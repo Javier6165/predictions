@@ -431,6 +431,10 @@ export function PortfolioPage() {
     if (window.matchMedia('(max-width: 1023px)').matches) setPanelSheet(true);
   };
   const openSell = (positionId: string) => {
+    // Pin the selection so the panel stays on this prediction after a partial sale.
+    const next = new URLSearchParams(params);
+    next.set('position', positionId);
+    setParams(next, { replace: true });
     setPanelSheet(false);
     setSellDraft({ kind: 'sell', positionId, quantity: 0 });
   };

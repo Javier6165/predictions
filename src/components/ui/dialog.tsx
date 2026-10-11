@@ -11,8 +11,12 @@ export function DialogContent({
   className,
   children,
   hideClose,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
   ...props
 }: React.ComponentProps<typeof D.Content> & { hideClose?: boolean }) {
+  // Controlled dialogs have no Radix Trigger, so remember who opened them and return focus there.
+  const returnTo = React.useRef<HTMLElement | null>(null);
   return (
     <D.Portal>
       <D.Overlay className="fixed inset-0 z-50 bg-[#02050c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
@@ -24,6 +28,19 @@ export function DialogContent({
           className,
         )}
         style={{ boxShadow: 'var(--shadow-pop)' }}
+        onOpenAutoFocus={(e) => {
+          const active = document.activeElement as HTMLElement | null;
+          returnTo.current = active && active !== document.body ? active : null;
+          onOpenAutoFocus?.(e);
+        }}
+        onCloseAutoFocus={(e) => {
+          onCloseAutoFocus?.(e);
+          const el = returnTo.current;
+          if (!e.defaultPrevented && el?.isConnected) {
+            e.preventDefault();
+            el.focus();
+          }
+        }}
         {...props}
       >
         {children}

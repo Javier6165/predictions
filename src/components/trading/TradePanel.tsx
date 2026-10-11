@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useId, useMemo } from 'react';
 import { ChevronDown, CircleAlert, Info, Lock, Sparkles } from 'lucide-react';
 import { catalog } from '@/data/fixtures';
 import { buyPreview, quoteBuyByBudget, sellPreview, validateBuy, validateLimit, validateSell } from '@/domain/engine';
@@ -30,12 +30,14 @@ function SideOption({
   side,
   selected,
   onSelect,
+  name,
 }: {
   market: Market;
   outcomeId: string;
   side: Side;
   selected: boolean;
   onSelect: () => void;
+  name: string;
 }) {
   const outcome = market.outcomes.find((o) => o.id === outcomeId)!;
   const q = quoteFor(outcome, side);
@@ -51,7 +53,7 @@ function SideOption({
           : 'border-line-strong hover:border-white/25 hover:bg-white/[0.03]',
       )}
     >
-      <input type="radio" name="ticket-side" className="sr-only" checked={selected} onChange={onSelect} />
+      <input type="radio" name={name} className="sr-only" checked={selected} onChange={onSelect} />
       <span
         aria-hidden
         className={cn(
@@ -76,6 +78,7 @@ function SideOption({
 }
 
 function BuyForm({ market, ticket, update, onReview }: PanelProps) {
+  const uid = useId();
   const user = useStore((s) => s.user);
   const setDialog = useUi((s) => s.setDialog);
   const outcome = market.outcomes.find((o) => o.id === ticket.outcomeId) ?? market.outcomes[0];
@@ -100,12 +103,12 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
     <div className="grid gap-4">
       {market.type === 'MULTI_OUTCOME' && (
         <div>
-          <label htmlFor="ticket-outcome" className="mb-1.5 block text-sm font-medium text-ink-2">
+          <label htmlFor={`${uid}-outcome`} className="mb-1.5 block text-sm font-medium text-ink-2">
             Outcome
           </label>
           <div className="relative">
             <select
-              id="ticket-outcome"
+              id={`${uid}-outcome`}
               value={ticket.outcomeId}
               onChange={(e) => update({ outcomeId: e.target.value })}
               className="h-11 w-full appearance-none rounded-xl border border-line-strong bg-surface px-3.5 pr-9 text-sm font-medium text-ink outline-none focus:border-accent"
@@ -125,13 +128,13 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
         <legend className="mb-1.5 text-sm font-medium text-ink-2">Your prediction</legend>
         <div className="grid gap-2">
           {(['YES', 'NO'] as const).map((s) => (
-            <SideOption key={s} market={market} outcomeId={outcome.id} side={s} selected={ticket.side === s} onSelect={() => update({ side: s })} />
+            <SideOption key={s} market={market} outcomeId={outcome.id} side={s} selected={ticket.side === s} onSelect={() => update({ side: s })} name={`${uid}-side`} />
           ))}
         </div>
       </fieldset>
 
       <div>
-        <label htmlFor="ticket-amount" className="mb-1.5 block text-sm font-medium text-ink-2">
+        <label htmlFor={`${uid}-amount`} className="mb-1.5 block text-sm font-medium text-ink-2">
           Amount to invest
         </label>
         <div className="flex items-center rounded-xl border border-line-strong bg-white/[0.03] px-3.5 focus-within:border-accent">
@@ -139,13 +142,13 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             $
           </span>
           <input
-            id="ticket-amount"
+            id={`${uid}-amount`}
             inputMode="decimal"
             autoComplete="off"
             value={ticket.amountText}
             onChange={(e) => update({ amountText: e.target.value })}
             placeholder="0"
-            aria-describedby="ticket-estimate"
+            aria-describedby={`${uid}-estimate`}
             aria-invalid={!!error}
             className="h-12 w-full bg-transparent px-2 text-xl font-semibold text-ink outline-none tabular placeholder:text-subtle"
           />
@@ -169,7 +172,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
         <p className="mt-2 text-xs text-muted">Available demo cash: {formatMoney(available)}</p>
       </div>
 
-      <div id="ticket-estimate" aria-live="polite">
+      <div id={`${uid}-estimate`} aria-live="polite">
         {error ? (
           <p className="flex gap-2 rounded-xl border border-no/30 bg-no-soft px-3.5 py-3 text-sm text-no" role="alert">
             <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
@@ -229,6 +232,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
 }
 
 function LimitSection({ market, ticket, update, onReview }: PanelProps) {
+  const uid = useId();
   const user = useStore((s) => s.user);
   const outcome = market.outcomes.find((o) => o.id === ticket.outcomeId) ?? market.outcomes[0];
   const quote = quoteFor(outcome, ticket.side);
@@ -246,7 +250,7 @@ function LimitSection({ market, ticket, update, onReview }: PanelProps) {
         type="button"
         onClick={() => update({ advancedOpen: !ticket.advancedOpen })}
         aria-expanded={ticket.advancedOpen}
-        aria-controls="limit-section"
+        aria-controls={`${uid}-limit`}
         className="flex w-full items-center justify-between px-4 py-3 text-sm font-medium text-ink-2 hover:text-ink"
       >
         <span>
@@ -255,7 +259,7 @@ function LimitSection({ market, ticket, update, onReview }: PanelProps) {
         <ChevronDown className={cn('h-4 w-4 transition', ticket.advancedOpen && 'rotate-180')} aria-hidden />
       </button>
       {ticket.advancedOpen && (
-        <div id="limit-section" className="grid gap-3 border-t border-line px-4 pb-4 pt-3">
+        <div id={`${uid}-limit`} className="grid gap-3 border-t border-line px-4 pb-4 pt-3">
           <p className="text-xs leading-relaxed text-muted">
             Places a resting BUY for <span className="text-ink-2">“{bare(proposition(market, outcome.id, ticket.side))}”</span>. The cash is held
             until you cancel. In this demo, limit orders never fill on their own.
@@ -325,6 +329,7 @@ export function SellForm({
   positions?: { id: string; label: string }[];
   onPosition?: (id: string) => void;
 }) {
+  const uid = useId();
   const user = useStore((s) => s.user);
   const position = user.positions.find((p) => p.id === positionId);
   const view = position ? positionView(user, catalog, position) : null;
@@ -379,11 +384,11 @@ export function SellForm({
       ) : (
         <>
           <div>
-            <label htmlFor="sell-qty" className="mb-1.5 block text-sm font-medium text-ink-2">
+            <label htmlFor={`${uid}-sell-qty`} className="mb-1.5 block text-sm font-medium text-ink-2">
               Contracts to sell
             </label>
             <input
-              id="sell-qty"
+              id={`${uid}-sell-qty`}
               inputMode="numeric"
               value={qtyText}
               onChange={(e) => setQtyText(e.target.value.replace(/\D/g, '').slice(0, 7))}

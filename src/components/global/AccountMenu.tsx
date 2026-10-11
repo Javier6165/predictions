@@ -26,7 +26,7 @@ export function AccountMenu() {
   const user = useStore((s) => s.user);
   const setDialog = useUi((s) => s.setDialog);
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger
         className="rounded-full outline-none transition hover:opacity-90 focus-visible:ring-2 focus-visible:ring-accent"
         aria-label="Demo Explorer account menu"

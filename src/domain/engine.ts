@@ -218,12 +218,13 @@ export function validateBuy(
   const quote = quoteFor(outcome, side);
   if (!quote) return { ok: false, error: { code: 'MARKET_NOT_TRADABLE', block: 'NO_QUOTE' } };
   if (!isPositiveInt(quantity)) return { ok: false, error: { code: 'INVALID_QUANTITY' } };
-  if (quantity > market.liquidity.maxBuy)
-    return { ok: false, error: { code: 'INSUFFICIENT_LIQUIDITY', maxQuantity: market.liquidity.maxBuy } };
   const cost = quantity * quote.askCents + FEES_CENTS;
   const available = availableCents(state);
+  // Funds first: it's the more actionable message when both limits are exceeded.
   if (cost > available)
     return { ok: false, error: { code: 'INSUFFICIENT_FUNDS', requiredCents: cost, availableCents: available } };
+  if (quantity > market.liquidity.maxBuy)
+    return { ok: false, error: { code: 'INSUFFICIENT_LIQUIDITY', maxQuantity: market.liquidity.maxBuy } };
   return { ok: true, quote };
 }
 

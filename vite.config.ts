@@ -12,6 +12,20 @@ export default defineConfig({
       '@data': fileURLToPath(new URL('./data', import.meta.url)),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Keep the app chunk small: vendor libraries change rarely and cache well.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return undefined;
+          if (/recharts|d3-|victory|decimal\.js|eventemitter3|lodash/.test(id)) return 'charts';
+          if (/radix-ui|@radix-ui|cmdk|@floating-ui|react-remove-scroll|aria-hidden/.test(id)) return 'ui';
+          if (/react-dom|react-router|scheduler|\/react\//.test(id)) return 'react';
+          return 'vendor';
+        },
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,
