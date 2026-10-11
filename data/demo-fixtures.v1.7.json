@@ -39,7 +39,7 @@
         "Featured"
       ],
       "resolutionSummary": "YES if an independently verifiable crewed landing takes place before January 1, 2035 (UTC); NO otherwise. Demo terms only.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": true,
       "storylineIsFictional": true,
       "pricePathKey": "mars-2035",
@@ -47,7 +47,7 @@
         "yesCondition": "The demo event ledger records a successful crewed landing on the Martian surface before 2035-01-01T00:00:00Z.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2035-01-01T00:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -145,17 +145,25 @@
       "demoUpdates": [
         {
           "id": "mars-2035-update-1",
-          "at": "2026-10-05T12:00:00+02:00",
-          "title": "Scenario briefing updated",
-          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "at": "2026-10-08T09:00:00+02:00",
+          "title": "Heavy-lift test campaign slips one quarter",
+          "body": "In the demo storyline, the program behind the leading Mars architecture pushes its next integrated flight test into early 2027. The market still edged up to 48% as an unrelated crew-capsule milestone closed.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         },
         {
           "id": "mars-2035-update-2",
-          "at": "2026-09-24T12:00:00+02:00",
-          "title": "Market outlook refreshed",
-          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "at": "2026-09-29T15:30:00+02:00",
+          "title": "Why the odds sit near a coin flip",
+          "body": "Landing crew before 2035 requires launch windows in 2031 or 2033. Traders in this simulation are pricing whether two refuelling demonstrations can land before the 2031 window.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "mars-2035-update-3",
+          "at": "2026-09-12T11:00:00+02:00",
+          "title": "Fictional agency publishes surface-habitat timeline",
+          "body": "A synthetic roadmap places pressurised-habitat tests in 2029, a date many demo participants read as tight but feasible.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         }
@@ -188,7 +196,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "exoplanet-2027",
@@ -196,7 +204,7 @@
         "yesCondition": "The demo astronomy bulletin designates at least one newly confirmed exoplanet as potentially habitable by 2027-12-31T23:59:59Z.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-12-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -291,13 +299,30 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "exoplanet-2027-update-1",
+          "at": "2026-10-06T10:00:00+02:00",
+          "title": "Candidate world shows a water-vapour hint",
+          "body": "A fictional observatory team reports a tentative atmospheric signal on a temperate super-Earth. Confirmation would need a second, independent instrument.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "exoplanet-2027-update-2",
+          "at": "2026-09-18T18:00:00+02:00",
+          "title": "What \u201cconfirm\u201d means in this market",
+          "body": "The demo rule requires two independent observations and a habitability-zone orbit. A single press release does not count.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "arctic-2027",
       "category": "Science & Climate",
       "type": "THRESHOLD",
-      "question": "Will September 2027 Arctic sea-ice extent be below 4m km²?",
+      "question": "Will September 2027 Arctic sea-ice extent be below 4m km\u00b2?",
       "title": "Arctic sea ice",
       "closeAt": "2027-10-15T20:00:00+02:00",
       "status": "OPEN",
@@ -320,7 +345,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "arctic-2027",
@@ -328,7 +353,7 @@
         "yesCondition": "The demo September 2027 average Arctic sea-ice extent measurement is strictly below 4.00 million square kilometres.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-10-15T18:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -423,14 +448,31 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "arctic-2027-update-1",
+          "at": "2026-10-01T12:00:00+02:00",
+          "title": "September 2026 minimum lands just above the line",
+          "body": "The fictional ice-extent ledger closed September at 4.2m km\u00b2. The market reads this as evidence that next year is close to a toss-up.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "arctic-2027-update-2",
+          "at": "2026-09-10T08:00:00+02:00",
+          "title": "Melt season outlook models diverge",
+          "body": "Two synthetic forecast models disagree by roughly 0.4m km\u00b2 for 2027, which explains the wide intraday swings in the demo.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
-      "id": "harris-election-2028",
+      "id": "marlowe-election-2028",
       "category": "Politics",
       "type": "BINARY",
-      "question": "Will Kamala Harris win the 2028 US presidential election?",
-      "title": "Kamala Harris 2028",
+      "question": "Will fictional candidate Elena Marlowe win the 2028 US presidential election?",
+      "title": "Elena Marlowe 2028",
       "closeAt": "2028-11-07T23:59:59-05:00",
       "status": "OPEN",
       "outcomes": [
@@ -455,15 +497,15 @@
         "Elections"
       ],
       "resolutionSummary": "YES if the named person is certified as the election winner under this demo contract; no claim about candidacy is implied.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
-      "pricePathKey": "harris-election-2028",
+      "pricePathKey": "marlowe-election-2028",
       "resolutionRule": {
-        "yesCondition": "The demo US election certification record names Kamala Harris as winner of the 2028 presidential election.",
+        "yesCondition": "The demo US election certification record names the fictional candidate Elena Marlowe as winner of the 2028 presidential election.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2029-01-10T20:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -560,18 +602,18 @@
       ],
       "demoUpdates": [
         {
-          "id": "harris-election-2028-update-1",
-          "at": "2026-10-05T12:00:00+02:00",
-          "title": "Scenario briefing updated",
-          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "id": "marlowe-election-2028-update-1",
+          "at": "2026-10-07T20:00:00+02:00",
+          "title": "Marlowe exploratory committee draws a crowd",
+          "body": "In this fictional storyline, Elena Marlowe\u2019s first town-hall tour drew attention, though her implied odds have held near 34%. No real candidacy is implied.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         },
         {
-          "id": "harris-election-2028-update-2",
-          "at": "2026-09-24T12:00:00+02:00",
-          "title": "Market outlook refreshed",
-          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "id": "marlowe-election-2028-update-2",
+          "at": "2026-09-26T14:00:00+02:00",
+          "title": "Primary calendar debate weighs on early odds",
+          "body": "A synthetic party committee is weighing a compressed primary calendar, which demo traders see as favouring better-known rivals.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         }
@@ -604,7 +646,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "midterm-turnout-2026",
@@ -612,7 +654,7 @@
         "yesCondition": "The demo 2026 midterm turnout record reports votes cast greater than 52.00% of the declared voting-eligible population.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2026-11-20T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -707,7 +749,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "midterm-turnout-2026-update-1",
+          "at": "2026-10-05T16:00:00+02:00",
+          "title": "Early-vote returns run ahead of 2022 pace",
+          "body": "The fictional turnout tracker shows early ballots running ahead of the comparable 2022 point; YES has held around 56\u201357%.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "midterm-turnout-2026-update-2",
+          "at": "2026-09-21T10:00:00+02:00",
+          "title": "How turnout is measured here",
+          "body": "The demo rule uses ballots counted divided by the voting-eligible population, published by a fictional statistics ledger.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "eu-reform-2027",
@@ -736,7 +795,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "eu-reform-2027",
@@ -744,7 +803,7 @@
         "yesCondition": "The demo EU legislation record says a named AI regulatory reform package obtained final adoption during calendar year 2027.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-12-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -839,7 +898,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "eu-reform-2027-update-1",
+          "at": "2026-10-02T11:00:00+02:00",
+          "title": "Committee vote scheduled for spring",
+          "body": "The fictional parliamentary committee has calendared its vote for March 2027, leaving a narrow window for final adoption within the year.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "eu-reform-2027-update-2",
+          "at": "2026-09-15T09:30:00+02:00",
+          "title": "Trilogue friction keeps the market below 50%",
+          "body": "Demo participants cite disagreement over enforcement timelines as the main obstacle.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "ucl-2027",
@@ -913,7 +989,7 @@
       ],
       "tags": [],
       "resolutionSummary": "YES for the selected club only if that club is the winner; No does not imply a specific rival wins.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "ucl-2027",
@@ -921,7 +997,7 @@
         "yesCondition": "The fictional 2027 football final ledger names exactly one winning club; each YES contract wins only for its named club, including Other club for any unlisted winner.",
         "noCondition": "For each named outcome, NO wins if another mutually exclusive outcome wins; never infer which rival wins from a NO contract.",
         "evaluatedAt": "2027-06-02T12:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -1058,17 +1134,25 @@
       "demoUpdates": [
         {
           "id": "ucl-2027-update-1",
-          "at": "2026-10-05T12:00:00+02:00",
-          "title": "Scenario briefing updated",
-          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "at": "2026-10-04T22:30:00+02:00",
+          "title": "Real Madrid extend group-stage lead",
+          "body": "A third straight win in the fictional group stage keeps Real Madrid the clear favourite at 58%. A NO on any single club only says that club won\u2019t lift the trophy.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         },
         {
           "id": "ucl-2027-update-2",
-          "at": "2026-09-24T12:00:00+02:00",
-          "title": "Market outlook refreshed",
-          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "at": "2026-09-30T22:00:00+02:00",
+          "title": "Bayern injury list grows",
+          "body": "Two synthetic squad injuries saw Bayern\u2019s implied chance dip to 11% the following week before recovering to 12%.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "ucl-2027-update-3",
+          "at": "2026-09-16T21:45:00+02:00",
+          "title": "\u201cOther club\u201d is the field",
+          "body": "The Other club outcome covers every winner outside the three named sides, so the four options always add up to 100%.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         }
@@ -1078,7 +1162,7 @@
       "id": "world-cup-2027",
       "category": "Sports",
       "type": "BINARY",
-      "question": "Will Spain win the 2027 Women’s World Cup?",
+      "question": "Will Spain win the 2027 Women\u2019s World Cup?",
       "title": "Spain World Cup",
       "closeAt": "2027-07-31T23:59:59+02:00",
       "status": "OPEN",
@@ -1101,15 +1185,15 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "world-cup-2027",
       "resolutionRule": {
-        "yesCondition": "The fictional 2027 women’s football tournament ledger identifies Spain as tournament winner.",
+        "yesCondition": "The fictional 2027 women\u2019s football tournament ledger identifies Spain as tournament winner.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-08-01T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -1204,7 +1288,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "world-cup-2027-update-1",
+          "at": "2026-10-03T19:00:00+02:00",
+          "title": "Spain name an experimental squad",
+          "body": "The fictional federation rests several veterans for autumn friendlies, a move the market reads as long-term planning rather than weakness.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "world-cup-2027-update-2",
+          "at": "2026-09-09T12:00:00+02:00",
+          "title": "Tournament seeding confirmed",
+          "body": "Synthetic seeding puts Spain in the top pot, avoiding the other favourites until the semi-finals.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "nba-2027",
@@ -1233,7 +1334,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "nba-2027",
@@ -1241,7 +1342,7 @@
         "yesCondition": "The fictional 2027 basketball playoff ledger records the Boston Celtics as one of the two NBA Finals teams.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-06-30T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -1336,7 +1437,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "nba-2027-update-1",
+          "at": "2026-10-06T23:00:00+02:00",
+          "title": "Preseason opener answers depth questions",
+          "body": "In the demo storyline, Boston\u2019s bench outscored its opponent by 18 points, nudging Finals odds toward even.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "nba-2027-update-2",
+          "at": "2026-09-24T17:00:00+02:00",
+          "title": "Conference picture looks crowded",
+          "body": "Four fictional contenders sit within a few points of each other, keeping this market close to 50%.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "bitcoin-150k-2027",
@@ -1367,7 +1485,7 @@
         "Price threshold"
       ],
       "resolutionSummary": "Demo scenario: YES if the specified illustrative price series records a qualifying trade of at least $150k by the cutoff.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "bitcoin-150k-2027",
@@ -1375,7 +1493,7 @@
         "yesCondition": "At least one fictional Bitcoin/USD spot-price observation reaches or exceeds 150,000 USD strictly before 2028-01-01T00:00:00Z.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2028-01-01T00:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -1473,17 +1591,17 @@
       "demoUpdates": [
         {
           "id": "bitcoin-150k-2027-update-1",
-          "at": "2026-10-05T12:00:00+02:00",
-          "title": "Scenario briefing updated",
-          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "at": "2026-10-08T07:00:00+02:00",
+          "title": "Rally stalls below a round number",
+          "body": "The synthetic price index failed to hold a fresh high this week. YES has moved between 52% and 55% for a month.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         },
         {
           "id": "bitcoin-150k-2027-update-2",
-          "at": "2026-09-24T12:00:00+02:00",
-          "title": "Market outlook refreshed",
-          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "at": "2026-09-27T13:00:00+02:00",
+          "title": "How this threshold resolves",
+          "body": "Any daily close at or above $150,000 on the fictional reference index before 2028 resolves YES. Intraday spikes don\u2019t count.",
           "publisher": "NOVA DEMO",
           "isSimulated": true
         }
@@ -1516,7 +1634,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "ethereum-8k",
@@ -1524,7 +1642,7 @@
         "yesCondition": "At least one fictional Ethereum/USD spot-price observation reaches or exceeds 8,000 USD on or before 2027-12-31T23:59:59Z.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-12-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -1619,7 +1737,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "ethereum-8k-update-1",
+          "at": "2026-10-01T09:00:00+02:00",
+          "title": "Network upgrade date set",
+          "body": "A fictional upgrade is scheduled for Q2 2027. Demo traders are split on whether it moves the $8,000 threshold.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "ethereum-8k-update-2",
+          "at": "2026-09-14T16:00:00+02:00",
+          "title": "Fees fall to a two-year low",
+          "body": "Lower on-chain costs in the storyline have not yet translated into a higher implied probability.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "crypto-etf-2027",
@@ -1648,7 +1783,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "crypto-etf-2027",
@@ -1656,7 +1791,7 @@
         "yesCondition": "The fictional regulator decision ledger records final approval of at least one new spot crypto ETF by 2027-06-30T23:59:59Z.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-06-30T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -1751,7 +1886,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "crypto-etf-2027-update-1",
+          "at": "2026-10-05T15:00:00+02:00",
+          "title": "Regulator opens comment period",
+          "body": "The fictional regulator opened a 60-day comment window on two new spot products, a step demo traders read as constructive.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "crypto-etf-2027-update-2",
+          "at": "2026-09-19T11:00:00+02:00",
+          "title": "Two filings withdrawn, one refiled",
+          "body": "Paperwork churn in the storyline added short-lived volatility to the market.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "ai-model-2027",
@@ -1780,7 +1932,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "ai-model-2027",
@@ -1788,7 +1940,7 @@
         "yesCondition": "A fictional open-source AI model ranks first on the specified demo public-style benchmark snapshot dated in 2027.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-12-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -1883,7 +2035,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "ai-model-2027-update-1",
+          "at": "2026-10-07T18:00:00+02:00",
+          "title": "Open model closes the gap on reasoning suite",
+          "body": "A fictional open-weights release scores within two points of the leader on the reference benchmark used by this market.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "ai-model-2027-update-2",
+          "at": "2026-09-22T10:00:00+02:00",
+          "title": "Which benchmark counts",
+          "body": "The demo rule names a single synthetic leaderboard and requires the top score to hold for seven consecutive days.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "apple-foldable-2027",
@@ -1912,7 +2081,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "apple-foldable-2027",
@@ -1920,7 +2089,7 @@
         "yesCondition": "The fictional product announcement ledger records a foldable smartphone formally announced by Apple before 2028-01-01T00:00:00Z.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2028-01-01T00:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -2015,7 +2184,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "apple-foldable-2027-update-1",
+          "at": "2026-10-02T08:00:00+02:00",
+          "title": "Supply-chain chatter, but no announcement",
+          "body": "Demo storyline reports of hinge orders lifted the market briefly. Only an official announcement resolves YES.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "apple-foldable-2027-update-2",
+          "at": "2026-09-11T19:00:00+02:00",
+          "title": "Pending limit orders cluster at 22\u00a2",
+          "body": "Resting limit orders in the storyline cluster below the current ask, from participants waiting for a cheaper entry.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "robotaxi-2027",
@@ -2044,7 +2230,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "robotaxi-2027",
@@ -2052,7 +2238,7 @@
         "yesCondition": "The fictional mobility ledger records a public, paid robotaxi service launching in at least three additional US cities during calendar year 2027.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-12-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -2147,7 +2333,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "robotaxi-2027-update-1",
+          "at": "2026-10-04T12:00:00+02:00",
+          "title": "Permit granted in a third fictional city",
+          "body": "A synthetic city council approved driverless operations, leaving one more launch needed for the threshold.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "robotaxi-2027-update-2",
+          "at": "2026-09-17T15:00:00+02:00",
+          "title": "What \u201claunch\u201d means",
+          "body": "Public, paid rides without a safety driver in the service area. Pilot programmes with staff only don\u2019t count.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "fed-2027",
@@ -2176,7 +2379,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "fed-2027",
@@ -2184,7 +2387,7 @@
         "yesCondition": "The fictional US central bank policy target upper bound effective on 2027-12-31 is strictly below 3.00%.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2028-01-01T00:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -2279,7 +2482,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "fed-2027-update-1",
+          "at": "2026-10-08T20:00:00+02:00",
+          "title": "Policy statement softens language",
+          "body": "The fictional central bank dropped a reference to \u201cfurther firming\u201d. The market has hovered between 50% and 52% since.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "fed-2027-update-2",
+          "at": "2026-09-23T20:00:00+02:00",
+          "title": "Rate path projections widen",
+          "body": "Synthetic committee projections now span more than a full point for end-2027.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "inflation-2026",
@@ -2308,7 +2528,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "inflation-2026",
@@ -2316,7 +2536,7 @@
         "yesCondition": "The fictional December 2026 US CPI 12-month year-over-year inflation measurement is strictly above 3.00%.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-01-20T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -2411,7 +2631,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "inflation-2026-update-1",
+          "at": "2026-10-09T14:30:00+02:00",
+          "title": "Core prices cool for a second month",
+          "body": "The fictional price index rose less than expected. YES (above 3.0%) sits at 44%, inside its recent 43\u201345% range.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "inflation-2026-update-2",
+          "at": "2026-09-11T14:30:00+02:00",
+          "title": "Energy base effects ahead",
+          "body": "Demo analysts expect energy comparisons to push the December reading higher, keeping the market close.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "oil-2027",
@@ -2442,7 +2679,7 @@
         "Volatile"
       ],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "oil-2027",
@@ -2450,7 +2687,7 @@
         "yesCondition": "At least one fictional Brent crude front-month trade price strictly exceeds 110.00 USD/bbl in calendar year 2027.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-12-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -2545,7 +2782,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "oil-2027-update-1",
+          "at": "2026-10-06T11:00:00+02:00",
+          "title": "Producer group signals output hold",
+          "body": "A fictional producers\u2019 meeting ended without cuts, trimming the odds of oil trading above $110.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "oil-2027-update-2",
+          "at": "2026-09-20T09:00:00+02:00",
+          "title": "Volatile market, wide spreads",
+          "body": "This demo market carries a Volatile tag: expect larger moves and a wider gap between buy and sell prices.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "music-tour-2027",
@@ -2574,7 +2828,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "music-tour-2027",
@@ -2582,7 +2836,7 @@
         "yesCondition": "The fictional artist Aurora Vale publicly announces an international tour scheduled for 2027 by the scenario cutoff.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-08-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -2677,7 +2931,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "music-tour-2027-update-1",
+          "at": "2026-10-07T12:00:00+02:00",
+          "title": "Aurora Vale teases \u201csomething big\u201d",
+          "body": "A cryptic post from the fictional artist kept the market at 65%. Only an official tour announcement resolves YES.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "music-tour-2027-update-2",
+          "at": "2026-09-25T18:00:00+02:00",
+          "title": "Stadium holds spotted",
+          "body": "Storyline venue calendars show unexplained summer holds in four cities.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "film-award-2027",
@@ -2751,7 +3022,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "film-award-2027",
@@ -2759,7 +3030,7 @@
         "yesCondition": "The fictional 2027 film awards ledger names one Best Picture winner; its assigned genre determines exactly one winning outcome (Drama, Comedy, Science fiction, Other).",
         "noCondition": "For each named outcome, NO wins if another mutually exclusive outcome wins; never infer which rival wins from a NO contract.",
         "evaluatedAt": "2027-03-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -2893,7 +3164,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "film-award-2027-update-1",
+          "at": "2026-10-03T21:00:00+02:00",
+          "title": "Festival circuit favours a quiet drama",
+          "body": "A fictional drama swept two autumn festivals. Drama leads the field at 45%.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "film-award-2027-update-2",
+          "at": "2026-09-19T21:00:00+02:00",
+          "title": "Science fiction gains on a box-office surprise",
+          "body": "A synthetic sci-fi release outperformed expectations, keeping that outcome in the high 20s.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "festival-2027",
@@ -2922,7 +3210,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "festival-2027",
@@ -2930,7 +3218,7 @@
         "yesCondition": "The fictional event ledger announces a new festival called Horizon Sound with events in at least three world regions by the cutoff.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-12-31T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -3025,7 +3313,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "festival-2027-update-1",
+          "at": "2026-10-01T17:00:00+02:00",
+          "title": "Promoter registers new festival brand",
+          "body": "The fictional Horizon Sound trademark filing is public, but an announcement still needs a date and venue.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "festival-2027-update-2",
+          "at": "2026-09-13T12:00:00+02:00",
+          "title": "Venue talks reported",
+          "body": "Storyline sources mention talks with two coastal venues.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "peace-talks-2027",
@@ -3054,7 +3359,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "peace-talks-2027",
@@ -3062,7 +3367,7 @@
         "yesCondition": "The fictional diplomatic ledger records an official first face-to-face session of a named new peace negotiation process by the scenario cutoff.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2027-06-30T23:59:59Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -3157,7 +3462,24 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "peace-talks-2027-update-1",
+          "at": "2026-10-05T10:00:00+02:00",
+          "title": "Mediators propose a framework meeting",
+          "body": "In the demo scenario, two fictional mediating states proposed a preparatory meeting for early 2027.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "peace-talks-2027-update-2",
+          "at": "2026-09-28T10:00:00+02:00",
+          "title": "Why this market is sensitive",
+          "body": "Resolution requires a formal, publicly announced negotiation process; informal contacts don\u2019t count.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "global-event-pending",
@@ -3178,7 +3500,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "global-event-pending",
@@ -3186,7 +3508,7 @@
         "yesCondition": "The fictional summit ledger records a signed, publicly announced joint initiative at the designated October 2026 summit.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2026-10-04T12:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -3281,7 +3603,16 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "global-event-pending-update-1",
+          "at": "2026-10-03T09:00:00+02:00",
+          "title": "Summit closes; result under review",
+          "body": "The fictional summit ended on 2 October. The demo resolver is reviewing whether the joint initiative was formally signed. Trading has ended.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     },
     {
       "id": "global-event-resolved",
@@ -3302,7 +3633,7 @@
       ],
       "tags": [],
       "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
-      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "resolutionSource": "DEMO SCENARIO \u2014 fictional source, not a live feed",
       "isFeatured": false,
       "storylineIsFictional": true,
       "pricePathKey": "global-event-resolved",
@@ -3312,7 +3643,7 @@
         "yesCondition": "The fictional climate summit minutes record adoption of the planned declaration; the supplied demo winner is YES.",
         "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
         "evaluatedAt": "2026-10-08T12:00:00Z",
-        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER \u2014 no live external resolution source",
         "isSimulated": true,
         "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
         "settlementCentsPerWinningContract": 100,
@@ -3407,7 +3738,16 @@
           }
         }
       ],
-      "demoUpdates": []
+      "demoUpdates": [
+        {
+          "id": "global-event-resolved-update-1",
+          "at": "2026-10-08T12:00:00+02:00",
+          "title": "Declaration adopted \u2014 market resolved YES",
+          "body": "The fictional summit minutes record adoption of the planned declaration. YES contracts settled at $1, NO at $0.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
     }
   ],
   "initialState": {
@@ -3445,7 +3785,7 @@
       },
       {
         "id": "pos-3",
-        "marketId": "harris-election-2028",
+        "marketId": "marlowe-election-2028",
         "outcomeId": "yes",
         "side": "YES",
         "quantity": 60,
