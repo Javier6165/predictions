@@ -8,14 +8,14 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-accent text-white shadow-[0_8px_24px_-10px_rgb(59_130_246/0.8)] hover:bg-accent-strong',
+        primary: 'bg-cta text-white shadow-[0_8px_24px_-10px_rgb(59_130_246/0.8)] hover:bg-cta-hover',
         white: 'bg-white text-slate-900 hover:bg-slate-100',
         secondary: 'border border-line-strong bg-surface-2 text-ink hover:bg-surface-3',
         ghost: 'text-ink-2 hover:bg-white/5 hover:text-ink',
         outline: 'border border-line-strong text-ink hover:bg-white/5',
-        yes: 'bg-yes-strong text-white hover:bg-emerald-600',
-        no: 'bg-no-strong text-white hover:bg-rose-600',
-        danger: 'bg-no-strong text-white hover:bg-rose-600',
+        yes: 'bg-yes text-bg hover:bg-emerald-300',
+        no: 'bg-danger text-white hover:bg-danger-hover',
+        danger: 'bg-danger text-white hover:bg-danger-hover',
         link: 'h-auto px-0 text-accent hover:underline underline-offset-4',
       },
       size: {

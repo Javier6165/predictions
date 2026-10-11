@@ -51,7 +51,7 @@ function Summary() {
   const setDialog = useUi((s) => s.setDialog);
   const s = portfolioSummary(user, catalog);
   return (
-    <div className="grid gap-4 md:grid-cols-[1fr_1fr_1.35fr]">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.35fr]">
       <section className="card flex items-start gap-4 p-5" aria-label="Portfolio value">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-yes-soft text-yes">
           <LineChart className="h-5 w-5" aria-hidden />
@@ -88,7 +88,7 @@ function Summary() {
           </Button>
         </div>
       </section>
-      <section className="card grid gap-4 p-5 sm:grid-cols-[auto_1fr]" aria-label="Profit and loss">
+      <section className="card grid gap-4 p-5 sm:grid-cols-[auto_1fr] md:col-span-2 xl:col-span-1" aria-label="Profit and loss">
         <div className="flex items-start gap-4">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/6 text-ink-2">
             <CircleDollarSign className="h-5 w-5" aria-hidden />
@@ -474,7 +474,7 @@ export function PortfolioPage() {
           {TABS.map((t) => (
             <TabsTrigger key={t} value={t}>
               {labels[t]}
-              <span className={cn('rounded-full px-1.5 py-0.5 text-[11px] tabular', tab === t ? 'bg-accent text-white' : 'bg-white/8 text-ink-2')}>{counts[t]}</span>
+              <span className={cn('rounded-full px-1.5 py-0.5 text-[11px] tabular', tab === t ? 'bg-cta text-white' : 'bg-white/8 text-ink-2')}>{counts[t]}</span>
             </TabsTrigger>
           ))}
         </TabsList>

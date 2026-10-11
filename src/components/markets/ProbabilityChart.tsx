@@ -99,7 +99,7 @@ export function ProbabilityChart({ market, outcomeIds, side = 'YES', range = 'AL
       <div aria-hidden className="h-full w-full">
         <ResponsiveContainer width="100%" height="100%">
           {single ? (
-            <AreaChart {...common}>
+            <AreaChart {...common} accessibilityLayer={false}>
               <defs>
                 <linearGradient id={`${gid}-fill`} x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0" stopColor={color} stopOpacity={0.35} />
@@ -120,7 +120,7 @@ export function ProbabilityChart({ market, outcomeIds, side = 'YES', range = 'AL
               />
             </AreaChart>
           ) : (
-            <LineChart {...common}>
+            <LineChart {...common} accessibilityLayer={false}>
               {axes}
               {outcomeIds.map((id) => {
                 const idx = market.outcomes.findIndex((o) => o.id === id);

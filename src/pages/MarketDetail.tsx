@@ -437,7 +437,7 @@ export function MarketDetailPage() {
             </TabsContent>
 
             <TabsContent value="data" className="mt-5 grid gap-5 outline-none">
-              <section className="card overflow-x-auto p-1">
+              <section className="card relative overflow-x-auto p-1" tabIndex={0} aria-label="Demo quotes table, scrolls horizontally on small screens">
                 <table className="w-full min-w-[520px] text-sm">
                   <caption className="px-4 pb-1 pt-4 text-left text-sm font-semibold text-ink">Demo quotes per contract</caption>
                   <thead>

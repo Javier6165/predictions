@@ -96,17 +96,21 @@ Money rules: all amounts are **integer cents**, quantities are whole contracts, 
 
 ## Testing done
 
-Run on 11 Oct 2026 in a Linux container with Chromium 1194:
+Last full run on 11 Oct 2026 in a Linux container with Chromium 1194 (suite run twice, no flaky tests):
 
 - `npm run lint` — pass
 - `npm run typecheck` — pass
 - `npm run test` — **45 passed** (35 domain/fixture tests covering FIN-01..21, 3 store/persistence tests incl. FIN-22, 7 UI component tests)
 - `npm run build` — pass
-- `npm run test:e2e` — **26 passed**: E2E-01..23 and 25..27 on desktop 1440px, E2E-24 + search/filters on mobile 390px, plus liquidity, suspension and settlement scenarios
+- `npm run test:e2e` — **40 passed**:
+  - `e2e/app.spec.ts` — E2E-01..23 and 25..27 at 1440px, plus liquidity, suspension and settlement scenarios
+  - `e2e/mobile.spec.ts` — E2E-24 full purchase journey and search/filters at 390px
+  - `e2e/edge-cases.spec.ts` — double-click Confirm, reload during Review, sell from Market Detail, limit order on a multi-outcome NO, fresh account + notification deep link, odd amount inputs, settlement re-run refused, empty search, scroll restoration on Back, Save from Detail
+  - `e2e/smoke-a11y.spec.ts` — every route and all 24 markets × 4 tabs at 1440, 768 and 390px with **no console errors and no horizontal overflow**; **axe (WCAG 2.1 A/AA) with zero violations** on key pages at desktop and phone widths and on every overlay (search, notifications, account dialogs, review, receipt, sell, mobile ticket and filter sheets)
 - `python3 scripts/validate-fixtures.py` — PASS
-- Visual QA: screenshots in [`docs/qa/`](docs/qa) compared against the approved references in `references/` (see `docs/DESIGN_REFERENCES.md`).
+- Visual QA: screenshots in [`docs/qa/`](docs/qa) compared against the approved references in `references/` (see `docs/DESIGN_REFERENCES.md`), plus a tablet (768px) review.
 
-Not done: no automated axe audit, no manual screen-reader pass, no testing on Safari/Firefox or real phones, no user research. Keyboard flows are covered by E2E-23/26 (search, review, Escape, focus return).
+Not done: no manual screen-reader pass, no testing on Safari/Firefox or real phones, no user research. Keyboard flows are covered by E2E-23/26 (search, review, Escape, focus return).
 
 ## Differences from the references (deliberate)
 

@@ -11,6 +11,21 @@ Estado a 11/10/2026. Rama de trabajo: `feat/p0-demo-app`.
 - [x] **Fase 4** — Market Detail (outcomes, gráfico, Overview/News/Market data/Rules), ticket prediction-first, Review → Confirm → Receipt, venta, orden límite, bottom sheet móvil.
 - [x] **Fase 5** — Portfolio (resumen reconciliado, Active/Pending/History/Saved, panel de posición), notificaciones deterministas, menú de cuenta, Add demo funds, Reset (showcase/fresh), Settings (reduce motion + escenarios demo).
 - [x] **Fase 6** — 45 tests Vitest, 26 E2E Playwright (desktop + 390px), capturas en `docs/qa/`, README.
+- [x] **QA ronda 2** — rastreo de todas las rutas y mercados a 1440/768/390px + axe WCAG 2.1 AA en páginas y overlays; casos límite. Ahora 40 E2E.
+
+## QA ronda 2 — hallazgos corregidos
+
+| Hallazgo | Corrección |
+|---|---|
+| Navbar desbordaba 143px en tablet (768px) | Buscador como icono por debajo de `lg` |
+| Resumen de Portfolio desbordaba en tablet | Rejilla 2 columnas en `md`, 3 en `xl` |
+| Contraste insuficiente: botones azules (3.7:1), verdes/rojos con texto blanco, texto “subtle” (4.1:1) | Token `--color-cta` #2563eb (5.2:1), `--color-danger` #e11d48, verde con texto oscuro, subtle #7d89a3 |
+| Recharts dejaba un elemento enfocable dentro de `aria-hidden` | `accessibilityLayer={false}`; el resumen accesible va en `figcaption` |
+| Tabla de cotizaciones: overflow móvil (el `sr-only` escapaba del scroll) y región no enfocable | `relative` en el contenedor y en `PpDelta`; región con `tabIndex` y etiqueta |
+| Doble clic en Confirm: el 2.º clic cerraba el recibo (sin duplicar la operación) | Recibo protegido 500 ms frente a clics de rebote |
+| Preguntas cortadas a 2 líneas en filas móviles de Explore | Sin miniatura en móvil, hasta 3 líneas |
+| Cohete del hero detrás del titular en tablet | Solo visible en desktop |
+| Contraste “per contract” sobre opción seleccionada | `text-muted` |
 
 ## Decisiones tomadas por precedencia (sin preguntar)
 

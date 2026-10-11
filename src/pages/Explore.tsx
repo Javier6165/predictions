@@ -367,12 +367,12 @@ export function ExplorePage() {
               aria-controls="explore-results"
             >
               <SlidersHorizontal className="h-4 w-4" /> {filtersOpen ? 'Hide filters' : 'Filters'}
-              {activeCount > 0 && <span className="rounded-full bg-accent px-1.5 text-xs text-white tabular">{activeCount}</span>}
+              {activeCount > 0 && <span className="rounded-full bg-cta px-1.5 text-xs text-white tabular">{activeCount}</span>}
               {!filtersOpen && <ChevronRight className="h-4 w-4 text-muted" />}
             </Button>
             <Button variant="secondary" className="lg:hidden" onClick={() => setMobileFilters(true)} aria-haspopup="dialog">
               <SlidersHorizontal className="h-4 w-4" /> Filters
-              {activeCount > 0 && <span className="rounded-full bg-accent px-1.5 text-xs text-white tabular">{activeCount}</span>}
+              {activeCount > 0 && <span className="rounded-full bg-cta px-1.5 text-xs text-white tabular">{activeCount}</span>}
             </Button>
             <p className="text-sm text-muted" aria-live="polite">
               {filtered ? (

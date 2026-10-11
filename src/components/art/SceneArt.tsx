@@ -150,7 +150,7 @@ export function SceneArt({
           {hero ? (
             <>
               <Planet id={id} p={p} cx={330} cy={250} rad={190} />
-              <g transform="translate(196 60) scale(0.82)">
+              <g transform="translate(196 60) scale(0.82)" className="hidden lg:inline">
                 <ellipse cx="12" cy="250" rx="70" ry="30" fill={p.glow} opacity="0.5" filter={`url(#${id}-blur)`} />
                 <ellipse cx="12" cy="214" rx="13" ry="52" fill={`url(#${id}-flame)`} />
                 <path d="M0 60 Q12 0 24 60 L24 170 L0 170 Z" fill={`url(#${id}-metal)`} />

@@ -77,7 +77,7 @@ function Hero({ market }: { market: Market }) {
                   <span className="block text-xs text-ink-2">Yes</span>
                   <span className="text-lg font-semibold text-yes tabular">{formatPrice(yes.askCents)}</span>
                 </span>
-                <span className="rounded-full bg-yes-strong px-3 py-1.5 text-xs font-semibold text-white">Predict</span>
+                <span className="rounded-full bg-yes px-3 py-1.5 text-xs font-semibold text-bg">Predict</span>
               </Link>
               <Link
                 to={`/markets/${market.id}?side=NO`}
@@ -87,7 +87,7 @@ function Hero({ market }: { market: Market }) {
                   <span className="block text-xs text-ink-2">No</span>
                   <span className="text-lg font-semibold text-no tabular">{formatPrice(no.askCents)}</span>
                 </span>
-                <span className="rounded-full bg-no-strong px-3 py-1.5 text-xs font-semibold text-white">Predict</span>
+                <span className="rounded-full bg-no px-3 py-1.5 text-xs font-semibold text-bg">Predict</span>
               </Link>
             </div>
           ) : (

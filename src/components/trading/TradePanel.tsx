@@ -71,7 +71,7 @@ function SideOption({
       </span>
       <span className="shrink-0 text-right">
         <span className="block text-base font-semibold tabular">{q ? formatPrice(q.askCents) : '—'}</span>
-        <span className="text-[10px] text-subtle">per contract</span>
+        <span className="text-[10px] text-muted">per contract</span>
       </span>
     </label>
   );
@@ -490,7 +490,7 @@ export function TradePanel({ market, ticket, update, onReview }: PanelProps) {
               title={disabled ? 'You don’t hold a position in this market yet' : undefined}
               className={cn(
                 'rounded-lg py-2 text-sm font-semibold transition',
-                mode === m ? 'bg-accent text-white' : 'text-ink-2 hover:text-ink',
+                mode === m ? 'bg-cta text-white' : 'text-ink-2 hover:text-ink',
                 disabled && 'cursor-not-allowed opacity-45 hover:text-ink-2',
               )}
             >

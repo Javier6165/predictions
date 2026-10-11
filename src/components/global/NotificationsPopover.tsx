@@ -76,7 +76,7 @@ export function NotificationsPopover() {
         >
           {unread ? <BellRing className="h-5 w-5" /> : <Bell className="h-5 w-5" />}
           {unread > 0 && (
-            <span className="absolute right-1 top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-no-strong px-1 text-[10px] font-bold text-white tabular">
+            <span className="absolute right-1 top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-danger px-1 text-[10px] font-bold text-white tabular">
               {unread > 9 ? '9+' : unread}
             </span>
           )}

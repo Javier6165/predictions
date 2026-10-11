@@ -16,11 +16,16 @@
   --color-ink: #eef2fa;
   --color-ink-2: #c5cee0;
   --color-muted: #8e9ab3;
-  --color-subtle: #66728c;
+  --color-subtle: #7d89a3;
 
   --color-accent: #3b82f6;
   --color-accent-strong: #2563eb;
   --color-accent-soft: rgb(59 130 246 / 0.14);
+  /* Filled CTA blue: white text on it meets WCAG AA (5.2:1); --color-accent is for text/borders. */
+  --color-cta: #2563eb;
+  --color-cta-hover: #1d4ed8;
+  --color-danger: #e11d48;
+  --color-danger-hover: #be123c;
   --color-lilac: #b4bcff;
 
   --color-yes: #34d399;

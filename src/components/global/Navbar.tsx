@@ -80,7 +80,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setOverlay('search')}
-          className="glass ml-auto hidden h-10 w-full max-w-sm items-center gap-2.5 rounded-full px-4 text-left text-sm text-muted transition hover:border-white/25 md:flex"
+          className="glass ml-auto hidden h-10 w-full max-w-sm items-center gap-2.5 rounded-full px-4 text-left text-sm text-muted transition hover:border-white/25 lg:flex"
           aria-label="Search markets (Ctrl or Command + K)"
         >
           <Search className="h-4 w-4" aria-hidden />
@@ -88,11 +88,11 @@ export function Navbar() {
           <Kbd>⌘K</Kbd>
         </button>
 
-        <div className="ml-auto flex items-center gap-1 md:ml-0 sm:gap-2">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2 lg:ml-0">
           <button
             type="button"
             onClick={() => setOverlay('search')}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-2 hover:bg-white/8 hover:text-ink md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-2 hover:bg-white/8 hover:text-ink lg:hidden"
             aria-label="Search markets"
           >
             <Search className="h-5 w-5" />

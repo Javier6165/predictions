@@ -100,6 +100,8 @@ export function TradeFlowDialog({
   const [error, setError] = useState<EngineError | null>(null);
   const [requoted, setRequoted] = useState<{ from: number; to: number } | null>(null);
   const [busy, setBusy] = useState(false);
+  // A fast double-click on Confirm must not dismiss the receipt or hit one of its buttons.
+  const [receiptSettled, setReceiptSettled] = useState(true);
   const [receipt, setReceipt] = useState<TradeReceipt | LimitOrder | null>(null);
   const [sellQtyText, setSellQtyText] = useState('');
   const confirmRef = useRef<HTMLButtonElement>(null);
@@ -166,6 +168,8 @@ export function TradeFlowDialog({
     if (r.ok) {
       setReceipt(r.receipt);
       setStep('receipt');
+      setReceiptSettled(false);
+      window.setTimeout(() => setReceiptSettled(true), 500);
       return;
     }
     if (r.error.code === 'QUOTE_CHANGED') {
@@ -455,8 +459,11 @@ export function TradeFlowDialog({
           e.preventDefault();
           requestAnimationFrame(() => confirmRef.current?.focus());
         }}
+        onInteractOutside={(e) => {
+          if (!receiptSettled) e.preventDefault();
+        }}
       >
-        {body}
+        <div className={cn(!receiptSettled && 'pointer-events-none')}>{body}</div>
         {step !== 'receipt' && <DemoLabel className="mt-4" />}
       </DialogContent>
     </Dialog>

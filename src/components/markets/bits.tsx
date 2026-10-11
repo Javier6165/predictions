@@ -12,7 +12,7 @@ export function PpDelta({ value, className, suffix }: { value: number; className
   const up = value > 0;
   const Icon = up ? TrendingUp : TrendingDown;
   return (
-    <span className={cn('inline-flex items-center gap-1 text-xs font-semibold tabular', up ? 'text-yes' : 'text-no', className)}>
+    <span className={cn('relative inline-flex items-center gap-1 text-xs font-semibold tabular', up ? 'text-yes' : 'text-no', className)}>
       <Icon className="h-3.5 w-3.5" aria-hidden />
       <span>{formatPp(value)}</span>
       {suffix && <span className="font-normal text-muted">{suffix}</span>}

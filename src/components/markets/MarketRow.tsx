@@ -16,11 +16,11 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
   return (
     <div className="group relative flex items-center gap-3 rounded-xl px-2 py-2.5 transition hover:bg-white/[0.035] sm:gap-4 sm:px-3">
       {rank !== undefined && <span className="w-4 shrink-0 text-center text-sm font-medium text-subtle tabular">{rank}</span>}
-      <MarketThumb market={market} className={cn(compact ? 'h-11 w-11' : 'h-12 w-16 sm:h-14 sm:w-24')} />
+      <MarketThumb market={market} className={cn('hidden sm:block', compact ? 'h-11 w-11' : 'h-14 w-24')} />
       <div className="min-w-0 flex-1">
         <Link
           to={`/markets/${market.id}`}
-          className="line-clamp-2 text-[14px] font-medium leading-snug text-ink outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:outline-2 focus-visible:after:outline-accent sm:text-[15px]"
+          className="line-clamp-3 text-[14px] font-medium leading-snug sm:line-clamp-2 text-ink outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:outline-2 focus-visible:after:outline-accent sm:text-[15px]"
         >
           {market.question}
         </Link>
