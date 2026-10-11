@@ -61,7 +61,7 @@ React + TypeScript + Vite, Tailwind, shadcn/ui, React Router, Zustand, Recharts 
 
 Toda la experiencia conserva la **proposición elegida**. Ejemplo:
 
-- `I believe Kamala Harris will win the 2028 US presidential election.`
+- `I believe Elena Marlowe will win the 2028 US presidential election.` (Elena Marlowe es una candidata ficticia; sustituye al ejemplo histórico con Kamala Harris del blueprint.)
 - `You're investing $50 in this prediction.`
 - `If you're right, you'll receive $125 total (profit $75); if not, you could lose $50.`
 - `Trade details: 125 Yes contracts × 40¢ · Demo fees $0` en segundo plano.
