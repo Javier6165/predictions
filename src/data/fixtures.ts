@@ -61,6 +61,7 @@ export function buildCatalog(input: unknown): Catalog {
 export const catalog: Catalog = buildCatalog(raw);
 
 const SEED_DEPOSIT_AT = '2026-10-09T10:00:00+02:00';
+const SEED_NOTIFICATION_AT = '2026-10-10T09:00:00+02:00';
 
 /** The exact showcase account from the fixture (FIN-01 baseline). */
 export function showcaseState(c: Catalog = catalog): UserState {
@@ -139,7 +140,7 @@ export function showcaseState(c: Catalog = catalog): UserState {
       title: 'Your prediction moved',
       text: n.text,
       targetPath: `/markets/${n.targetMarketId}`,
-      createdAt: c.displayAsOf,
+      createdAt: SEED_NOTIFICATION_AT,
       seq: next(),
       readAt: n.readAt,
     })),
