@@ -93,7 +93,11 @@ test('settle scenario: market shows resolved, rerun is refused', async ({ page }
     await page.getByRole('button', { name: 'Demo Explorer account menu' }).click();
     await page.getByRole('menuitem', { name: /Settings/ }).click();
     const item = page.getByRole('dialog').getByRole('listitem').filter({ hasText: 'Fast-forward' });
-    if (i === 0) await item.getByRole('button', { name: 'Run' }).click();
+    if (i === 0) {
+      await item.getByRole('button', { name: 'Run' }).click();
+      await expect(page.getByText('You called it.')).toBeVisible();
+      await page.keyboard.press('Escape');
+    }
     else { await expect(item.getByText('Active in this session')).toBeVisible(); await item.getByRole('button', { name: 'View' }).click(); }
   }
   await page.goto('/markets/ucl-2027');

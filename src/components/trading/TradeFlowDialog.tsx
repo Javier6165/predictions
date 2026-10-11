@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
-import { CheckCircle2, ChevronDown, CircleAlert, RefreshCw, Timer } from 'lucide-react';
+import { ChevronDown, CircleAlert, RefreshCw, Timer } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { catalog } from '@/data/fixtures';
@@ -13,6 +13,8 @@ import { cn } from '@/lib/cn';
 import { formatContracts, formatMoney, formatPrice, formatReturn, formatSignedMoney } from '@/lib/format';
 import { MarketThumb } from '@/components/art/MarketArt';
 import { errorCopy } from './errors';
+import { AnimatedCheck } from '@/components/motion/AnimatedCheck';
+import { PriceExplainer } from './PriceExplainer';
 import { reviewBuy, SellForm, DemoLabel } from './TradePanel';
 import { newIntentId, type TradeDraft } from './types';
 
@@ -231,7 +233,18 @@ export function TradeFlowDialog({
               <>
                 <dl className="px-1">
                   <Row label="Investment" value={formatMoney(p.costCents)} strong />
-                  <Row label="Price per contract" value={formatPrice(p.askCents)} />
+                  <Row
+                    label={
+                      <span className="inline-flex items-center gap-1.5">
+                        Price per contract
+                        {(() => {
+                          const q = quoteFor(findOutcome(m, draft.outcomeId)!, draft.side);
+                          return q ? <PriceExplainer quote={q} sideLabel={draft.side === 'YES' ? 'Yes' : 'No'} variant="icon" /> : null;
+                        })()}
+                      </span>
+                    }
+                    value={formatPrice(p.askCents)}
+                  />
                   <Row label="Contracts you’ll buy" value={p.quantity.toLocaleString('en-US')} />
                   {p.unusedCents > 0 && <Row label="Not invested (stays in cash)" value={formatMoney(p.unusedCents)} />}
                 </dl>
@@ -361,7 +374,7 @@ export function TradeFlowDialog({
       const m = currentMarket(receipt.marketId);
       body = (
         <div className="text-center">
-          <CheckCircle2 className="mx-auto h-14 w-14 text-accent" aria-hidden />
+          <AnimatedCheck className="mx-auto h-16 w-16" tone="accent" />
           <DialogTitle className="mt-3 text-xl">Limit order placed</DialogTitle>
           <DialogDescription className="mt-1.5">
             Waiting to buy {formatContracts(receipt.requestedQuantity)} at {formatPrice(receipt.limitPriceCents)} backing “
@@ -388,7 +401,7 @@ export function TradeFlowDialog({
       const isSell = receipt.realizedPnLCents !== undefined;
       body = (
         <div className="text-center">
-          <CheckCircle2 className="mx-auto h-14 w-14 text-yes" aria-hidden />
+          <AnimatedCheck className="mx-auto h-16 w-16" />
           <DialogTitle className="mt-3 text-xl">{isSell ? 'Sale confirmed' : 'Your prediction is active!'}</DialogTitle>
           <DialogDescription className="mt-1.5 text-[15px] text-ink-2">
             {isSell

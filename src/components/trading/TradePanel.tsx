@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/cn';
 import { formatContracts, formatMoney, formatPrice, formatReturn, formatSignedMoney, parseDollarsToCents } from '@/lib/format';
 import { errorCopy } from './errors';
+import { PriceExplainer } from './PriceExplainer';
 import type { TicketState, TradeDraft } from './types';
 
 const PRESETS = [1000, 2500, 5000, 10000];
@@ -131,6 +132,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             <SideOption key={s} market={market} outcomeId={outcome.id} side={s} selected={ticket.side === s} onSelect={() => update({ side: s })} name={`${uid}-side`} />
           ))}
         </div>
+        {quote && <PriceExplainer quote={quote} sideLabel={ticket.side === 'YES' ? 'Yes' : 'No'} className="mt-2" />}
       </fieldset>
 
       <div>

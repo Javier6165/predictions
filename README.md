@@ -32,10 +32,9 @@ Playwright uses its own Chromium. If you already have one installed elsewhere, p
 
 ## Deploy
 
-It's a static SPA. Build with `npm run build` and serve `dist/` with a fallback to `index.html` so deep links such as `/markets/mars-2035` survive a reload.
+Not deployed yet. It's a static SPA: build with `npm run build` and serve `dist/` with a fallback to `index.html` so deep links such as `/markets/mars-2035` survive a reload.
 
-- **Vercel** — import the GitHub repo; `vercel.json` already rewrites every path to `/index.html`. Build command `npm run build`, output `dist`.
-- **Netlify** — build `npm run build`, publish `dist`; `public/_redirects` (`/* /index.html 200`) is copied into the build.
+- **Netlify** (chosen host) — import the GitHub repo. `netlify.toml` already sets the build command (`npm run build`), the publish directory (`dist`), Node 22 and the SPA rewrite (`public/_redirects` does the same as a fallback).
 - **Replit** — *Import from GitHub*, then run `npm install && npm run dev -- --host 0.0.0.0`. For a deployment use `npm run build` + `npm run preview -- --host 0.0.0.0`.
 
 No environment variables or API keys are needed.
@@ -57,7 +56,11 @@ Routes: `/` Home · `/explore` (filters in the URL: `?category=&q=&status=&type=
 
 **Predict** — On a market, choose the outcome and **Yes/No**; the ticket shows the exact sentence you're backing ("Real Madrid will not win…"). Enter a dollar amount → whole contracts at the **ask**, unused cents shown → **Review** (cost, payout if right, profit, max loss, $0 demo fees, resolution rule) → **Confirm** → **Receipt**. Nothing changes until Confirm; confirming twice never double-executes.
 
-**Manage** — Portfolio › Active: select a prediction → **Sell position** (partial or all, at the **bid**, with realized P&L) or **Buy more**. Market detail › *Advanced: limit order* places a resting BUY that **holds cash** and shows under Pending, where you can **Cancel** it. History lists every buy, sale, order, top-up and settlement.
+**Understand** — Each market chart pins the NOVA Demo notes to their week (numbered markers) and lists them under *What moved it* with that week's move in pp; clicking a note opens it in News. A *“Why 49¢ and not 48%?”* explainer in the ticket (and in Review) shows probability vs. buy price vs. sell price and the spread, from the live demo quote.
+
+**Manage** — Portfolio › Active: select a prediction → **Sell position** (partial or all, at the **bid**, with realized P&L) or **Buy more**. Market detail › *Advanced: limit order* places a resting BUY that **holds cash** and shows under Pending, where you can **Cancel** it or press *Demo: simulate a seller* to fill it in full at your limit. History lists every buy, sale, order, fill, top-up and settlement, with filters (Trades, Orders, Settled, Funds).
+
+**Settle** — When a market you hold settles, a one-time result screen shows each prediction as correct/incorrect with payout and profit; Active shows a *settled this session* summary and History marks rows **Won**/**Lost**.
 
 **Demo account** (avatar menu) — *Add demo funds* ($250/$500/$1,000; never counted as profit), *Reset demo* (**Restore showcase** or **Start fresh** with $1,000 and an empty portfolio), *Settings* (reduce motion, demo scenarios), *About this demo*.
 
@@ -68,7 +71,8 @@ Routes: `/` Home · `/explore` (filters in the URL: `?category=&q=&status=&type=
 | Price moves before you confirm | Opens Mars. Review a Yes buy and press Confirm → nothing executes, you're asked to confirm again at 52¢. |
 | Limited liquidity | Opens Mars. Any buy over 5 contracts is rejected in full (no partial or phantom fills). |
 | Suspend a market | Mars stops trading; your holding stays in Portfolio. |
-| Fast-forward: settle the Champions League | Real Madrid wins; the showcase's 40 Yes contracts pay $40.00 once (realized +$16.00). |
+| A seller takes your limit orders | Fills every open limit BUY in full at its own limit (repeatable). The showcase's 20 @ 22¢ becomes a position; available cash doesn't change. |
+| Fast-forward: settle the Champions League | Real Madrid wins; the showcase's 40 Yes contracts pay $40.00 once (realized +$16.00) and the result screen opens. |
 
 Also built in: the **resolved** market `/markets/global-event-resolved` and the **awaiting result** market `/markets/global-event-pending` (no trading).
 
@@ -78,7 +82,22 @@ State lives in **`sessionStorage`** (per tab, versioned and validated with Zod).
 
 ## How it's built
 
-React 19 + TypeScript + Vite 7 · React Router 7 · Tailwind CSS 4 with design tokens · Radix primitives in shadcn/ui style (`src/components/ui`) · cmdk · Zustand · Recharts · Zod · Vitest + Testing Library · Playwright.
+React 19 + TypeScript + Vite 7 · React Router 7 · Tailwind CSS 4 with design tokens · Radix primitives in shadcn/ui style (`src/components/ui`) · cmdk · Zustand · Recharts · Motion · Zod · Vitest + Testing Library · Playwright · GitHub Actions CI (`.github/workflows/ci.yml`).
+
+### Motion layer
+
+Small, purposeful animations in `src/components/motion/`, all off when the OS asks for reduced motion or when *Settings › Reduce motion* is on:
+
+| Component | Where | Inspired by |
+|---|---|---|
+| `AnimatedNumber` | Portfolio summary, outcome probabilities — rolls from the old to the new value on change, always ending on the exact cents | React Bits *CountUp* |
+| `BlurReveal` | Home and Explore headlines (word-by-word, screen readers get the plain sentence) | React Bits *BlurText* |
+| `Spotlight` | Category tiles, Explore grid cards, Portfolio prediction cards (mouse only) | React Bits *SpotlightCard* |
+| `BorderBeam` | Featured-market card on Home (CSS only) | Magic UI *BorderBeam* (MIT) |
+| `AnimatedCheck` | Receipts, demo funds, settlement result | — |
+| Sliding tab / nav indicator | Navbar, Market detail and Portfolio tabs | Motion `layoutId` |
+
+These are re-implementations written for this project (not copied component code), so no third-party component licence applies; credits above are for the ideas. Deliberately **not** used: WebGL backgrounds (Particles/Galaxy: heavy `ogl`/three dependencies, and better decided once final imagery exists) and confetti (reads as casino, against the brief).
 
 ```
 data/                 demo-fixtures.v1.7.json (single source of market + seed data)
@@ -88,7 +107,8 @@ src/data/             fixture loader + Zod schema, categories, propositions, edi
 src/state/            Zustand store (sessionStorage) and UI store (overlays, dialogs, toasts)
 src/components/       ui primitives, global chrome, markets, trading flow, generated art
 src/pages/            Home, Explore, MarketDetail, Portfolio, NotFound
-e2e/                  Playwright specs (desktop + 390px mobile)
+src/components/motion/ decorative motion primitives (reduced-motion aware)
+e2e/                  Playwright specs (desktop + 390px mobile, smoke crawl + axe, edge cases, features)
 docs/qa/              QA screenshots (desktop 1440px, mobile 390px)
 ```
 
@@ -100,15 +120,18 @@ Last full run on 11 Oct 2026 in a Linux container with Chromium 1194 (suite run 
 
 - `npm run lint` — pass
 - `npm run typecheck` — pass
-- `npm run test` — **45 passed** (35 domain/fixture tests covering FIN-01..21, 3 store/persistence tests incl. FIN-22, 7 UI component tests)
+- `npm run test` — **48 passed** (38 domain/fixture tests covering FIN-01..21 plus limit fills and settlement receipts, 3 store/persistence tests incl. FIN-22, 7 UI component tests)
 - `npm run build` — pass
-- `npm run test:e2e` — **40 passed**:
+- `npm run test:e2e` — **45 passed**:
   - `e2e/app.spec.ts` — E2E-01..23 and 25..27 at 1440px, plus liquidity, suspension and settlement scenarios
   - `e2e/mobile.spec.ts` — E2E-24 full purchase journey and search/filters at 390px
   - `e2e/edge-cases.spec.ts` — double-click Confirm, reload during Review, sell from Market Detail, limit order on a multi-outcome NO, fresh account + notification deep link, odd amount inputs, settlement re-run refused, empty search, scroll restoration on Back, Save from Detail
+  - `e2e/features.spec.ts` — chart notes → News, price explainer numbers, simulated limit fill, settlement result + Active summary, and a run **with motion enabled** checking animated numbers end on the exact cents
   - `e2e/smoke-a11y.spec.ts` — every route and all 24 markets × 4 tabs at 1440, 768 and 390px with **no console errors and no horizontal overflow**; **axe (WCAG 2.1 A/AA) with zero violations** on key pages at desktop and phone widths and on every overlay (search, notifications, account dialogs, review, receipt, sell, mobile ticket and filter sheets)
 - `python3 scripts/validate-fixtures.py` — PASS
 - Visual QA: screenshots in [`docs/qa/`](docs/qa) compared against the approved references in `references/` (see `docs/DESIGN_REFERENCES.md`), plus a tablet (768px) review.
+
+CI: `.github/workflows/ci.yml` runs the same checks and E2E on every PR (Chromium).
 
 Not done: no manual screen-reader pass, no testing on Safari/Firefox or real phones, no user research. Keyboard flows are covered by E2E-23/26 (search, review, Escape, focus return).
 

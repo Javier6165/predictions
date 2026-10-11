@@ -12,6 +12,9 @@ import { MarketThumb } from '@/components/art/MarketArt';
 import { PpDelta, SaveButton } from '@/components/markets/bits';
 import { ProbabilityChart } from '@/components/markets/ProbabilityChart';
 import { Button } from '@/components/ui/button';
+import { BlurReveal } from '@/components/motion/BlurReveal';
+import { BorderBeam } from '@/components/motion/BorderBeam';
+import { Spotlight as SpotlightGlow } from '@/components/motion/Spotlight';
 import { Chip, SectionHeader } from '@/components/ui/misc';
 import { ago, formatDate, formatPrice, timeLeft } from '@/lib/format';
 import { cn } from '@/lib/cn';
@@ -40,7 +43,7 @@ function Hero({ market }: { market: Market }) {
             </Chip>
           </div>
           <h1 id="hero-title" className="mt-5 text-[40px] font-semibold leading-[1.04] tracking-[-0.035em] text-ink sm:text-6xl lg:text-[68px]">
-            {HERO.headlineLead} <span className="text-gradient">{HERO.headlineAccent}</span>
+            <BlurReveal text={HERO.headlineLead} /> <BlurReveal text={HERO.headlineAccent} wordClassName="text-gradient" delay={0.3} />
           </h1>
           <p className="mt-5 max-w-lg text-[17px] leading-relaxed text-ink-2">{HERO.dek}</p>
           <div className="mt-8 flex items-center gap-3">
@@ -56,7 +59,8 @@ function Hero({ market }: { market: Market }) {
           </p>
         </div>
 
-        <div className="glass w-full max-w-md justify-self-end rounded-3xl p-5 sm:p-6">
+        <div className="glass relative w-full max-w-md justify-self-end rounded-3xl p-5 sm:p-6">
+          <BorderBeam />
           <div className="flex items-start justify-between">
             <div>
               <p className="text-5xl font-semibold tracking-tight tabular">{o.probabilityCents}%</p>
@@ -160,6 +164,7 @@ function Categories({ markets }: { markets: Market[] }) {
           const count = markets.filter((m) => m.category === c.name).length;
           return (
             <li key={c.slug} className="w-36 shrink-0 sm:w-auto">
+              <SpotlightGlow className="rounded-2xl" color="rgba(255,255,255,0.12)">
               <Link
                 to={`/explore?category=${c.slug}`}
                 className="group relative block aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-white/30"
@@ -178,6 +183,7 @@ function Categories({ markets }: { markets: Market[] }) {
                   </span>
                 </div>
               </Link>
+              </SpotlightGlow>
             </li>
           );
         })}

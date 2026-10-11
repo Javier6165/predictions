@@ -4,6 +4,8 @@ import { Compass, Home, PieChart, Plus, Search } from 'lucide-react';
 import { useUi } from '@/state/ui';
 import { cn } from '@/lib/cn';
 import { Kbd } from '@/components/ui/misc';
+import { motion } from 'motion/react';
+import { useMotionOK } from '@/components/motion/useMotionOK';
 import { NotificationsPopover } from './NotificationsPopover';
 import { AccountMenu } from './AccountMenu';
 
@@ -45,6 +47,7 @@ export function Navbar() {
   }, []);
 
   const solid = !overHero || scrolled;
+  const motionOK = useMotionOK();
 
   return (
     <header
@@ -66,13 +69,21 @@ export function Navbar() {
               to={n.to}
               end={n.end}
               className={({ isActive }) =>
-                cn(
-                  'relative rounded-lg px-3 py-2 text-sm font-medium transition',
-                  isActive ? 'text-ink after:absolute after:inset-x-3 after:-bottom-[15px] after:h-0.5 after:rounded-full after:bg-ink' : 'text-ink-2 hover:text-ink',
-                )
+                cn('relative rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-ink' : 'text-ink-2 hover:text-ink')
               }
             >
-              {n.label}
+              {({ isActive }) => (
+                <>
+                  {n.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute inset-x-3 -bottom-[15px] h-0.5 rounded-full bg-ink"
+                      transition={motionOK ? { type: 'spring', stiffness: 500, damping: 40 } : { duration: 0 }}
+                    />
+                  )}
+                </>
+              )}
             </NavLink>
           ))}
         </nav>

@@ -1,11 +1,17 @@
 import { useId, useMemo } from 'react';
-import { Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, Line, LineChart, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import type { ChartAnnotation } from '@/domain/selectors';
 import type { Market, Side } from '@/domain/types';
 import { formatDate, formatShortDate } from '@/lib/format';
 
 export const SERIES_COLORS = ['#3b82f6', '#fb7185', '#34d399', '#fbbf24', '#b388ff'];
 
 export type ChartRange = '1M' | '3M' | 'ALL';
+
+export function rangeStart(range: ChartRange, nowIso: string): string | undefined {
+  if (range === 'ALL') return undefined;
+  return new Date(Date.parse(nowIso) - (range === '1M' ? 31 : 92) * 86_400_000).toISOString();
+}
 
 function sliceByRange<T extends { at: string }>(points: T[], range: ChartRange, nowIso: string): T[] {
   if (range === 'ALL') return points;
@@ -25,13 +31,29 @@ interface Props {
   compact?: boolean;
   nowIso: string;
   highlightOutcomeId?: string;
+  /** Numbered note markers pinned to chart points. */
+  annotations?: ChartAnnotation[];
+  activeAnnotation?: number | null;
+  onAnnotationHover?: (n: number | null) => void;
 }
 
 /**
  * Probability history from fixture `chartPoints`. The endpoint uses the current
  * outcome probability so a scenario re-quote is reflected. NO = 100 − YES.
  */
-export function ProbabilityChart({ market, outcomeIds, side = 'YES', range = 'ALL', height = 280, compact = false, nowIso, highlightOutcomeId }: Props) {
+export function ProbabilityChart({
+  market,
+  outcomeIds,
+  side = 'YES',
+  range = 'ALL',
+  height = 280,
+  compact = false,
+  nowIso,
+  highlightOutcomeId,
+  annotations = [],
+  activeAnnotation = null,
+  onAnnotationHover,
+}: Props) {
   const gid = useId().replace(/:/g, '');
   const data = useMemo(() => {
     const pts = market.chartPoints.map((p, i, arr) => {
@@ -57,9 +79,42 @@ export function ProbabilityChart({ market, outcomeIds, side = 'YES', range = 'AL
   const single = outcomeIds.length === 1;
   const color = single ? (side === 'YES' ? SERIES_COLORS[0] : SERIES_COLORS[1]) : undefined;
 
+  const visibleAt = new Set(data.map((d) => d.at));
+  const markers = annotations
+    .filter((a) => visibleAt.has(a.pointAt))
+    // One marker per point; later notes on the same week share it.
+    .filter((a, i, arr) => arr.findIndex((b) => b.pointAt === a.pointAt) === i)
+    .map((a) => (
+      <ReferenceDot
+        key={a.n}
+        x={a.pointAt}
+        y={a.value}
+        ifOverflow="visible"
+        shape={(props: { cx?: number; cy?: number }) => {
+          const { cx = 0, cy = 0 } = props;
+          const sameWeek = annotations.filter((b) => b.pointAt === a.pointAt).map((b) => b.n);
+          const active = activeAnnotation !== null && sameWeek.includes(activeAnnotation);
+          return (
+            <g
+              onMouseEnter={() => onAnnotationHover?.(a.n)}
+              onMouseLeave={() => onAnnotationHover?.(null)}
+              style={{ cursor: 'default' }}
+            >
+              <line x1={cx} x2={cx} y1={cy - 30} y2={cy - 6} stroke="rgba(226,232,240,0.45)" strokeDasharray="2 3" />
+              <circle cx={cx} cy={cy} r={active ? 6 : 4.5} fill="#050912" stroke="#e2e8f0" strokeWidth={2} />
+              <circle cx={cx} cy={cy - 40} r={active ? 11 : 9.5} fill={active ? '#2563eb' : '#17233d'} stroke="#e2e8f0" strokeOpacity={0.7} />
+              <text x={cx} y={cy - 36.5} textAnchor="middle" fontSize={10.5} fontWeight={700} fill="#fff">
+                {sameWeek.join('·')}
+              </text>
+            </g>
+          );
+        }}
+      />
+    ));
+
   const common = {
     data,
-    margin: compact ? { top: 4, right: 4, bottom: 0, left: 4 } : { top: 10, right: 8, bottom: 0, left: 0 },
+    margin: compact ? { top: 4, right: 4, bottom: 0, left: 4 } : { top: annotations.length ? 46 : 10, right: 12, bottom: 0, left: 0 },
   };
 
   const axes = !compact && (
@@ -118,6 +173,7 @@ export function ProbabilityChart({ market, outcomeIds, side = 'YES', range = 'AL
                 activeDot={{ r: 4 }}
                 isAnimationActive={false}
               />
+              {!compact && markers}
             </AreaChart>
           ) : (
             <LineChart {...common} accessibilityLayer={false}>
@@ -139,6 +195,7 @@ export function ProbabilityChart({ market, outcomeIds, side = 'YES', range = 'AL
                   />
                 );
               })}
+              {!compact && markers}
             </LineChart>
           )}
         </ResponsiveContainer>

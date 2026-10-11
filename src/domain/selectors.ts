@@ -135,3 +135,49 @@ export function leadOutcome(market: Market) {
 export function biggestMove(market: Market): number {
   return Math.max(...market.outcomes.map((o) => Math.abs(changePp(market, o.id))));
 }
+
+export interface ChartAnnotation {
+  n: number;
+  noteId: string;
+  title: string;
+  noteAt: string;
+  /** Chart point the note is pinned to (nearest weekly snapshot). */
+  pointAt: string;
+  /** Probability of the drawn proposition at that point. */
+  value: number;
+  /** Change vs the previous snapshot, in percentage points (null for the first point). */
+  deltaPp: number | null;
+}
+
+/**
+ * Pin each demo note to the nearest chart snapshot inside [fromIso, toIso] and
+ * quantify that week's move for the drawn proposition. Derived only from fixture data.
+ */
+export function chartAnnotations(market: Market, outcomeId: string, side: Side, fromIso?: string): ChartAnnotation[] {
+  const series = chartSeries(market, outcomeId, side);
+  const outcome = findOutcome(market, outcomeId);
+  if (outcome && series.length) {
+    const live = side === 'YES' ? outcome.probabilityCents : PAYOUT_CENTS - outcome.probabilityCents;
+    series[series.length - 1] = { ...series[series.length - 1], value: live };
+  }
+  const from = fromIso ? Date.parse(fromIso) : -Infinity;
+  const notes = [...market.updates]
+    .filter((u) => Date.parse(u.at) >= from - 3.5 * 86_400_000)
+    .sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
+  return notes.map((u, i) => {
+    const t = Date.parse(u.at);
+    let idx = 0;
+    series.forEach((p, k) => {
+      if (Math.abs(Date.parse(p.at) - t) < Math.abs(Date.parse(series[idx].at) - t)) idx = k;
+    });
+    return {
+      n: i + 1,
+      noteId: u.id,
+      title: u.title,
+      noteAt: u.at,
+      pointAt: series[idx].at,
+      value: series[idx].value,
+      deltaPp: idx > 0 ? series[idx].value - series[idx - 1].value : null,
+    };
+  });
+}

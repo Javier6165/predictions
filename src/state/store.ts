@@ -6,6 +6,7 @@ import {
   cancelLimit,
   executeBuy,
   executeSell,
+  fillLimitOrder,
   markAllNotificationsRead,
   markNotificationRead,
   placeLimitBuy,
@@ -35,6 +36,8 @@ export interface AppStore {
   sell: (intent: SellIntent) => EngineResult<TradeReceipt>;
   placeLimit: (intent: LimitIntent) => EngineResult<LimitOrder>;
   cancelOrder: (orderId: string) => EngineResult<LimitOrder>;
+  /** Explicit demo event: a seller takes this resting order at its limit. */
+  fillOrder: (orderId: string) => EngineResult<TradeReceipt>;
   addFunds: (amountCents: number) => EngineResult<LedgerEntry>;
   setSaved: (marketId: string, saved: boolean) => void;
   toggleSaved: (marketId: string) => void;
@@ -68,6 +71,7 @@ export const useStore = create<AppStore>()(
       sell: (intent) => commit(set, executeSell(get().user, catalog, intent)),
       placeLimit: (intent) => commit(set, placeLimitBuy(get().user, catalog, intent)),
       cancelOrder: (id) => commit(set, cancelLimit(get().user, catalog, id)),
+      fillOrder: (id) => commit(set, fillLimitOrder(get().user, catalog, id)),
       addFunds: (amount) => commit(set, addDemoFunds(get().user, catalog, amount)),
       setSaved: (id, saved) => set({ user: setSaved(get().user, id, saved) }),
       toggleSaved: (id) => {

@@ -584,6 +584,88 @@ export function cancelLimit(state: UserState, catalog: Catalog, orderId: string)
   return { ok: true, state: s, receipt: cancelled };
 }
 
+/**
+ * Explicit, deterministic demo event: a seller takes a resting limit BUY at its
+ * limit price, in full (no partial fills in P0). The reserve becomes the cost,
+ * so available cash is unchanged and cash total drops by exactly qty × limit.
+ */
+export function fillLimitOrder(state: UserState, catalog: Catalog, orderId: string): EngineResult<TradeReceipt> {
+  const order = state.orders.find((o) => o.id === orderId);
+  if (!order) return { ok: false, error: { code: 'UNKNOWN_ORDER' } };
+  if (order.status !== 'OPEN') return { ok: false, error: { code: 'ORDER_NOT_OPEN' } };
+  const market = resolveMarket(state, catalog, order.marketId);
+  if (!market) return { ok: false, error: { code: 'UNKNOWN_MARKET' } };
+  const block = tradeBlock(market);
+  if (block) return { ok: false, error: { code: 'MARKET_NOT_TRADABLE', block } };
+
+  const cost = order.requestedQuantity * order.limitPriceCents;
+  const [next, seq] = nextSeq(state);
+  let s = next;
+  const existing = s.positions.find((p) => p.marketId === order.marketId && p.outcomeId === order.outcomeId && p.side === order.side);
+  const positionId = existing?.id ?? `pos-u${seq}`;
+  const positions: Position[] = existing
+    ? s.positions.map((p) =>
+        p.id === existing.id ? { ...p, quantity: p.quantity + order.requestedQuantity, costBasisCents: p.costBasisCents + cost } : p,
+      )
+    : [
+        ...s.positions,
+        {
+          id: positionId,
+          marketId: order.marketId,
+          outcomeId: order.outcomeId,
+          side: order.side,
+          quantity: order.requestedQuantity,
+          costBasisCents: cost,
+          openedSeq: seq,
+        },
+      ];
+  const entry: LedgerEntry = {
+    id: `ledger-${seq}`,
+    kind: 'LIMIT_FILLED',
+    cashDeltaCents: -cost,
+    marketId: order.marketId,
+    outcomeId: order.outcomeId,
+    side: order.side,
+    quantity: order.requestedQuantity,
+    priceCents: order.limitPriceCents,
+    orderId: order.id,
+    createdAt: catalog.displayAsOf,
+    seq,
+  };
+  s = {
+    ...s,
+    cashTotalCents: s.cashTotalCents - cost,
+    positions,
+    orders: s.orders.map((o) =>
+      o.id === order.id ? { ...o, status: 'FILLED' as const, filledQuantity: o.requestedQuantity, reservedCashCents: 0 } : o,
+    ),
+    ledger: [...s.ledger, entry],
+  };
+  s = notify(
+    s,
+    catalog,
+    'ORDER_FILLED',
+    'Your limit order filled',
+    `${order.requestedQuantity} contracts at your ${formatPrice(order.limitPriceCents)} limit — you’re now backing “${bare(proposition(market, order.outcomeId, order.side))}”.`,
+    `/portfolio?tab=active&position=${positionId}`,
+  );
+  return {
+    ok: true,
+    state: s,
+    receipt: {
+      ledgerId: entry.id,
+      positionId,
+      marketId: order.marketId,
+      outcomeId: order.outcomeId,
+      side: order.side,
+      quantity: order.requestedQuantity,
+      priceCents: order.limitPriceCents,
+      amountCents: cost,
+      remainingQuantity: positions.find((p) => p.id === positionId)?.quantity,
+    },
+  };
+}
+
 // ───────────────────────────── Funds ─────────────────────────────
 
 export const DEMO_TOP_UPS_CENTS = [25000, 50000, 100000] as const;
@@ -619,6 +701,25 @@ export function addDemoFunds(state: UserState, catalog: Catalog, amountCents: nu
 
 // ───────────────────────────── Settlement ─────────────────────────────
 
+export interface SettledPosition {
+  positionId: string;
+  outcomeId: string;
+  side: Side;
+  quantity: number;
+  costBasisCents: number;
+  payoutCents: number;
+  realizedPnLCents: number;
+  won: boolean;
+}
+
+export interface SettlementReceipt {
+  marketId: string;
+  yesOutcomeIds: string[];
+  payoutCents: number;
+  realizedPnLCents: number;
+  settled: SettledPosition[];
+}
+
 /**
  * Settle a market once. A position wins if (YES and its outcome is a winner) or
  * (NO and its outcome is not a winner). Winners receive qty × 100¢, losers 0¢.
@@ -629,7 +730,7 @@ export function settleMarket(
   catalog: Catalog,
   marketId: string,
   yesOutcomeIds: string[],
-): EngineResult<{ payoutCents: number; realizedPnLCents: number }> {
+): EngineResult<SettlementReceipt> {
   const base = catalog.byId.get(marketId);
   if (!base) return { ok: false, error: { code: 'UNKNOWN_MARKET' } };
   const current = marketFor(state, base);
@@ -640,6 +741,7 @@ export function settleMarket(
   let s = state;
   let totalPayout = 0;
   let totalRealized = 0;
+  const settled: SettledPosition[] = [];
   // Release open orders first so reserves are never double counted.
   for (const o of s.orders.filter((x) => x.marketId === marketId && x.status === 'OPEN')) {
     const r = cancelLimit(s, catalog, o.id);
@@ -651,6 +753,16 @@ export function settleMarket(
     const realized = payout - p.costBasisCents;
     totalPayout += payout;
     totalRealized += realized;
+    settled.push({
+      positionId: p.id,
+      outcomeId: p.outcomeId,
+      side: p.side,
+      quantity: p.quantity,
+      costBasisCents: p.costBasisCents,
+      payoutCents: payout,
+      realizedPnLCents: realized,
+      won: wins,
+    });
     let seq: number;
     [s, seq] = nextSeq(s);
     s = {
@@ -697,7 +809,7 @@ export function settleMarket(
       },
     },
   };
-  return { ok: true, state: s, receipt: { payoutCents: totalPayout, realizedPnLCents: totalRealized } };
+  return { ok: true, state: s, receipt: { marketId, yesOutcomeIds, payoutCents: totalPayout, realizedPnLCents: totalRealized, settled } };
 }
 
 // ───────────────────────────── Saved & notifications ─────────────────────────────

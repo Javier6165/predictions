@@ -6,19 +6,20 @@ import { categoryByName } from '@/data/categories';
 import { catalog } from '@/data/fixtures';
 import { proposition } from '@/domain/copy';
 import { quoteFor, tradeBlock, TRADE_BLOCK_COPY } from '@/domain/quotes';
-import { changePp, positionView } from '@/domain/selectors';
+import { chartAnnotations, changePp, positionView } from '@/domain/selectors';
 import type { Market, Side } from '@/domain/types';
 import { useStore } from '@/state/store';
 import { SceneArt } from '@/components/art/SceneArt';
 import { marketArt } from '@/components/art/MarketArt';
 import { PpDelta, SaveButton, StatusBadge } from '@/components/markets/bits';
-import { ProbabilityChart, SERIES_COLORS, type ChartRange } from '@/components/markets/ProbabilityChart';
+import { ProbabilityChart, SERIES_COLORS, rangeStart, type ChartRange } from '@/components/markets/ProbabilityChart';
 import { TradePanel } from '@/components/trading/TradePanel';
 import { TradeFlowDialog } from '@/components/trading/TradeFlowDialog';
 import type { TicketState, TradeDraft } from '@/components/trading/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { Chip } from '@/components/ui/misc';
 import { cn } from '@/lib/cn';
 import { ago, formatCompactMoney, formatDate, formatMoney, formatPrice, formatReturn, formatSignedMoney, timeLeft } from '@/lib/format';
@@ -61,7 +62,7 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
                 <span className={cn('text-sm font-semibold', side === 'YES' ? 'text-yes' : 'text-no')}>{side === 'YES' ? 'Yes' : 'No'}</span>
                 <PpDelta value={delta} />
               </div>
-              <p className="mt-1 text-4xl font-semibold tracking-tight tabular">{prob}%</p>
+              <AnimatedNumber value={prob} format={(v) => `${v}%`} className="mt-1 block text-4xl font-semibold tracking-tight tabular" />
               <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/8">
                 <div className={cn('h-full rounded-full', side === 'YES' ? 'bg-yes' : 'bg-no')} style={{ width: `${prob}%` }} />
               </div>
@@ -130,10 +131,21 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
   );
 }
 
-function ChartCard({ market, ticket }: { market: Market; ticket: TicketState }) {
+function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: TicketState; onOpenNote: (noteId: string) => void }) {
   const [range, setRange] = useState<ChartRange>('3M');
+  const [active, setActive] = useState<number | null>(null);
   const multi = market.type === 'MULTI_OUTCOME';
   const side: Side = multi ? 'YES' : ticket.side;
+  const annotatedOutcome = multi ? ticket.outcomeId : market.outcomes[0].id;
+  const annotatedLabel = multi
+    ? market.outcomes.find((o) => o.id === annotatedOutcome)?.label ?? ''
+    : side === 'YES'
+      ? 'Yes'
+      : 'No';
+  const notes = useMemo(
+    () => chartAnnotations(market, annotatedOutcome, side, rangeStart(range, DEMO_NOW)),
+    [market, annotatedOutcome, side, range],
+  );
   return (
     <section className="card p-4 sm:p-5" aria-label="Probability history">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -175,9 +187,64 @@ function ChartCard({ market, ticket }: { market: Market; ticket: TicketState }) 
           height={300}
           nowIso={DEMO_NOW}
           highlightOutcomeId={multi ? ticket.outcomeId : undefined}
+          annotations={notes}
+          activeAnnotation={active}
+          onAnnotationHover={setActive}
         />
       </div>
       <p className="mt-2 text-[11px] text-subtle">Weekly demo snapshots, indicative probability. Not live data.</p>
+      {notes.length > 0 && (
+        <div className="mt-4 border-t border-line pt-4">
+          <h3 className="text-sm font-semibold">
+            What moved it <span className="font-normal text-muted">· {annotatedLabel}</span>
+          </h3>
+          <ol className="mt-2 grid grid-cols-1 gap-1">
+            {notes.map((a) => (
+              <li key={a.noteId}>
+                <button
+                  type="button"
+                  onClick={() => onOpenNote(a.noteId)}
+                  onMouseEnter={() => setActive(a.n)}
+                  onMouseLeave={() => setActive(null)}
+                  onFocus={() => setActive(a.n)}
+                  onBlur={() => setActive(null)}
+                  className={cn(
+                    'flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition',
+                    active === a.n ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]',
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px] font-bold tabular',
+                      active === a.n ? 'border-cta bg-cta text-white' : 'border-line-strong bg-surface-3 text-ink',
+                    )}
+                    aria-hidden
+                  >
+                    {a.n}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-medium">{a.title}</span>
+                    <span className="text-xs text-muted">NOVA Demo note · {formatDate(a.noteAt)}</span>
+                  </span>
+                  <span className="shrink-0 text-right">
+                    {a.deltaPp === null ? (
+                      <span className="text-xs text-muted">Start of chart</span>
+                    ) : (
+                      <>
+                        <PpDelta value={a.deltaPp} />
+                        <span className="block text-[11px] text-subtle">that week · {a.value}%</span>
+                      </>
+                    )}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-2 text-[11px] text-subtle">
+            Notes are fictional storyline context pinned to the nearest weekly snapshot — not a claim that they caused the move.
+          </p>
+        </div>
+      )}
     </section>
   );
 }
@@ -246,6 +313,24 @@ export function MarketDetailPage() {
   const [ticket, setTicket] = useState<TicketState>(() => initialTicket(market));
   const [draft, setDraft] = useState<TradeDraft | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  // Focus a chart note once the News tab has actually rendered it.
+  const [pendingNote, setPendingNote] = useState<string | null>(null);
+  useEffect(() => {
+    if (!pendingNote || tab !== 'news') return;
+    let frame = 0;
+    let tries = 0;
+    // Radix mounts the tab panel a frame later, so wait for the note to exist.
+    const tryFocus = () => {
+      const el = document.getElementById(`note-${pendingNote}`);
+      if (el) {
+        el.scrollIntoView({ block: 'center' });
+        el.focus();
+        setPendingNote(null);
+      } else if (tries++ < 20) frame = requestAnimationFrame(tryFocus);
+    };
+    frame = requestAnimationFrame(tryFocus);
+    return () => cancelAnimationFrame(frame);
+  }, [pendingNote, tab]);
 
   // New market id → fresh ticket (keeps state while staying on the same market).
   useEffect(() => {
@@ -277,6 +362,10 @@ export function MarketDetailPage() {
   const block = tradeBlock(market);
   const resolved = resolutionText(market);
   const panel = <TradePanel market={market} ticket={ticket} update={update} onReview={openReview} />;
+  const openNote = (noteId: string) => {
+    setPendingNote(noteId);
+    setTab('news');
+  };
   const setTab = (t: string) => {
     const next = new URLSearchParams(params);
     if (t === 'overview') next.delete('tab');
@@ -362,7 +451,7 @@ export function MarketDetailPage() {
           )}
 
           <Tabs value={tab} onValueChange={setTab}>
-            <TabsList aria-label="Market sections">
+            <TabsList aria-label="Market sections" activeValue={tab}>
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="news">News</TabsTrigger>
               <TabsTrigger value="data">Market data</TabsTrigger>
@@ -372,7 +461,7 @@ export function MarketDetailPage() {
             <TabsContent value="overview" className="mt-5 grid gap-5 outline-none">
               <YourPositions market={market} onSell={sellFromCard} />
               <OutcomeCards market={market} ticket={ticket} select={select} />
-              <ChartCard market={market} ticket={ticket} />
+              <ChartCard market={market} ticket={ticket} onOpenNote={openNote} />
               <div className="grid gap-5 md:grid-cols-2">
                 <section className="card p-5" aria-labelledby="why-title">
                   <h2 id="why-title" className="flex items-center gap-2 font-semibold">
@@ -420,7 +509,7 @@ export function MarketDetailPage() {
               ) : (
                 <ol className="grid gap-3">
                   {updates.map((u) => (
-                    <li key={u.id} className="card p-5">
+                    <li key={u.id} id={`note-${u.id}`} tabIndex={-1} className="card scroll-mt-24 p-5 outline-none focus-visible:ring-2 focus-visible:ring-accent">
                       <p className="flex items-center gap-2 text-xs text-muted">
                         <span className="rounded bg-white/8 px-1.5 py-0.5 font-semibold text-ink-2">NOVA DEMO</span>
                         <span>{formatDate(u.at)}</span>

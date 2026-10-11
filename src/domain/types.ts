@@ -111,6 +111,7 @@ export type LedgerKind =
   | 'SELL'
   | 'LIMIT_PLACED'
   | 'LIMIT_CANCELLED'
+  | 'LIMIT_FILLED'
   | 'DEPOSIT'
   | 'SETTLEMENT';
 

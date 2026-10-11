@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { SettlementReceipt } from '@/domain/engine';
 
 export type Overlay = 'search' | 'bell' | null;
 export type AccountDialog = 'funds' | 'reset' | 'settings' | 'about' | null;
@@ -17,6 +18,9 @@ interface UiStore {
   dialog: AccountDialog;
   setDialog: (d: AccountDialog) => void;
   toasts: Toast[];
+  /** Result of a settlement shown once as a dedicated moment (not persisted). */
+  settlement: SettlementReceipt | null;
+  setSettlement: (r: SettlementReceipt | null) => void;
   toast: (t: Omit<Toast, 'id'>) => void;
   dismissToast: (id: number) => void;
 }
@@ -29,6 +33,8 @@ export const useUi = create<UiStore>()((set, get) => ({
   dialog: null,
   setDialog: (dialog) => set({ dialog, overlay: null }),
   toasts: [],
+  settlement: null,
+  setSettlement: (settlement) => set({ settlement }),
   toast: (t) => {
     const id = ++toastId;
     set({ toasts: [...get().toasts, { ...t, id }] });

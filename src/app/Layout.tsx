@@ -5,6 +5,7 @@ import { Footer } from '@/components/global/Footer';
 import { SearchDialog } from '@/components/global/SearchDialog';
 import { AccountDialogs } from '@/components/global/AccountDialogs';
 import { Toaster } from '@/components/global/Toaster';
+import { SettlementDialog } from '@/components/portfolio/SettlementDialog';
 import { useStore } from '@/state/store';
 import { useUi } from '@/state/ui';
 
@@ -40,12 +41,15 @@ export function Layout() {
       </a>
       <Navbar />
       <main id="main" className="flex-1">
-        <Outlet />
+        <div key={pathname} className="route-fade">
+          <Outlet />
+        </div>
       </main>
       <Footer />
       <MobileNav />
       <SearchDialog />
       <AccountDialogs />
+      <SettlementDialog />
       <Toaster />
       <ScrollRestoration />
     </div>

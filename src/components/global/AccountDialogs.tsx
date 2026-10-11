@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { CheckCircle2, FlaskConical, RotateCcw, ShieldCheck, Sparkles, Wallet } from 'lucide-react';
+import { FlaskConical, RotateCcw, ShieldCheck, Sparkles, Wallet } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -12,6 +12,7 @@ import { portfolioSummary } from '@/domain/selectors';
 import { catalog } from '@/data/fixtures';
 import { formatDate, formatMoney, formatSignedMoney } from '@/lib/format';
 import { cn } from '@/lib/cn';
+import { AnimatedCheck } from '@/components/motion/AnimatedCheck';
 
 function FundsDialog() {
   const open = useUi((s) => s.dialog === 'funds');
@@ -36,7 +37,7 @@ function FundsDialog() {
       <DialogContent className="p-6 sm:p-7">
         {done ? (
           <div className="py-2 text-center">
-            <CheckCircle2 className="mx-auto h-12 w-12 text-yes" aria-hidden />
+            <AnimatedCheck className="mx-auto h-14 w-14" />
             <DialogTitle className="mt-3 text-xl">{formatMoney(done)} demo funds added</DialogTitle>
             <DialogDescription className="mt-1.5">
               Available demo cash is now <span className="font-semibold text-ink">{formatMoney(summary.availableCents)}</span>. Your
@@ -175,6 +176,7 @@ function SettingsDialog() {
   const setMotion = useStore((s) => s.setMotion);
   const active = useStore((s) => s.user.activeScenarios);
   const run = useStore((s) => s.runScenario);
+  const setSettlement = useUi((s) => s.setSettlement);
   const navigate = useNavigate();
 
   return (
@@ -216,7 +218,7 @@ function SettingsDialog() {
           </p>
           <ul className="mt-3 grid gap-2">
             {SCENARIOS.map((s) => {
-              const on = active.includes(s.id);
+              const on = active.includes(s.id) && !s.repeatable;
               return (
                 <li key={s.id} className="rounded-2xl border border-line p-3.5">
                   <div className="flex items-start justify-between gap-3">
@@ -235,9 +237,12 @@ function SettingsDialog() {
                         onClick={() => {
                           const r = run(s.id);
                           if (r.ok) {
-                            toast({ title: `Scenario active: ${s.title}`, tone: 'info' });
+                            if (r.filledOrders)
+                              toast({ title: `${r.filledOrders} limit order${r.filledOrders === 1 ? '' : 's'} filled`, description: 'Held cash became the cost of the new contracts.', tone: 'success' });
+                            else if (!r.settlement) toast({ title: `Scenario active: ${s.title}`, tone: 'info' });
                             setDialog(null);
                             navigate(s.path);
+                            if (r.settlement) setSettlement(r.settlement);
                           } else toast({ title: r.message, tone: 'warn' });
                         }}
                       >

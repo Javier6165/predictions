@@ -324,12 +324,17 @@ test('Scenario: suspended market keeps holdings but blocks trading', async ({ pa
 test('Scenario: settlement pays out once', async ({ page }) => {
   await page.goto('/');
   await runScenario(page, 'Fast-forward: settle the Champions League');
-  await expect(page).toHaveURL(/tab=history/);
-  await expect(page.getByText('Settled · won')).toBeVisible();
+  const moment = page.getByRole('dialog');
+  await expect(moment.getByText('You called it.')).toBeVisible();
+  await expect(moment.getByText('Market settled · Real Madrid won')).toBeVisible();
+  await moment.getByRole('link', { name: 'See it in your history' }).click();
+  await expect(page).toHaveURL(/tab=history&filter=settled/);
+  await expect(page.getByText('Won', { exact: true })).toBeVisible();
   await expect(money(page, 'cash-available')).toHaveText('$912.00');
   await expect(money(page, 'sum-realized-p-l')).toHaveText('+$16.00');
   await page.reload();
-  await expect(page.getByText('Settled · won')).toHaveCount(1);
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(page.getByText('Won', { exact: true })).toHaveCount(1);
 });
 
 test('E2E-27 No real-money surface', async ({ page }) => {

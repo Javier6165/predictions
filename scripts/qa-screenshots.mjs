@@ -20,7 +20,7 @@ for (const [label, viewport, mobile] of [
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   for (const r of routes) {
     await page.goto(base + r, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(1500); // let entrance animations finish
     const name = `${label}${r.replace(/[/?=&]+/g, '_') || '_home'}.png`;
     await page.screenshot({ path: join(out, name), fullPage: true });
     console.log('saved', name);

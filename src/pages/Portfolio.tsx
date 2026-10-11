@@ -23,6 +23,8 @@ import { portfolioSummary, positionViews, openOrders, type PositionView } from '
 import type { LedgerEntry, LimitOrder } from '@/domain/types';
 import { marketFor, quoteFor, findOutcome } from '@/domain/quotes';
 import { useStore } from '@/state/store';
+import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
+import { Spotlight } from '@/components/motion/Spotlight';
 import { useUi } from '@/state/ui';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
 import { MarketThumb } from '@/components/art/MarketArt';
@@ -58,9 +60,7 @@ function Summary() {
         </span>
         <div>
           <p className="text-sm text-muted">Portfolio value</p>
-          <p className="mt-0.5 text-3xl font-semibold tracking-tight tabular" data-testid="portfolio-value">
-            {formatMoney(s.portfolioValueCents)}
-          </p>
+          <AnimatedNumber value={s.portfolioValueCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="portfolio-value" />
           <p className={cn('mt-1 text-sm font-medium tabular', pnlClass(s.totalPnLCents))}>
             {formatSignedMoney(s.totalPnLCents)} ({formatReturn(s.totalPnLCents, s.depositsCents)}) all-time P&amp;L
           </p>
@@ -73,9 +73,7 @@ function Summary() {
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm text-muted">Cash available</p>
-          <p className="mt-0.5 text-3xl font-semibold tracking-tight tabular" data-testid="cash-available">
-            {formatMoney(s.availableCents)}
-          </p>
+          <AnimatedNumber value={s.availableCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="cash-available" />
           {s.reservedCents > 0 ? (
             <p className="mt-1 text-xs text-muted">
               + {formatMoney(s.reservedCents)} held for pending orders · {formatMoney(s.cashTotalCents)} total cash
@@ -95,9 +93,7 @@ function Summary() {
           </span>
           <div>
             <p className="text-sm text-muted">Total profit / loss</p>
-            <p className={cn('mt-0.5 text-3xl font-semibold tracking-tight tabular', pnlClass(s.totalPnLCents))} data-testid="total-pnl">
-              {formatSignedMoney(s.totalPnLCents)}
-            </p>
+            <AnimatedNumber value={s.totalPnLCents} format={formatSignedMoney} className={cn('mt-0.5 block text-3xl font-semibold tracking-tight tabular', pnlClass(s.totalPnLCents))} data-testid="total-pnl" />
           </div>
         </div>
         <dl className="grid gap-1 text-sm sm:border-l sm:border-line sm:pl-5">
@@ -132,7 +128,8 @@ function SideChip({ side, label }: { side: 'YES' | 'NO'; label: string }) {
 function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: boolean; onManage: () => void }) {
   const m = v.market;
   return (
-    <article
+    <Spotlight
+      as="article"
       className={cn('card flex flex-col gap-4 p-4 transition sm:flex-row sm:items-center', selected ? 'border-accent/60 ring-1 ring-accent/40' : 'hover:border-line-strong')}
       aria-label={proposition(m, v.position.outcomeId, v.position.side)}
     >
@@ -175,7 +172,7 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
           </Button>
         </div>
       </div>
-    </article>
+    </Spotlight>
   );
 }
 
@@ -324,22 +321,32 @@ const KIND_META: Record<LedgerEntry['kind'], { label: string; icon: typeof Clock
   SELL: { label: 'Sold', icon: ArrowDownLeft, cls: 'bg-yes-soft text-yes' },
   LIMIT_PLACED: { label: 'Limit order placed', icon: Timer, cls: 'bg-white/6 text-ink-2' },
   LIMIT_CANCELLED: { label: 'Limit order cancelled', icon: Ban, cls: 'bg-white/6 text-ink-2' },
+  LIMIT_FILLED: { label: 'Limit order filled', icon: ArrowUpRight, cls: 'bg-accent-soft text-accent' },
   DEPOSIT: { label: 'Demo funds added', icon: Wallet, cls: 'bg-accent-soft text-accent' },
   SETTLEMENT: { label: 'Settled', icon: Gavel, cls: 'bg-warn-soft text-warn' },
 };
 
 const isSessionEntry = (e: LedgerEntry) => /^ledger-\d+$/.test(e.id);
 
+const HISTORY_FILTERS: { id: string; label: string; match: (e: LedgerEntry) => boolean }[] = [
+  { id: 'all', label: 'All', match: () => true },
+  { id: 'trades', label: 'Trades', match: (e) => e.kind === 'BUY' || e.kind === 'SELL' || e.kind === 'LIMIT_FILLED' },
+  { id: 'orders', label: 'Orders', match: (e) => e.kind === 'LIMIT_PLACED' || e.kind === 'LIMIT_CANCELLED' },
+  { id: 'settled', label: 'Settled', match: (e) => e.kind === 'SETTLEMENT' },
+  { id: 'funds', label: 'Funds', match: (e) => e.kind === 'DEPOSIT' },
+];
+
 function HistoryRow({ e }: { e: LedgerEntry }) {
   const meta = KIND_META[e.kind];
   const market = e.marketId ? catalog.byId.get(e.marketId) : undefined;
   const statement = market && e.outcomeId && e.side ? proposition(market, e.outcomeId, e.side) : null;
   let detail = '';
+  if (e.kind === 'LIMIT_FILLED') detail = `${e.quantity} contracts at your ${formatPrice(e.priceCents ?? 0)} limit`;
   if (e.kind === 'BUY' || e.kind === 'SELL') detail = `${e.quantity} contracts at ${formatPrice(e.priceCents ?? 0)}`;
   if (e.kind === 'LIMIT_PLACED' || e.kind === 'LIMIT_CANCELLED') detail = `${e.quantity} contracts · limit ${formatPrice(e.priceCents ?? 0)} · no cash moved`;
   if (e.kind === 'SETTLEMENT') detail = `${e.quantity} contracts · ${e.won ? 'prediction correct, paid $1.00 each' : 'prediction incorrect, paid $0'}`;
   if (e.kind === 'DEPOSIT') detail = 'Virtual money — not profit';
-  const label = e.kind === 'SETTLEMENT' ? (e.won ? 'Settled · won' : 'Settled · lost') : meta.label;
+  const label = meta.label;
   return (
     <li className="flex items-start gap-3 px-3 py-3.5 sm:px-4">
       <span className={cn('mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full', meta.cls)}>
@@ -347,6 +354,11 @@ function HistoryRow({ e }: { e: LedgerEntry }) {
       </span>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold">
+          {e.kind === 'SETTLEMENT' ? (
+            <span className={cn('mr-1 rounded-full px-2 py-0.5 text-[11px] font-semibold', e.won ? 'bg-yes-soft text-yes' : 'bg-white/8 text-ink-2')}>
+              {e.won ? 'Won' : 'Lost'}
+            </span>
+          ) : null}
           {label}
           <span className="ml-2 text-xs font-normal text-subtle">{isSessionEntry(e) ? 'This session' : formatDate(e.createdAt)}</span>
         </p>
@@ -365,12 +377,12 @@ function HistoryRow({ e }: { e: LedgerEntry }) {
   );
 }
 
-function PendingRow({ o, onCancel }: { o: LimitOrder; onCancel: () => void }) {
+function PendingRow({ o, onCancel, onSimulateFill }: { o: LimitOrder; onCancel: () => void; onSimulateFill: () => void }) {
   const user = useStore((s) => s.user);
   const market = marketFor(user, catalog.byId.get(o.marketId)!);
   const q = quoteFor(findOutcome(market, o.outcomeId)!, o.side);
   return (
-    <li className="card flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
+    <li className="card flex flex-col gap-4 p-4 sm:flex-row sm:flex-wrap sm:items-center">
       <div className="flex min-w-0 flex-1 gap-4">
         <MarketThumb market={market} className="h-16 w-20" />
         <div className="min-w-0">
@@ -394,6 +406,14 @@ function PendingRow({ o, onCancel }: { o: LimitOrder; onCancel: () => void }) {
           Cancel order
         </Button>
       </div>
+      <button
+        type="button"
+        onClick={onSimulateFill}
+        disabled={!q}
+        className="self-start text-left text-xs text-muted underline-offset-4 hover:text-ink hover:underline disabled:no-underline disabled:opacity-50 sm:basis-full sm:pl-24"
+      >
+        Demo: simulate a seller at {formatPrice(o.limitPriceCents)}
+      </button>
     </li>
   );
 }
@@ -416,6 +436,29 @@ export function PortfolioPage() {
   const [cancelId, setCancelId] = useState<string | null>(null);
   const [panelSheet, setPanelSheet] = useState(false);
   const cancelTarget = orders.find((o) => o.id === cancelId);
+  const fillOrder = useStore((s) => s.fillOrder);
+  const historyFilter = HISTORY_FILTERS.find((f) => f.id === params.get('filter')) ?? HISTORY_FILTERS[0];
+  const filteredHistory = history.filter(historyFilter.match);
+  const setHistoryFilter = (id: string) => {
+    const next = new URLSearchParams(params);
+    next.set('tab', 'history');
+    if (id === 'all') next.delete('filter');
+    else next.set('filter', id);
+    next.delete('position');
+    setParams(next, { replace: true });
+  };
+  const settledThisSession = history.filter((e) => e.kind === 'SETTLEMENT' && isSessionEntry(e));
+  const settledPnL = settledThisSession.reduce((sum, e) => sum + (e.realizedPnLCents ?? 0), 0);
+  const simulateFill = (orderId: string) => {
+    const r = fillOrder(orderId);
+    if (r.ok)
+      toast({
+        title: 'Limit order filled',
+        description: `${r.receipt.quantity} contracts at ${formatPrice(r.receipt.priceCents)} — the held ${formatMoney(r.receipt.amountCents)} became their cost.`,
+        tone: 'success',
+      });
+    else toast({ title: errorCopy(r.error), tone: 'warn' });
+  };
 
   const setTab = (t: string) => {
     const next = new URLSearchParams(params);
@@ -470,7 +513,7 @@ export function PortfolioPage() {
       </div>
 
       <Tabs value={tab} onValueChange={setTab} className="mt-8">
-        <TabsList aria-label="Portfolio sections">
+        <TabsList aria-label="Portfolio sections" activeValue={tab}>
           {TABS.map((t) => (
             <TabsTrigger key={t} value={t}>
               {labels[t]}
@@ -480,6 +523,23 @@ export function PortfolioPage() {
         </TabsList>
 
         <TabsContent value="active" className="mt-6 outline-none">
+          {settledThisSession.length > 0 && (
+            <div className="card mb-4 flex flex-wrap items-center gap-3 border-yes/30 p-4">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-yes-soft text-yes">
+                <Trophy className="h-5 w-5" aria-hidden />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold">
+                  {settledThisSession.length} prediction{settledThisSession.length === 1 ? '' : 's'} settled this session ·{' '}
+                  {settledThisSession.filter((e) => e.won).length} correct
+                </p>
+                <p className={cn('text-xs tabular', pnlClass(settledPnL))}>Realized {formatSignedMoney(settledPnL)} from settlements</p>
+              </div>
+              <Button size="sm" variant="secondary" onClick={() => setHistoryFilter('settled')}>
+                View settled
+              </Button>
+            </div>
+          )}
           {views.length === 0 ? (
             <EmptyActive />
           ) : (
@@ -528,11 +588,11 @@ export function PortfolioPage() {
           ) : (
             <>
               <p className="mb-3 flex items-center gap-2 text-sm text-muted">
-                <Info className="h-4 w-4" aria-hidden /> Pending orders hold cash until cancelled. In this demo they don’t fill automatically.
+                <Info className="h-4 w-4" aria-hidden /> Pending orders hold cash until they fill or you cancel. In this demo nothing fills on its own — use “simulate a seller” to see a fill.
               </p>
               <ul className="grid gap-3">
                 {orders.map((o) => (
-                  <PendingRow key={o.id} o={o} onCancel={() => setCancelId(o.id)} />
+                  <PendingRow key={o.id} o={o} onCancel={() => setCancelId(o.id)} onSimulateFill={() => simulateFill(o.id)} />
                 ))}
               </ul>
             </>
@@ -540,11 +600,34 @@ export function PortfolioPage() {
         </TabsContent>
 
         <TabsContent value="history" className="mt-6 outline-none">
-          <ul className="card divide-y divide-line p-1">
-            {history.map((e) => (
-              <HistoryRow key={e.id} e={e} />
-            ))}
-          </ul>
+          <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label="Filter history">
+            {HISTORY_FILTERS.map((f) => {
+              const n = history.filter(f.match).length;
+              return (
+                <button
+                  key={f.id}
+                  type="button"
+                  aria-pressed={historyFilter.id === f.id}
+                  onClick={() => setHistoryFilter(f.id)}
+                  className={cn(
+                    'rounded-full border px-3 py-1.5 text-xs font-medium transition',
+                    historyFilter.id === f.id ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-ink-2 hover:text-ink',
+                  )}
+                >
+                  {f.label} <span className="text-muted tabular">{n}</span>
+                </button>
+              );
+            })}
+          </div>
+          {filteredHistory.length === 0 ? (
+            <p className="card p-8 text-center text-sm text-muted">Nothing here yet.</p>
+          ) : (
+            <ul className="card divide-y divide-line p-1">
+              {filteredHistory.map((e) => (
+                <HistoryRow key={e.id} e={e} />
+              ))}
+            </ul>
+          )}
         </TabsContent>
 
         <TabsContent value="saved" className="mt-6 outline-none">

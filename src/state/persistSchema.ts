@@ -43,7 +43,7 @@ export const userStateSchema = z.object({
   ledger: z.array(
     z.object({
       id: z.string(),
-      kind: z.enum(['BUY', 'SELL', 'LIMIT_PLACED', 'LIMIT_CANCELLED', 'DEPOSIT', 'SETTLEMENT']),
+      kind: z.enum(['BUY', 'SELL', 'LIMIT_PLACED', 'LIMIT_CANCELLED', 'LIMIT_FILLED', 'DEPOSIT', 'SETTLEMENT']),
       cashDeltaCents: int,
       marketId: z.string().optional(),
       outcomeId: z.string().optional(),

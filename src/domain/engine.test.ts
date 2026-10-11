@@ -407,3 +407,43 @@ describe('saved markets', () => {
     expect(setSaved(a, 'mars-2035', false).savedMarketIds).toEqual([]);
   });
 });
+
+describe('Limit fill (explicit demo event)', () => {
+  it('fills the seeded 20 @ 22¢ in full: reserve becomes cost, available unchanged', async () => {
+    const { fillLimitOrder } = await import('./engine');
+    const s0 = showcase();
+    const before = portfolioSummary(s0, catalog);
+    const r = fillLimitOrder(s0, catalog, 'order-001');
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    const after = reconcile(r.state);
+    expect(after.cashTotalCents).toBe(before.cashTotalCents - 440);
+    expect(after.availableCents).toBe(before.availableCents);
+    expect(after.reservedCents).toBe(0);
+    const pos = r.state.positions.find((p) => p.marketId === 'apple-foldable-2027')!;
+    expect(pos).toMatchObject({ quantity: 20, costBasisCents: 440, side: 'YES' });
+    expect(r.state.orders[0]).toMatchObject({ status: 'FILLED', filledQuantity: 20, reservedCashCents: 0 });
+    expect(r.state.ledger.at(-1)).toMatchObject({ kind: 'LIMIT_FILLED', cashDeltaCents: -440 });
+    // Marked at 26¢ vs paid 22¢ → +80¢ unrealized added.
+    expect(after.unrealizedPnLCents).toBe(before.unrealizedPnLCents + 80);
+    expect(fillLimitOrder(r.state, catalog, 'order-001').ok).toBe(false);
+  });
+
+  it('scenario fills every open order and is repeatable; refuses when none', () => {
+    const r = applyScenario(showcase(), catalog, 'fill-limit-orders');
+    expect(r.ok && r.filledOrders).toBe(1);
+    if (!r.ok) return;
+    reconcile(r.state);
+    const again = applyScenario(r.state, catalog, 'fill-limit-orders');
+    expect(again.ok).toBe(false);
+  });
+
+  it('settlement receipt lists each position with won/lost', () => {
+    const r = applyScenario(showcase(), catalog, 'settle-ucl-real-madrid');
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.settlement?.settled).toEqual([
+      expect.objectContaining({ outcomeId: 'real-madrid', side: 'YES', quantity: 40, payoutCents: 4000, realizedPnLCents: 1600, won: true }),
+    ]);
+  });
+});

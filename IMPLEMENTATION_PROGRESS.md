@@ -13,6 +13,15 @@ Estado a 11/10/2026. Rama de trabajo: `feat/p0-demo-app`.
 - [x] **Fase 6** — 45 tests Vitest, 26 E2E Playwright (desktop + 390px), capturas en `docs/qa/`, README.
 - [x] **QA ronda 2** — rastreo de todas las rutas y mercados a 1440/768/390px + axe WCAG 2.1 AA en páginas y overlays; casos límite. Ahora 40 E2E.
 
+- [x] **Mejoras de producto** — notas ancladas al gráfico (“What moved it”), explicador probabilidad vs precio, momento de liquidación (pantalla de resultado, resumen en Active, filtros de History con Won/Lost), ejecución explícita de órdenes límite (botón en Pending + escenario repetible).
+- [x] **Capa de motion** — `src/components/motion/` (AnimatedNumber, BlurReveal, Spotlight, BorderBeam, AnimatedCheck, indicadores con `layoutId`), respetando reduced motion. Revisados React Bits y Magic UI/21st.dev: reimplementados en ligero; descartados fondos WebGL y confeti (ver README).
+- [x] **CI** (GitHub Actions) y `netlify.toml` preparado (sin desplegar). `vercel.json` eliminado: hosting elegido = Netlify.
+
+## Pendiente fuera de alcance actual (decidido en la conversación de seguimiento)
+
+- Imágenes definitivas y branding: trabajo aparte, cuando el producto esté cerrado.
+- Deploy en Netlify: más adelante.
+
 ## QA ronda 2 — hallazgos corregidos
 
 | Hallazgo | Corrección |

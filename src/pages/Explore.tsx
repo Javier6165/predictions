@@ -11,6 +11,8 @@ import { MarketThumb } from '@/components/art/MarketArt';
 import { MarketRow } from '@/components/markets/MarketRow';
 import { PpDelta, SaveButton, StatusBadge } from '@/components/markets/bits';
 import { Button } from '@/components/ui/button';
+import { BlurReveal } from '@/components/motion/BlurReveal';
+import { Spotlight } from '@/components/motion/Spotlight';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/cn';
 import { formatCompactMoney, formatDate } from '@/lib/format';
@@ -186,7 +188,7 @@ function FiltersForm({
 function MarketCard({ market }: { market: Market }) {
   const lead = leadOutcome(market);
   return (
-    <article className="card group relative flex flex-col overflow-hidden transition hover:border-line-strong">
+    <Spotlight as="article" className="card group relative flex flex-col overflow-hidden transition hover:border-line-strong">
       <div className="relative h-32 overflow-hidden">
         <MarketThumb market={market} className="h-full w-full rounded-none ring-0" />
         <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
@@ -210,7 +212,7 @@ function MarketCard({ market }: { market: Market }) {
           </div>
         </div>
       </div>
-    </article>
+    </Spotlight>
   );
 }
 
@@ -299,7 +301,7 @@ export function ExplorePage() {
         <div className="mx-auto max-w-[1320px] px-4 pb-8 pt-10 sm:px-6 sm:pt-14 lg:px-8">
           <p className="inline-flex rounded-md bg-white/10 px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-2">Explore markets</p>
           <h1 id="explore-title" className="mt-4 max-w-2xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
-            Discover what the world <span className="text-gradient">is predicting.</span>
+            <BlurReveal text="Discover what the world" /> <BlurReveal text="is predicting." wordClassName="text-gradient" delay={0.25} />
           </h1>
           <p className="mt-4 max-w-xl text-ink-2">
             From politics to science, browse every demo market. Compare the odds, save what interests you and dig into the rules.
