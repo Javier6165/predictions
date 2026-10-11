@@ -5,7 +5,9 @@ import { cn } from '@/lib/cn';
 import { useMotionOK } from '@/components/motion/useMotionOK';
 
 export const Tabs = T.Root;
-export const TabsContent = T.Content;
+export function TabsContent({ className, ...props }: React.ComponentProps<typeof T.Content>) {
+  return <T.Content className={cn('data-[state=active]:animate-fade-in', className)} {...props} />;
+}
 
 const IndicatorCtx = React.createContext<{ value?: string; id: string }>({ id: '' });
 

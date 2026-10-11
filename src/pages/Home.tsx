@@ -1,4 +1,7 @@
 import { useMemo, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { useMotionOK } from '@/components/motion/useMotionOK';
+import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { Link } from 'react-router';
 import { ArrowRight, CalendarClock, ChevronLeft, ChevronRight, Flame, Lightbulb, Sparkles, TrendingUp } from 'lucide-react';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
@@ -20,6 +23,11 @@ import { ago, formatDate, formatPrice, timeLeft } from '@/lib/format';
 import { cn } from '@/lib/cn';
 
 function Hero({ market }: { market: Market }) {
+  const ok = useMotionOK();
+  const { scrollY } = useScroll();
+  // Cinematic depth: the scene drifts slower than the content as you scroll.
+  const artY = useTransform(scrollY, [0, 700], [0, 140]);
+  const artScale = useTransform(scrollY, [0, 700], [1, 1.06]);
   const o = market.outcomes[0];
   const yes = quoteFor(o, 'YES');
   const no = quoteFor(o, 'NO');
@@ -27,7 +35,9 @@ function Hero({ market }: { market: Market }) {
   return (
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <SceneArt art="science" seed="hero" hero className="h-full w-full" />
+        <motion.div className="absolute inset-0" style={ok ? { y: artY, scale: artScale } : undefined}>
+          <SceneArt art="science" seed="hero" hero animated={ok} className="h-full w-full" />
+        </motion.div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#050912_0%,rgb(5_9_18/0.85)_35%,rgb(5_9_18/0.15)_70%,rgb(5_9_18/0.35)_100%)] max-lg:bg-[linear-gradient(180deg,rgb(5_9_18/0.55),rgb(5_9_18/0.8)_60%,#050912)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent" />
         <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-bg/70 to-transparent" />
@@ -63,7 +73,13 @@ function Hero({ market }: { market: Market }) {
           <BorderBeam />
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-5xl font-semibold tracking-tight tabular">{o.probabilityCents}%</p>
+              <AnimatedNumber
+                value={o.probabilityCents}
+                from={0}
+                duration={1.4}
+                format={(v) => `${v}%`}
+                className="block text-5xl font-semibold tracking-tight tabular"
+              />
               <p className="mt-1 text-sm text-ink-2">chance of Yes · indicative</p>
             </div>
             <PpDelta value={delta} suffix="7d" className="mt-2 text-sm" />
@@ -127,7 +143,7 @@ function Spotlight({ markets }: { markets: Market[] }) {
           {markets.map((m) => {
             const lead = leadOutcome(m);
             return (
-              <li key={m.id} className="relative flex min-w-[260px] flex-1 snap-start items-center gap-3 border-r border-line p-4 last:border-r-0">
+              <li key={m.id} className="group relative flex min-w-[260px] flex-1 snap-start items-center gap-3 border-r border-line p-4 transition-colors last:border-r-0 hover:bg-white/[0.03]">
                 <MarketThumb market={m} className="h-14 w-14" />
                 <div className="min-w-0">
                   <Link to={`/markets/${m.id}`} className="line-clamp-2 text-[13px] font-medium leading-snug text-ink after:absolute after:inset-0">
@@ -159,7 +175,7 @@ function Categories({ markets }: { markets: Market[] }) {
           </Link>
         }
       />
-      <ul className="scrollbar-none mt-5 -mx-4 flex gap-3 overflow-x-auto px-4 sm:mx-0 sm:grid sm:grid-cols-4 sm:px-0 lg:grid-cols-8">
+      <ul className="stagger scrollbar-none mt-5 -mx-4 flex gap-3 overflow-x-auto px-4 sm:mx-0 sm:grid sm:grid-cols-4 sm:px-0 lg:grid-cols-8">
         {CATEGORIES.map((c) => {
           const count = markets.filter((m) => m.category === c.name).length;
           return (
@@ -206,11 +222,11 @@ function RankedList({ title, subtitle, icon, markets, pick, href }: { title: str
           </Link>
         }
       />
-      <ol className="mt-4 divide-y divide-line">
+      <ol className="stagger mt-4 divide-y divide-line">
         {markets.map((m, i) => {
           const o = pick(m);
           return (
-            <li key={m.id} className="relative flex items-center gap-3 py-3">
+            <li key={m.id} className="group relative flex items-center gap-3 rounded-xl py-3 transition-colors hover:bg-white/[0.025]">
               <span className="hidden w-4 text-center text-sm text-subtle tabular sm:block">{i + 1}</span>
               <MarketThumb market={m} className="hidden h-12 w-12 sm:block" />
               <Link to={`/markets/${m.id}`} className="line-clamp-2 min-w-0 flex-1 text-sm font-medium leading-snug text-ink after:absolute after:inset-0">
@@ -265,7 +281,7 @@ function Insights({ markets }: { markets: Market[] }) {
           </div>
           <ul className="grid gap-3">
             {notes.map(({ m, u }) => (
-              <li key={u.id} className="relative flex gap-3 rounded-2xl border border-white/10 bg-black/35 p-3 backdrop-blur-md transition hover:border-white/25">
+              <li key={u.id} className="lift group relative flex gap-3 rounded-2xl border border-white/10 bg-black/35 p-3 backdrop-blur-md hover:border-white/25">
                 <MarketThumb market={m} className="h-16 w-20" />
                 <div className="min-w-0">
                   <Link to={`/markets/${m.id}?tab=news`} className="line-clamp-2 text-sm font-medium text-ink after:absolute after:inset-0">
@@ -297,11 +313,11 @@ function ClosingSoon({ markets }: { markets: Market[] }) {
           </Link>
         }
       />
-      <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="stagger mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {markets.map((m) => {
           const d = new Date(m.closeAt);
           return (
-            <li key={m.id} className="card relative flex items-center gap-3 p-3.5 transition hover:border-line-strong">
+            <li key={m.id} className="card lift group relative flex items-center gap-3 p-3.5">
               <div className="w-11 shrink-0 text-center">
                 <p className="text-[11px] font-semibold uppercase text-muted">{d.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' })}</p>
                 <p className="text-xl font-semibold tabular">{d.getUTCDate()}</p>

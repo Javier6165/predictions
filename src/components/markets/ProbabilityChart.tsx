@@ -1,6 +1,7 @@
 import { useId, useMemo } from 'react';
 import { Area, AreaChart, CartesianGrid, Line, LineChart, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import type { ChartAnnotation } from '@/domain/selectors';
+import { useMotionOK } from '@/components/motion/useMotionOK';
 import type { Market, Side } from '@/domain/types';
 import { formatDate, formatShortDate } from '@/lib/format';
 
@@ -55,6 +56,8 @@ export function ProbabilityChart({
   onAnnotationHover,
 }: Props) {
   const gid = useId().replace(/:/g, '');
+  // Lines draw in on first view and morph between ranges; static with reduced motion.
+  const animateLines = useMotionOK();
   const data = useMemo(() => {
     const pts = market.chartPoints.map((p, i, arr) => {
       const row: Record<string, number | string> = { at: p.at };
@@ -171,7 +174,9 @@ export function ProbabilityChart({
                 fill={`url(#${gid}-fill)`}
                 dot={false}
                 activeDot={{ r: 4 }}
-                isAnimationActive={false}
+                isAnimationActive={animateLines}
+                animationDuration={900}
+                animationEasing="ease-out"
               />
               {!compact && markers}
             </AreaChart>
@@ -191,7 +196,9 @@ export function ProbabilityChart({
                     strokeOpacity={dim ? 0.35 : 1}
                     dot={false}
                     activeDot={{ r: 4 }}
-                    isAnimationActive={false}
+                    isAnimationActive={animateLines}
+                animationDuration={900}
+                animationEasing="ease-out"
                   />
                 );
               })}

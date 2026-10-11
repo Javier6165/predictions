@@ -1,4 +1,6 @@
 import { Bookmark, BookmarkCheck, TrendingDown, TrendingUp } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useMotionOK } from '@/components/motion/useMotionOK';
 import { useStore } from '@/state/store';
 import { useUi } from '@/state/ui';
 import { useIsSaved } from '@/lib/hooks';
@@ -36,6 +38,33 @@ export function SaveButton({
   const toggle = useStore((s) => s.toggleSaved);
   const toast = useUi((s) => s.toast);
   const Icon = saved ? BookmarkCheck : Bookmark;
+  const ok = useMotionOK();
+  // Pop on toggle, with a soft ring when something gets saved.
+  const icon = (size: string) => (
+    <span className="relative inline-flex">
+      <motion.span
+        key={saved ? 'on' : 'off'}
+        className="inline-flex"
+        initial={ok ? { scale: 0.55, rotate: saved ? -12 : 0 } : false}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ type: 'spring', stiffness: 520, damping: 14 }}
+      >
+        <Icon className={cn(size, saved && 'fill-accent/25')} />
+      </motion.span>
+      <AnimatePresence>
+        {ok && saved && (
+          <motion.span
+            key="ring"
+            className="pointer-events-none absolute inset-[-6px] rounded-full border border-accent/70"
+            initial={{ scale: 0.4, opacity: 0.9 }}
+            animate={{ scale: 1.5, opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.55, ease: 'easeOut' }}
+          />
+        )}
+      </AnimatePresence>
+    </span>
+  );
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -56,7 +85,7 @@ export function SaveButton({
           className,
         )}
       >
-        <Icon className="h-5 w-5" />
+        {icon('h-5 w-5')}
       </button>
     );
   return (
@@ -71,7 +100,7 @@ export function SaveButton({
         className,
       )}
     >
-      <Icon className={cn('h-[18px] w-[18px]', saved && 'fill-accent/25')} />
+      {icon('h-[18px] w-[18px]')}
     </button>
   );
 }

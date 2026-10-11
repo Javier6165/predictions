@@ -45,11 +45,27 @@ const PALETTES: Record<CategoryArt, Palette> = {
   global: { sky: ['#01040c', '#041531', '#0a2a55'], glow: '#5ec8ff', a: '#1d6fd1', b: '#0b3a7a', c: '#bff0ff' },
 };
 
-function Stars({ r, count, maxY = 300 }: { r: () => number; count: number; maxY?: number }) {
+function Stars({ r, count, maxY = 300, twinkle = false }: { r: () => number; count: number; maxY?: number; twinkle?: boolean }) {
   const stars: ReactNode[] = [];
   for (let i = 0; i < count; i++) {
     const size = r() < 0.92 ? 0.5 + r() * 0.7 : 1.2 + r();
-    stars.push(<circle key={i} cx={r() * 400} cy={r() * maxY} r={size} fill="#fff" opacity={0.25 + r() * 0.6} />);
+    const opacity = 0.25 + r() * 0.6;
+    const cx = r() * 400;
+    const cy = r() * maxY;
+    // Only some stars twinkle, each on its own slow rhythm, so the sky feels alive but calm.
+    const lively = twinkle && i % 3 === 0;
+    stars.push(
+      <circle
+        key={i}
+        cx={cx}
+        cy={cy}
+        r={size}
+        fill="#fff"
+        opacity={opacity}
+        className={lively ? 'twinkle' : undefined}
+        style={lively ? ({ '--o': opacity, '--d': `${3 + (i % 5)}s`, '--delay': `${(i % 7) * 0.6}s` } as React.CSSProperties) : undefined}
+      />,
+    );
   }
   return <g>{stars}</g>;
 }
@@ -72,6 +88,7 @@ export function SceneArt({
   seed = 'nova',
   className,
   hero = false,
+  animated = false,
   label,
 }: {
   art: CategoryArt;
@@ -79,6 +96,8 @@ export function SceneArt({
   className?: string;
   /** Larger composition with a rocket for the Home hero. */
   hero?: boolean;
+  /** Subtle ambient motion (twinkling stars, exhaust flicker) for large hero scenes. */
+  animated?: boolean;
   /** Accessible label; decorative (aria-hidden) when omitted. */
   label?: string;
 }) {
@@ -146,13 +165,13 @@ export function SceneArt({
 
       {art === 'science' && (
         <g>
-          <Stars r={r} count={hero ? 140 : 60} />
+          <Stars r={r} count={hero ? 140 : 60} twinkle={animated} />
           {hero ? (
             <>
               <Planet id={id} p={p} cx={330} cy={250} rad={190} />
               <g transform="translate(196 60) scale(0.82)" className="hidden lg:inline">
                 <ellipse cx="12" cy="250" rx="70" ry="30" fill={p.glow} opacity="0.5" filter={`url(#${id}-blur)`} />
-                <ellipse cx="12" cy="214" rx="13" ry="52" fill={`url(#${id}-flame)`} />
+                <ellipse cx="12" cy="214" rx="13" ry="52" fill={`url(#${id}-flame)`} className={animated ? 'flame' : undefined} />
                 <path d="M0 60 Q12 0 24 60 L24 170 L0 170 Z" fill={`url(#${id}-metal)`} />
                 <path d="M0 140 L-14 178 L0 172 Z M24 140 L38 178 L24 172 Z" fill="#9aa3b5" />
                 <rect x="0" y="96" width="24" height="3" fill="#1d2433" opacity="0.6" />
@@ -175,7 +194,7 @@ export function SceneArt({
 
       {art === 'global' && (
         <g>
-          <Stars r={r} count={70} maxY={170} />
+          <Stars r={r} count={70} maxY={170} twinkle={animated} />
           <circle cx="200" cy="380" r="250" fill={p.glow} opacity="0.18" filter={`url(#${id}-blur)`} />
           <circle cx="200" cy="370" r="230" fill={`url(#${id}-planet)`} />
           <circle cx="200" cy="370" r="230" fill={`url(#${id}-shade)`} />
@@ -197,7 +216,7 @@ export function SceneArt({
 
       {art === 'politics' && (
         <g>
-          <Stars r={r} count={30} maxY={120} />
+          <Stars r={r} count={30} maxY={120} twinkle={animated} />
           <circle cx="300" cy="120" r="70" fill={p.glow} opacity="0.35" filter={`url(#${id}-blur)`} />
           <g fill={p.a} opacity="0.92">
             <ellipse cx="200" cy="128" rx="44" ry="40" />

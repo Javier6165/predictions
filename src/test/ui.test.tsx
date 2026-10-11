@@ -9,6 +9,10 @@ import { applyExploreFilters } from '@/pages/Explore';
 import { searchMarkets } from '@/lib/search';
 import { catalog } from '@/data/fixtures';
 
+/** Matches an element by its full text, even when numbers are split into animated spans. */
+const fullText = (re: RegExp) => (_: string, el: Element | null) =>
+  !!el && el.tagName === 'STRONG' && re.test(el.textContent ?? '');
+
 function renderAt(path: string) {
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   render(<RouterProvider router={router} />);
@@ -27,7 +31,7 @@ describe('Market detail ticket', () => {
     const cash0 = useStore.getState().user.cashTotalCents;
 
     await user.type(screen.getByLabelText('Amount to invest'), '50');
-    expect(screen.getByText(/102 contracts at 49¢/)).toBeInTheDocument();
+    expect(screen.getByText(fullText(/102 contracts at 49¢/))).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Review prediction' }));
     const dialog = await screen.findByRole('dialog');
     expect(within(dialog).getByText('A crewed mission will land on Mars before 2035.')).toBeInTheDocument();
@@ -49,7 +53,7 @@ describe('Market detail ticket', () => {
     renderAt('/markets/mars-2035');
     await user.type(screen.getByLabelText('Amount to invest'), '50');
     await user.click(screen.getByRole('radio', { name: /Buy No/ }));
-    expect(screen.getByText(/94 contracts at 53¢/)).toBeInTheDocument();
+    expect(screen.getByText(fullText(/94 contracts at 53¢/))).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Review prediction' }));
     const dialog = await screen.findByRole('dialog');
     expect(within(dialog).getByText('No crewed mission will land on Mars before 2035.')).toBeInTheDocument();

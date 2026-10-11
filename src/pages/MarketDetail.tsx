@@ -1,4 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
+import { ActivePill } from '@/components/motion/ActivePill';
+import { ProbabilityBar } from '@/components/motion/ProbabilityBar';
+import { useMotionOK } from '@/components/motion/useMotionOK';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { ArrowRight, CalendarClock, ChevronRight, Flame, Gavel, Newspaper, ShieldCheck, Sparkles, Trophy } from 'lucide-react';
 import { useMarket, DEMO_NOW } from '@/lib/hooks';
@@ -53,7 +56,8 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
               aria-pressed={tradable ? selected : undefined}
               disabled={!tradable}
               className={cn(
-                'card group p-4 text-left transition sm:p-5',
+                'card group p-4 text-left sm:p-5',
+                tradable && 'lift',
                 tradable && 'hover:border-line-strong',
                 tradable && selected && (side === 'YES' ? 'border-yes/60 ring-1 ring-yes/40' : 'border-no/60 ring-1 ring-no/40'),
               )}
@@ -63,9 +67,7 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
                 <PpDelta value={delta} />
               </div>
               <AnimatedNumber value={prob} format={(v) => `${v}%`} className="mt-1 block text-4xl font-semibold tracking-tight tabular" />
-              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/8">
-                <div className={cn('h-full rounded-full', side === 'YES' ? 'bg-yes' : 'bg-no')} style={{ width: `${prob}%` }} />
-              </div>
+              <ProbabilityBar value={prob} className="mt-3" barClassName={side === 'YES' ? 'bg-yes' : 'bg-no'} />
               <p className="mt-3 line-clamp-2 text-xs text-muted">{proposition(market, o.id, side)}</p>
               {q && <p className="mt-2 text-xs text-ink-2">Buy at {formatPrice(q.askCents)}</p>}
             </button>
@@ -88,9 +90,7 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
               <p className="flex items-center gap-2 font-medium">
                 {o.label} {winner && <Trophy className="h-4 w-4 text-warn" aria-label="Winner" />}
               </p>
-              <div className="mt-1.5 h-1.5 max-w-xs overflow-hidden rounded-full bg-white/8">
-                <div className="h-full rounded-full" style={{ width: `${o.probabilityCents}%`, background: SERIES_COLORS[i % SERIES_COLORS.length] }} />
-              </div>
+              <ProbabilityBar value={o.probabilityCents} className="mt-1.5 max-w-xs" color={SERIES_COLORS[i % SERIES_COLORS.length]} />
             </div>
             <div className="w-20 text-right">
               <p className="text-xl font-semibold tabular">{o.probabilityCents}%</p>
@@ -133,6 +133,7 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
 
 function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: TicketState; onOpenNote: (noteId: string) => void }) {
   const [range, setRange] = useState<ChartRange>('3M');
+  const pillId = useId();
   const [active, setActive] = useState<number | null>(null);
   const multi = market.type === 'MULTI_OUTCOME';
   const side: Side = multi ? 'YES' : ticket.side;
@@ -156,9 +157,13 @@ function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: Tic
               type="button"
               onClick={() => setRange(r)}
               aria-pressed={range === r}
-              className={cn('rounded-full border px-3 py-1 text-xs font-medium', range === r ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-muted hover:text-ink')}
+              className={cn(
+                'relative rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+                range === r ? 'border-accent text-ink' : 'border-line-strong text-muted hover:text-ink',
+              )}
             >
-              {r === 'ALL' ? 'All' : r}
+              {range === r && <ActivePill layoutId={`${pillId}-range`} className="bg-accent-soft" />}
+              <span className="relative">{r === 'ALL' ? 'All' : r}</span>
             </button>
           ))}
         </div>
@@ -313,6 +318,7 @@ export function MarketDetailPage() {
   const [ticket, setTicket] = useState<TicketState>(() => initialTicket(market));
   const [draft, setDraft] = useState<TradeDraft | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const motionOK = useMotionOK();
   // Focus a chart note once the News tab has actually rendered it.
   const [pendingNote, setPendingNote] = useState<string | null>(null);
   useEffect(() => {
@@ -379,7 +385,7 @@ export function MarketDetailPage() {
       <section className="relative isolate overflow-hidden" aria-labelledby="market-title">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-y-0 right-0 w-full [mask-image:linear-gradient(90deg,transparent,black_40%)] sm:w-[min(62%,820px)]">
-            <SceneArt art={marketArt(market)} seed={market.id} />
+            <SceneArt art={marketArt(market)} seed={market.id} animated={motionOK} />
           </div>
           <div className="absolute inset-0 bg-[linear-gradient(90deg,#050912_25%,rgb(5_9_18/0.75)_55%,rgb(5_9_18/0.2))] max-sm:bg-[linear-gradient(180deg,rgb(5_9_18/0.6),#050912)]" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-bg to-transparent" />

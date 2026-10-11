@@ -12,6 +12,10 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/cn';
 import { formatContracts, formatMoney, formatPrice, formatReturn, formatSignedMoney, parseDollarsToCents } from '@/lib/format';
 import { errorCopy } from './errors';
+import { motion } from 'motion/react';
+import { ActivePill } from '@/components/motion/ActivePill';
+import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
+import { useMotionOK } from '@/components/motion/useMotionOK';
 import { PriceExplainer } from './PriceExplainer';
 import type { TicketState, TradeDraft } from './types';
 
@@ -42,6 +46,7 @@ function SideOption({
 }) {
   const outcome = market.outcomes.find((o) => o.id === outcomeId)!;
   const q = quoteFor(outcome, side);
+  const ok = useMotionOK();
   const yes = side === 'YES';
   return (
     <label
@@ -62,7 +67,7 @@ function SideOption({
           selected ? (yes ? 'border-yes bg-yes' : 'border-no bg-no') : 'border-line-strong',
         )}
       >
-        {selected && <span className="h-2 w-2 rounded-full bg-bg" />}
+        {selected && <motion.span className="h-2 w-2 rounded-full bg-bg" initial={ok ? { scale: 0 } : false} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 600, damping: 18 }} />}
       </span>
       <span className="min-w-0 flex-1">
         <span className={cn('text-[11px] font-semibold uppercase tracking-wide', yes ? 'text-yes' : 'text-no')}>
@@ -194,9 +199,9 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
               <span>
                 At the current demo price this buys{' '}
                 <strong className="text-ink">
-                  {formatContracts(preview.quantity)} at {formatPrice(quote.askCents)}
+                  <AnimatedNumber value={preview.quantity} format={formatContracts} duration={0.35} /> at {formatPrice(quote.askCents)}
                 </strong>{' '}
-                for {formatMoney(preview.costCents)}.
+                for <AnimatedNumber value={preview.costCents} format={formatMoney} duration={0.35} />.
                 {preview.unusedCents > 0 && <> {formatMoney(preview.unusedCents)} stays in your cash.</>}
               </span>
             </p>
@@ -204,13 +209,17 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
               <div>
                 <dt className="text-xs text-muted">If you’re right</dt>
                 <dd className="font-semibold text-yes tabular">
-                  {formatMoney(preview.payoutIfRightCents)}{' '}
-                  <span className="text-xs font-medium">({formatSignedMoney(preview.profitIfRightCents)})</span>
+                  <AnimatedNumber value={preview.payoutIfRightCents} format={formatMoney} duration={0.35} />{' '}
+                  <span className="text-xs font-medium">
+                    (<AnimatedNumber value={preview.profitIfRightCents} format={formatSignedMoney} duration={0.35} />)
+                  </span>
                 </dd>
               </div>
               <div>
                 <dt className="text-xs text-muted">If you’re wrong</dt>
-                <dd className="font-semibold text-no tabular">−{formatMoney(preview.maxLossCents)}</dd>
+                <dd className="font-semibold text-no tabular">
+                  −<AnimatedNumber value={preview.maxLossCents} format={formatMoney} duration={0.35} />
+                </dd>
               </div>
             </dl>
           </div>
@@ -461,6 +470,7 @@ interface PanelProps {
 }
 
 export function TradePanel({ market, ticket, update, onReview }: PanelProps) {
+  const pillId = useId();
   const user = useStore((s) => s.user);
   const positions = useMemo(() => user.positions.filter((p) => p.marketId === market.id), [user.positions, market.id]);
   const block = tradeBlock(market);
@@ -491,12 +501,13 @@ export function TradePanel({ market, ticket, update, onReview }: PanelProps) {
               onClick={() => !disabled && update({ mode: m })}
               title={disabled ? 'You don’t hold a position in this market yet' : undefined}
               className={cn(
-                'rounded-lg py-2 text-sm font-semibold transition',
-                mode === m ? 'bg-cta text-white' : 'text-ink-2 hover:text-ink',
+                'relative rounded-lg py-2 text-sm font-semibold transition-colors',
+                mode === m ? 'text-white' : 'text-ink-2 hover:text-ink',
                 disabled && 'cursor-not-allowed opacity-45 hover:text-ink-2',
               )}
             >
-              {m === 'buy' ? 'Buy' : `Sell${positions.length ? ` (${positions.length})` : ''}`}
+              {mode === m && <ActivePill layoutId={`${pillId}-mode`} className="bg-cta shadow-[0_6px_18px_-8px_rgb(37_99_235/0.9)]" />}
+              <span className="relative">{m === 'buy' ? 'Buy' : `Sell${positions.length ? ` (${positions.length})` : ''}`}</span>
             </button>
           );
         })}

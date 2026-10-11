@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import {
   ArrowDownLeft,
@@ -25,6 +25,7 @@ import { marketFor, quoteFor, findOutcome } from '@/domain/quotes';
 import { useStore } from '@/state/store';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { Spotlight } from '@/components/motion/Spotlight';
+import { ActivePill } from '@/components/motion/ActivePill';
 import { useUi } from '@/state/ui';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
 import { MarketThumb } from '@/components/art/MarketArt';
@@ -60,7 +61,7 @@ function Summary() {
         </span>
         <div>
           <p className="text-sm text-muted">Portfolio value</p>
-          <AnimatedNumber value={s.portfolioValueCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="portfolio-value" />
+          <AnimatedNumber flash value={s.portfolioValueCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="portfolio-value" />
           <p className={cn('mt-1 text-sm font-medium tabular', pnlClass(s.totalPnLCents))}>
             {formatSignedMoney(s.totalPnLCents)} ({formatReturn(s.totalPnLCents, s.depositsCents)}) all-time P&amp;L
           </p>
@@ -73,7 +74,7 @@ function Summary() {
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm text-muted">Cash available</p>
-          <AnimatedNumber value={s.availableCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="cash-available" />
+          <AnimatedNumber flash value={s.availableCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="cash-available" />
           {s.reservedCents > 0 ? (
             <p className="mt-1 text-xs text-muted">
               + {formatMoney(s.reservedCents)} held for pending orders · {formatMoney(s.cashTotalCents)} total cash
@@ -93,7 +94,7 @@ function Summary() {
           </span>
           <div>
             <p className="text-sm text-muted">Total profit / loss</p>
-            <AnimatedNumber value={s.totalPnLCents} format={formatSignedMoney} className={cn('mt-0.5 block text-3xl font-semibold tracking-tight tabular', pnlClass(s.totalPnLCents))} data-testid="total-pnl" />
+            <AnimatedNumber flash value={s.totalPnLCents} format={formatSignedMoney} className={cn('mt-0.5 block text-3xl font-semibold tracking-tight tabular', pnlClass(s.totalPnLCents))} data-testid="total-pnl" />
           </div>
         </div>
         <dl className="grid gap-1 text-sm sm:border-l sm:border-line sm:pl-5">
@@ -130,7 +131,7 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
   return (
     <Spotlight
       as="article"
-      className={cn('card flex flex-col gap-4 p-4 transition sm:flex-row sm:items-center', selected ? 'border-accent/60 ring-1 ring-accent/40' : 'hover:border-line-strong')}
+      className={cn('card lift group flex flex-col gap-4 p-4 sm:flex-row sm:items-center', selected ? 'border-accent/60 ring-1 ring-accent/40' : '')}
       aria-label={proposition(m, v.position.outcomeId, v.position.side)}
     >
       <div className="flex min-w-0 flex-1 gap-4">
@@ -437,6 +438,7 @@ export function PortfolioPage() {
   const [panelSheet, setPanelSheet] = useState(false);
   const cancelTarget = orders.find((o) => o.id === cancelId);
   const fillOrder = useStore((s) => s.fillOrder);
+  const pillId = useId();
   const historyFilter = HISTORY_FILTERS.find((f) => f.id === params.get('filter')) ?? HISTORY_FILTERS[0];
   const filteredHistory = history.filter(historyFilter.match);
   const setHistoryFilter = (id: string) => {
@@ -544,7 +546,7 @@ export function PortfolioPage() {
             <EmptyActive />
           ) : (
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
-              <div className="grid content-start gap-3">
+              <div className="stagger grid content-start gap-3">
                 {views.map((v) => (
                   <PredictionCard key={v.position.id} v={v} selected={selected?.position.id === v.position.id} onManage={() => manage(v.position.id)} />
                 ))}
@@ -566,7 +568,9 @@ export function PortfolioPage() {
               </div>
               {selected && (
                 <aside className="card sticky top-[84px] hidden h-fit p-5 lg:block" aria-label="Selected position">
-                  <PositionPanel v={selected} onSell={() => openSell(selected.position.id)} />
+                  <div key={selected.position.id} className="animate-fade-in">
+                    <PositionPanel v={selected} onSell={() => openSell(selected.position.id)} />
+                  </div>
                 </aside>
               )}
             </div>
@@ -590,7 +594,7 @@ export function PortfolioPage() {
               <p className="mb-3 flex items-center gap-2 text-sm text-muted">
                 <Info className="h-4 w-4" aria-hidden /> Pending orders hold cash until they fill or you cancel. In this demo nothing fills on its own — use “simulate a seller” to see a fill.
               </p>
-              <ul className="grid gap-3">
+              <ul className="stagger grid gap-3">
                 {orders.map((o) => (
                   <PendingRow key={o.id} o={o} onCancel={() => setCancelId(o.id)} onSimulateFill={() => simulateFill(o.id)} />
                 ))}
@@ -610,11 +614,14 @@ export function PortfolioPage() {
                   aria-pressed={historyFilter.id === f.id}
                   onClick={() => setHistoryFilter(f.id)}
                   className={cn(
-                    'rounded-full border px-3 py-1.5 text-xs font-medium transition',
-                    historyFilter.id === f.id ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-ink-2 hover:text-ink',
+                    'relative rounded-full border px-3 py-1.5 text-xs font-medium transition-colors',
+                    historyFilter.id === f.id ? 'border-accent text-ink' : 'border-line-strong text-ink-2 hover:text-ink',
                   )}
                 >
-                  {f.label} <span className="text-muted tabular">{n}</span>
+                  {historyFilter.id === f.id && <ActivePill layoutId={`${pillId}-history`} className="bg-accent-soft" />}
+                  <span className="relative">
+                    {f.label} <span className="text-muted tabular">{n}</span>
+                  </span>
                 </button>
               );
             })}

@@ -476,7 +476,9 @@ export function TradeFlowDialog({
           if (!receiptSettled) e.preventDefault();
         }}
       >
-        <div className={cn(!receiptSettled && 'pointer-events-none')}>{body}</div>
+        <div key={step} className={cn('animate-fade-in', !receiptSettled && 'pointer-events-none')}>
+          {body}
+        </div>
         {step !== 'receipt' && <DemoLabel className="mt-4" />}
       </DialogContent>
     </Dialog>

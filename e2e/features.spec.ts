@@ -78,4 +78,23 @@ test.describe('with motion enabled', () => {
     await expect(page.getByTestId('portfolio-value')).toHaveText('$1,503.78');
     expect(errors).toEqual([]);
   });
+
+  for (const [label, width] of [['desktop', 1440], ['phone', 390]] as const) {
+    test(`main pages animate without errors or overflow (${label})`, async ({ page }) => {
+      test.setTimeout(90_000);
+      await page.setViewportSize({ width, height: 900 });
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      page.on('console', (m) => (m.type() === 'error' || m.type() === 'warning') && errors.push(m.text()));
+      for (const r of ['/', '/explore', '/explore?view=grid', '/markets/ucl-2027', '/markets/mars-2035?tab=news', '/portfolio', '/portfolio?tab=history']) {
+        await page.goto(r);
+        await page.waitForTimeout(1600); // let entrance animations finish
+        await page.mouse.wheel(0, 600);
+        await page.waitForTimeout(300);
+        const extra = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(extra, `${r} overflows`).toBeLessThanOrEqual(0);
+      }
+      expect(errors).toEqual([]);
+    });
+  }
 });

@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
+import { ActivePill } from '@/components/motion/ActivePill';
+import { useMotionOK } from '@/components/motion/useMotionOK';
 import { Link, useSearchParams } from 'react-router';
 import { ArrowRight, ChevronRight, LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react';
 import { CATEGORIES, categoryByName, categoryBySlug } from '@/data/categories';
@@ -188,7 +190,7 @@ function FiltersForm({
 function MarketCard({ market }: { market: Market }) {
   const lead = leadOutcome(market);
   return (
-    <Spotlight as="article" className="card group relative flex flex-col overflow-hidden transition hover:border-line-strong">
+    <Spotlight as="article" className="card lift group relative flex flex-col overflow-hidden">
       <div className="relative h-32 overflow-hidden">
         <MarketThumb market={market} className="h-full w-full rounded-none ring-0" />
         <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
@@ -228,6 +230,8 @@ export function ExplorePage() {
 
   const [filtersOpen, setFiltersOpen] = useState(() => readPref(FILTERS_OPEN_KEY, 'closed') === 'open');
   const [mobileFilters, setMobileFilters] = useState(false);
+  const pillId = useId();
+  const motionOK = useMotionOK();
   const [view, setView] = useState<'list' | 'grid'>(() => (readPref(VIEW_KEY, 'list') === 'grid' ? 'grid' : 'list'));
   const [qDraft, setQDraft] = useState(q);
   useEffect(() => setQDraft(q), [q]);
@@ -294,7 +298,7 @@ export function ExplorePage() {
       {/* Hero */}
       <section className="relative isolate overflow-hidden" aria-labelledby="explore-title">
         <div className="absolute inset-0 -z-10">
-          <SceneArt art="global" seed="explore-hero" />
+          <SceneArt art="global" seed="explore-hero" animated={motionOK} />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,#050912_15%,rgb(5_9_18/0.7)_55%,rgb(5_9_18/0.3))]" />
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-bg to-transparent" />
         </div>
@@ -307,7 +311,7 @@ export function ExplorePage() {
             From politics to science, browse every demo market. Compare the odds, save what interests you and dig into the rules.
           </p>
 
-          <ul className="scrollbar-none -mx-4 mt-8 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0" aria-label="Categories">
+          <ul className="stagger scrollbar-none -mx-4 mt-8 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0" aria-label="Categories">
             <li className="shrink-0">
               <button
                 type="button"
@@ -394,10 +398,13 @@ export function ExplorePage() {
                   type="button"
                   onClick={() => changeView(v)}
                   aria-pressed={view === v}
-                  className={cn('flex items-center gap-1.5 rounded-[10px] px-3 py-1.5 text-sm', view === v ? 'bg-white/10 text-ink' : 'text-muted hover:text-ink')}
+                  className={cn('relative flex items-center gap-1.5 rounded-[10px] px-3 py-1.5 text-sm transition-colors', view === v ? 'text-ink' : 'text-muted hover:text-ink')}
                 >
-                  {v === 'list' ? <List className="h-4 w-4" aria-hidden /> : <LayoutGrid className="h-4 w-4" aria-hidden />}
-                  {v === 'list' ? 'List' : 'Grid'}
+                  {view === v && <ActivePill layoutId={`${pillId}-view`} className="bg-white/10" />}
+                  <span className="relative flex items-center gap-1.5">
+                    {v === 'list' ? <List className="h-4 w-4" aria-hidden /> : <LayoutGrid className="h-4 w-4" aria-hidden />}
+                    {v === 'list' ? 'List' : 'Grid'}
+                  </span>
                 </button>
               ))}
             </div>
@@ -434,20 +441,20 @@ export function ExplorePage() {
                   </Button>
                 </div>
               ) : view === 'grid' ? (
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {results.map((m) => (
                     <MarketCard key={m.id} market={m} />
                   ))}
                 </div>
               ) : (
-                <div className="card divide-y divide-line p-2">
+                <div className="stagger card divide-y divide-line p-2">
                   {results.map((m) => (
                     <MarketRow key={m.id} market={m} />
                   ))}
                 </div>
               )
             ) : (
-              <div className="grid gap-5">
+              <div className="stagger grid gap-5">
                 {CATEGORIES.map((c) => {
                   const group = markets
                     .filter((m) => m.category === c.name)

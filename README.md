@@ -96,6 +96,10 @@ Small, purposeful animations in `src/components/motion/`, all off when the OS as
 | `BorderBeam` | Featured-market card on Home (CSS only) | Magic UI *BorderBeam* (MIT) |
 | `AnimatedCheck` | Receipts, demo funds, settlement result | — |
 | Sliding tab / nav indicator | Navbar, Market detail and Portfolio tabs | Motion `layoutId` |
+| `ActivePill` | Segmented controls: Buy/Sell, chart range, List/Grid, notification and history filters | Motion `layoutId` |
+| `ProbabilityBar` | Outcome bars grow to their value and ease on change | — |
+
+Micro-interactions on top of that: chart lines draw in and morph between ranges; the ticket's contracts, cost, payout and loss roll as you type; the Yes/No radio dot pops; Save pops with a soft ring; the bell rings and its badge pops when a new notification arrives; Portfolio totals roll and glow green/red in the direction of a change; cards that lead somewhere lift on hover, thumbnails breathe, arrows nudge toward their destination; primary buttons get a light sweep; lists enter with a short stagger; tabs, dialog steps and the selected-position panel cross-fade; the Home hero has slow parallax, twinkling stars and a flickering exhaust; the featured probability counts up on arrival.
 
 These are re-implementations written for this project (not copied component code), so no third-party component licence applies; credits above are for the ideas. Deliberately **not** used: WebGL backgrounds (Particles/Galaxy: heavy `ogl`/three dependencies, and better decided once final imagery exists) and confetti (reads as casino, against the brief).
 
@@ -122,11 +126,11 @@ Last full run on 11 Oct 2026 in a Linux container with Chromium 1194 (suite run 
 - `npm run typecheck` — pass
 - `npm run test` — **48 passed** (38 domain/fixture tests covering FIN-01..21 plus limit fills and settlement receipts, 3 store/persistence tests incl. FIN-22, 7 UI component tests)
 - `npm run build` — pass
-- `npm run test:e2e` — **45 passed**:
+- `npm run test:e2e` — **48 passed**:
   - `e2e/app.spec.ts` — E2E-01..23 and 25..27 at 1440px, plus liquidity, suspension and settlement scenarios
-  - `e2e/mobile.spec.ts` — E2E-24 full purchase journey and search/filters at 390px
+  - `e2e/mobile.spec.ts` — E2E-24 full purchase journey, search/filters at 390px, and no collapsed buttons in sheets/dialogs on a short (600px) screen
   - `e2e/edge-cases.spec.ts` — double-click Confirm, reload during Review, sell from Market Detail, limit order on a multi-outcome NO, fresh account + notification deep link, odd amount inputs, settlement re-run refused, empty search, scroll restoration on Back, Save from Detail
-  - `e2e/features.spec.ts` — chart notes → News, price explainer numbers, simulated limit fill, settlement result + Active summary, and a run **with motion enabled** checking animated numbers end on the exact cents
+  - `e2e/features.spec.ts` — chart notes → News, price explainer numbers, simulated limit fill, settlement result + Active summary, and runs **with motion enabled** checking animated numbers end on the exact cents and that the main pages animate without console errors or overflow at 1440 and 390px
   - `e2e/smoke-a11y.spec.ts` — every route and all 24 markets × 4 tabs at 1440, 768 and 390px with **no console errors and no horizontal overflow**; **axe (WCAG 2.1 A/AA) with zero violations** on key pages at desktop and phone widths and on every overlay (search, notifications, account dialogs, review, receipt, sell, mobile ticket and filter sheets)
 - `python3 scripts/validate-fixtures.py` — PASS
 - Visual QA: screenshots in [`docs/qa/`](docs/qa) compared against the approved references in `references/` (see `docs/DESIGN_REFERENCES.md`), plus a tablet (768px) review.

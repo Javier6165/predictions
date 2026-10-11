@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import { motion, useAnimationControls } from 'motion/react';
+import { useMotionOK } from '@/components/motion/useMotionOK';
+import { ActivePill } from '@/components/motion/ActivePill';
 import { useNavigate } from 'react-router';
 import { Bell, BellRing, CheckCheck, CircleDollarSign, Gavel, LineChart, ListX, ReceiptText, Timer, TriangleAlert, Wallet } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -58,6 +61,17 @@ export function NotificationsPopover() {
   const navigate = useNavigate();
   const [filter, setFilter] = useState<'all' | 'unread'>('all');
   const unread = unreadCount(user);
+  const pillId = useId();
+  const motionOK = useMotionOK();
+  const bellControls = useAnimationControls();
+  const prevUnread = useRef(unread);
+  // A short ring when a new notification arrives (never on first render or when reading).
+  useEffect(() => {
+    if (unread > prevUnread.current && motionOK) {
+      void bellControls.start({ rotate: [0, -16, 14, -10, 6, -3, 0], transition: { duration: 0.8, ease: 'easeInOut' } });
+    }
+    prevUnread.current = unread;
+  }, [unread, motionOK, bellControls]);
   const list = [...user.notifications].sort((a, b) => b.seq - a.seq).filter((n) => (filter === 'unread' ? !n.readAt : true));
 
   const openItem = (n: AppNotification) => {
@@ -74,11 +88,19 @@ export function NotificationsPopover() {
           className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-white/8 hover:text-ink"
           aria-label={unread ? `Notifications, ${unread} unread` : 'Notifications'}
         >
-          {unread ? <BellRing className="h-5 w-5" /> : <Bell className="h-5 w-5" />}
+          <motion.span animate={bellControls} className="inline-flex origin-top">
+            {unread ? <BellRing className="h-5 w-5" /> : <Bell className="h-5 w-5" />}
+          </motion.span>
           {unread > 0 && (
-            <span className="absolute right-1 top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-danger px-1 text-[10px] font-bold text-white tabular">
+            <motion.span
+              key={unread}
+              initial={motionOK ? { scale: 0.3 } : false}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 600, damping: 15 }}
+              className="absolute right-1 top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-danger px-1 text-[10px] font-bold text-white tabular"
+            >
               {unread > 9 ? '9+' : unread}
-            </span>
+            </motion.span>
           )}
         </button>
       </PopoverTrigger>
@@ -102,11 +124,12 @@ export function NotificationsPopover() {
               onClick={() => setFilter(f)}
               aria-pressed={filter === f}
               className={cn(
-                'rounded-full px-3 py-1 text-xs font-medium transition',
-                filter === f ? 'bg-white/10 text-ink' : 'text-muted hover:text-ink',
+                'relative rounded-full px-3 py-1 text-xs font-medium transition-colors',
+                filter === f ? 'text-ink' : 'text-muted hover:text-ink',
               )}
             >
-              {f === 'all' ? 'All' : `Unread${unread ? ` (${unread})` : ''}`}
+              {filter === f && <ActivePill layoutId={`${pillId}-bell-filter`} className="bg-white/10" />}
+              <span className="relative">{f === 'all' ? 'All' : `Unread${unread ? ` (${unread})` : ''}`}</span>
             </button>
           ))}
         </div>

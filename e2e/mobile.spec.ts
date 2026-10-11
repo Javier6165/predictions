@@ -40,3 +40,27 @@ test('Mobile search and filters sheet', async ({ page }) => {
   await expect(page).toHaveURL(/type=multi/);
   await expect(page.getByText('2 results')).toBeVisible();
 });
+
+test('short phone screen: no button collapses inside sheets and dialogs', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 600 });
+  const check = async (label: string) => {
+    const collapsed = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('[role="dialog"] button'))
+        .filter((b) => b.getBoundingClientRect().height < 12 && (b.textContent ?? '').trim().length > 2)
+        .map((b) => b.textContent),
+    );
+    expect(collapsed, label).toEqual([]);
+  };
+  await page.goto('/explore');
+  await page.getByRole('button', { name: /^Filters/ }).click();
+  await check('filters sheet');
+  await page.keyboard.press('Escape');
+  await page.goto('/markets/ucl-2027');
+  await page.getByRole('button', { name: 'Make a prediction' }).click();
+  await page.getByRole('dialog').getByLabel('Amount to invest').fill('30');
+  await check('ticket sheet');
+  await page.getByRole('dialog').getByRole('button', { name: 'Review prediction' }).click();
+  await check('review');
+  await page.getByRole('button', { name: 'Confirm prediction' }).click();
+  await check('receipt');
+});

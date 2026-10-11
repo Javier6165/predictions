@@ -15,6 +15,7 @@ Estado a 11/10/2026. Rama de trabajo: `feat/p0-demo-app`.
 
 - [x] **Mejoras de producto** — notas ancladas al gráfico (“What moved it”), explicador probabilidad vs precio, momento de liquidación (pantalla de resultado, resumen en Active, filtros de History con Won/Lost), ejecución explícita de órdenes límite (botón en Pending + escenario repetible).
 - [x] **Capa de motion** — `src/components/motion/` (AnimatedNumber, BlurReveal, Spotlight, BorderBeam, AnimatedCheck, indicadores con `layoutId`), respetando reduced motion. Revisados React Bits y Magic UI/21st.dev: reimplementados en ligero; descartados fondos WebGL y confeti (ver README).
+- [x] **Microinteracciones** — pills deslizantes, gráfico que se dibuja, barras que crecen, cifras que ruedan y destellan, Save con pop, campana que suena con aviso nuevo, elevación en hover, entrada escalonada, parallax y cielo vivo en el hero. Detectado y corregido: el brillo del CTA (overflow hidden) podía colapsar botones a 0px en paneles con scroll.
 - [x] **CI** (GitHub Actions) y `netlify.toml` preparado (sin desplegar). `vercel.json` eliminado: hosting elegido = Netlify.
 
 ## Pendiente fuera de alcance actual (decidido en la conversación de seguimiento)
