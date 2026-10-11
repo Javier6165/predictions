@@ -1,0 +1,3624 @@
+{
+  "schemaVersion": 2,
+  "scenarioId": "portfolio-ready",
+  "displayAsOf": "2026-10-10T12:00:00+02:00",
+  "isSimulation": true,
+  "sourceDisclaimer": "All events, prices, charts, quotes, positions, headlines, and forecasts here are illustrative DEMO data, not live market information.",
+  "clockPolicy": "Frozen scenario clock. No automatic tick on real time. Controlled deterministic events only.",
+  "currency": "USD",
+  "contractPayoutIfCorrectCents": 100,
+  "feesCents": 0,
+  "marketData": [
+    {
+      "id": "mars-2035",
+      "category": "Science & Climate",
+      "type": "BINARY",
+      "question": "Will a crewed mission land on Mars before 2035?",
+      "title": "Humans land on Mars",
+      "closeAt": "2034-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 48,
+          "yesQuote": {
+            "indicativeCents": 48,
+            "askCents": 49,
+            "bidCents": 47
+          },
+          "noQuote": {
+            "indicativeCents": 52,
+            "askCents": 53,
+            "bidCents": 51
+          }
+        }
+      ],
+      "tags": [
+        "Space",
+        "Featured"
+      ],
+      "resolutionSummary": "YES if an independently verifiable crewed landing takes place before January 1, 2035 (UTC); NO otherwise. Demo terms only.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": true,
+      "storylineIsFictional": true,
+      "pricePathKey": "mars-2035",
+      "resolutionRule": {
+        "yesCondition": "The demo event ledger records a successful crewed landing on the Martian surface before 2035-01-01T00:00:00Z.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2035-01-01T00:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 25717790,
+        "trendingScore": 50,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 53
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 46
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 54
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 44
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 50
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 46
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 50
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 46
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        }
+      ],
+      "demoUpdates": [
+        {
+          "id": "mars-2035-update-1",
+          "at": "2026-10-05T12:00:00+02:00",
+          "title": "Scenario briefing updated",
+          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "mars-2035-update-2",
+          "at": "2026-09-24T12:00:00+02:00",
+          "title": "Market outlook refreshed",
+          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
+    },
+    {
+      "id": "exoplanet-2027",
+      "category": "Science & Climate",
+      "type": "BINARY",
+      "question": "Will scientists confirm a potentially habitable exoplanet by 2027?",
+      "title": "Exoplanet discovery",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 37,
+          "yesQuote": {
+            "indicativeCents": 37,
+            "askCents": 38,
+            "bidCents": 36
+          },
+          "noQuote": {
+            "indicativeCents": 63,
+            "askCents": 64,
+            "bidCents": 62
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "exoplanet-2027",
+      "resolutionRule": {
+        "yesCondition": "The demo astronomy bulletin designates at least one newly confirmed exoplanet as potentially habitable by 2027-12-31T23:59:59Z.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-12-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 24117234,
+        "trendingScore": 34,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 31
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 41
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 36
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 33
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 35
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 36
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "arctic-2027",
+      "category": "Science & Climate",
+      "type": "THRESHOLD",
+      "question": "Will September 2027 Arctic sea-ice extent be below 4m km²?",
+      "title": "Arctic sea ice",
+      "closeAt": "2027-10-15T20:00:00+02:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 42,
+          "yesQuote": {
+            "indicativeCents": 42,
+            "askCents": 43,
+            "bidCents": 41
+          },
+          "noQuote": {
+            "indicativeCents": 58,
+            "askCents": 59,
+            "bidCents": 57
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "arctic-2027",
+      "resolutionRule": {
+        "yesCondition": "The demo September 2027 average Arctic sea-ice extent measurement is strictly below 4.00 million square kilometres.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-10-15T18:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 20404219,
+        "trendingScore": 69,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 36
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 45
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 42
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 43
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 40
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 43
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 41
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 43
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 42
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 42
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "harris-election-2028",
+      "category": "Politics",
+      "type": "BINARY",
+      "question": "Will Kamala Harris win the 2028 US presidential election?",
+      "title": "Kamala Harris 2028",
+      "closeAt": "2028-11-07T23:59:59-05:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 34,
+          "yesQuote": {
+            "indicativeCents": 34,
+            "askCents": 35,
+            "bidCents": 33
+          },
+          "noQuote": {
+            "indicativeCents": 66,
+            "askCents": 67,
+            "bidCents": 65
+          }
+        }
+      ],
+      "tags": [
+        "Hypothetical",
+        "Elections"
+      ],
+      "resolutionSummary": "YES if the named person is certified as the election winner under this demo contract; no claim about candidacy is implied.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "harris-election-2028",
+      "resolutionRule": {
+        "yesCondition": "The demo US election certification record names Kamala Harris as winner of the 2028 presidential election.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2029-01-10T20:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 24343076,
+        "trendingScore": 66,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 27
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 36
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 30
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 33
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 32
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 33
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        }
+      ],
+      "demoUpdates": [
+        {
+          "id": "harris-election-2028-update-1",
+          "at": "2026-10-05T12:00:00+02:00",
+          "title": "Scenario briefing updated",
+          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "harris-election-2028-update-2",
+          "at": "2026-09-24T12:00:00+02:00",
+          "title": "Market outlook refreshed",
+          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
+    },
+    {
+      "id": "midterm-turnout-2026",
+      "category": "Politics",
+      "type": "THRESHOLD",
+      "question": "Will US midterm turnout exceed 52% in 2026?",
+      "title": "Midterm turnout",
+      "closeAt": "2026-11-20T23:59:59-05:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 57,
+          "yesQuote": {
+            "indicativeCents": 57,
+            "askCents": 58,
+            "bidCents": 56
+          },
+          "noQuote": {
+            "indicativeCents": 43,
+            "askCents": 44,
+            "bidCents": 42
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "midterm-turnout-2026",
+      "resolutionRule": {
+        "yesCondition": "The demo 2026 midterm turnout record reports votes cast greater than 52.00% of the declared voting-eligible population.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2026-11-20T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 1275137,
+        "trendingScore": 97,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 50
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 53
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 55
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "eu-reform-2027",
+      "category": "Politics",
+      "type": "BINARY",
+      "question": "Will an EU AI regulatory reform be passed in 2027?",
+      "title": "EU policy reform",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 46,
+          "yesQuote": {
+            "indicativeCents": 46,
+            "askCents": 47,
+            "bidCents": 45
+          },
+          "noQuote": {
+            "indicativeCents": 54,
+            "askCents": 55,
+            "bidCents": 53
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "eu-reform-2027",
+      "resolutionRule": {
+        "yesCondition": "The demo EU legislation record says a named AI regulatory reform package obtained final adoption during calendar year 2027.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-12-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 22110334,
+        "trendingScore": 94,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 42
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 50
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 44
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 46
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 43
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 44
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 45
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 45
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 46
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "ucl-2027",
+      "category": "Sports",
+      "type": "MULTI_OUTCOME",
+      "question": "Who will win the 2027 UEFA Champions League?",
+      "title": "Champions League 2027",
+      "closeAt": "2027-06-01T20:00:00+02:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "real-madrid",
+          "label": "Real Madrid",
+          "probabilityCents": 58,
+          "yesQuote": {
+            "indicativeCents": 58,
+            "askCents": 59,
+            "bidCents": 57
+          },
+          "noQuote": {
+            "indicativeCents": 42,
+            "askCents": 43,
+            "bidCents": 41
+          }
+        },
+        {
+          "id": "barcelona",
+          "label": "Barcelona",
+          "probabilityCents": 16,
+          "yesQuote": {
+            "indicativeCents": 16,
+            "askCents": 17,
+            "bidCents": 15
+          },
+          "noQuote": {
+            "indicativeCents": 84,
+            "askCents": 85,
+            "bidCents": 83
+          }
+        },
+        {
+          "id": "bayern",
+          "label": "Bayern",
+          "probabilityCents": 12,
+          "yesQuote": {
+            "indicativeCents": 12,
+            "askCents": 13,
+            "bidCents": 11
+          },
+          "noQuote": {
+            "indicativeCents": 88,
+            "askCents": 89,
+            "bidCents": 87
+          }
+        },
+        {
+          "id": "other",
+          "label": "Other club",
+          "probabilityCents": 14,
+          "yesQuote": {
+            "indicativeCents": 14,
+            "askCents": 15,
+            "bidCents": 13
+          },
+          "noQuote": {
+            "indicativeCents": 86,
+            "askCents": 87,
+            "bidCents": 85
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "YES for the selected club only if that club is the winner; No does not imply a specific rival wins.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "ucl-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional 2027 football final ledger names exactly one winning club; each YES contract wins only for its named club, including Other club for any unlisted winner.",
+        "noCondition": "For each named outcome, NO wins if another mutually exclusive outcome wins; never infer which rival wins from a NO contract.",
+        "evaluatedAt": "2027-06-02T12:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 4914144,
+        "trendingScore": 64,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 65,
+            "barcelona": 20,
+            "bayern": 6,
+            "other": 9
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 65,
+            "barcelona": 10,
+            "bayern": 12,
+            "other": 13
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 56,
+            "barcelona": 15,
+            "bayern": 15,
+            "other": 14
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 58,
+            "barcelona": 11,
+            "bayern": 10,
+            "other": 21
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 60,
+            "barcelona": 16,
+            "bayern": 13,
+            "other": 11
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 64,
+            "barcelona": 12,
+            "bayern": 8,
+            "other": 16
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 60,
+            "barcelona": 15,
+            "bayern": 10,
+            "other": 15
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 58,
+            "barcelona": 19,
+            "bayern": 13,
+            "other": 10
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 63,
+            "barcelona": 15,
+            "bayern": 10,
+            "other": 12
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 60,
+            "barcelona": 16,
+            "bayern": 11,
+            "other": 13
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 58,
+            "barcelona": 15,
+            "bayern": 13,
+            "other": 14
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 60,
+            "barcelona": 16,
+            "bayern": 11,
+            "other": 13
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "real-madrid": 58,
+            "barcelona": 16,
+            "bayern": 12,
+            "other": 14
+          }
+        }
+      ],
+      "demoUpdates": [
+        {
+          "id": "ucl-2027-update-1",
+          "at": "2026-10-05T12:00:00+02:00",
+          "title": "Scenario briefing updated",
+          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "ucl-2027-update-2",
+          "at": "2026-09-24T12:00:00+02:00",
+          "title": "Market outlook refreshed",
+          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
+    },
+    {
+      "id": "world-cup-2027",
+      "category": "Sports",
+      "type": "BINARY",
+      "question": "Will Spain win the 2027 Women’s World Cup?",
+      "title": "Spain World Cup",
+      "closeAt": "2027-07-31T23:59:59+02:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 29,
+          "yesQuote": {
+            "indicativeCents": 29,
+            "askCents": 30,
+            "bidCents": 28
+          },
+          "noQuote": {
+            "indicativeCents": 71,
+            "askCents": 72,
+            "bidCents": 70
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "world-cup-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional 2027 women’s football tournament ledger identifies Spain as tournament winner.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-08-01T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 6926099,
+        "trendingScore": 89,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 23
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 32
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 26
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 29
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 25
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 30
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 27
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 30
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 28
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 30
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 29
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 29
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "nba-2027",
+      "category": "Sports",
+      "type": "BINARY",
+      "question": "Will the Celtics reach the 2027 NBA Finals?",
+      "title": "Celtics 2027 NBA",
+      "closeAt": "2027-06-30T23:59:59-04:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 49,
+          "yesQuote": {
+            "indicativeCents": 49,
+            "askCents": 50,
+            "bidCents": 48
+          },
+          "noQuote": {
+            "indicativeCents": 51,
+            "askCents": 52,
+            "bidCents": 50
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "nba-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional 2027 basketball playoff ledger records the Boston Celtics as one of the two NBA Finals teams.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-06-30T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 14259431,
+        "trendingScore": 81,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 55
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 42
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 50
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 45
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 49
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 49
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 49
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "bitcoin-150k-2027",
+      "category": "Crypto",
+      "type": "THRESHOLD",
+      "question": "Will Bitcoin reach $150,000 before 2028?",
+      "title": "Bitcoin $150k",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 54,
+          "yesQuote": {
+            "indicativeCents": 54,
+            "askCents": 55,
+            "bidCents": 53
+          },
+          "noQuote": {
+            "indicativeCents": 46,
+            "askCents": 47,
+            "bidCents": 45
+          }
+        }
+      ],
+      "tags": [
+        "Price threshold"
+      ],
+      "resolutionSummary": "Demo scenario: YES if the specified illustrative price series records a qualifying trade of at least $150k by the cutoff.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "bitcoin-150k-2027",
+      "resolutionRule": {
+        "yesCondition": "At least one fictional Bitcoin/USD spot-price observation reaches or exceeds 150,000 USD strictly before 2028-01-01T00:00:00Z.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2028-01-01T00:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 3931166,
+        "trendingScore": 96,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 50
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 52
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 54
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 55
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 52
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 55
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 53
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 53
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 54
+          }
+        }
+      ],
+      "demoUpdates": [
+        {
+          "id": "bitcoin-150k-2027-update-1",
+          "at": "2026-10-05T12:00:00+02:00",
+          "title": "Scenario briefing updated",
+          "body": "Illustrative context for a synthetic prediction market. Not a real news report.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        },
+        {
+          "id": "bitcoin-150k-2027-update-2",
+          "at": "2026-09-24T12:00:00+02:00",
+          "title": "Market outlook refreshed",
+          "body": "The demo market history has been refreshed for the showcase snapshot.",
+          "publisher": "NOVA DEMO",
+          "isSimulated": true
+        }
+      ]
+    },
+    {
+      "id": "ethereum-8k",
+      "category": "Crypto",
+      "type": "THRESHOLD",
+      "question": "Will Ethereum reach $8,000 by the end of 2027?",
+      "title": "Ethereum $8k",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 39,
+          "yesQuote": {
+            "indicativeCents": 39,
+            "askCents": 40,
+            "bidCents": 38
+          },
+          "noQuote": {
+            "indicativeCents": 61,
+            "askCents": 62,
+            "bidCents": 60
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "ethereum-8k",
+      "resolutionRule": {
+        "yesCondition": "At least one fictional Ethereum/USD spot-price observation reaches or exceeds 8,000 USD on or before 2027-12-31T23:59:59Z.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-12-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 20747173,
+        "trendingScore": 53,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 46
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 41
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 42
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 36
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "crypto-etf-2027",
+      "category": "Crypto",
+      "type": "BINARY",
+      "question": "Will a new spot crypto ETF be approved by June 2027?",
+      "title": "Crypto ETF",
+      "closeAt": "2027-06-30T23:59:59+02:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 61,
+          "yesQuote": {
+            "indicativeCents": 61,
+            "askCents": 62,
+            "bidCents": 60
+          },
+          "noQuote": {
+            "indicativeCents": 39,
+            "askCents": 40,
+            "bidCents": 38
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "crypto-etf-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional regulator decision ledger records final approval of at least one new spot crypto ETF by 2027-06-30T23:59:59Z.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-06-30T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 24407739,
+        "trendingScore": 39,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 65
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 66
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 63
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "ai-model-2027",
+      "category": "Tech & AI",
+      "type": "BINARY",
+      "question": "Will an open-source AI model top a leading benchmark in 2027?",
+      "title": "AI benchmark 2027",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 58,
+          "yesQuote": {
+            "indicativeCents": 58,
+            "askCents": 59,
+            "bidCents": 57
+          },
+          "noQuote": {
+            "indicativeCents": 42,
+            "askCents": 43,
+            "bidCents": 41
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "ai-model-2027",
+      "resolutionRule": {
+        "yesCondition": "A fictional open-source AI model ranks first on the specified demo public-style benchmark snapshot dated in 2027.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-12-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 7818488,
+        "trendingScore": 88,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 64
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 54
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "apple-foldable-2027",
+      "category": "Tech & AI",
+      "type": "BINARY",
+      "question": "Will Apple announce a foldable phone by 2027?",
+      "title": "Foldable phone",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 26,
+          "yesQuote": {
+            "indicativeCents": 26,
+            "askCents": 27,
+            "bidCents": 25
+          },
+          "noQuote": {
+            "indicativeCents": 74,
+            "askCents": 75,
+            "bidCents": 73
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "apple-foldable-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional product announcement ledger records a foldable smartphone formally announced by Apple before 2028-01-01T00:00:00Z.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2028-01-01T00:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 30985534,
+        "trendingScore": 54,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 23
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 32
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 26
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 20
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 27
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 23
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 28
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 25
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 28
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 26
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 25
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 26
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 26
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "robotaxi-2027",
+      "category": "Tech & AI",
+      "type": "BINARY",
+      "question": "Will a robotaxi service launch in three more US cities by 2027?",
+      "title": "Robotaxi expansion",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 62,
+          "yesQuote": {
+            "indicativeCents": 62,
+            "askCents": 63,
+            "bidCents": 61
+          },
+          "noQuote": {
+            "indicativeCents": 38,
+            "askCents": 39,
+            "bidCents": 37
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "robotaxi-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional mobility ledger records a public, paid robotaxi service launching in at least three additional US cities during calendar year 2027.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-12-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 13402934,
+        "trendingScore": 44,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 69
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 64
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 65
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "fed-2027",
+      "category": "Economy & Finance",
+      "type": "THRESHOLD",
+      "question": "Will the US policy rate be below 3% in December 2027?",
+      "title": "US interest rates",
+      "closeAt": "2027-12-31T23:59:59-05:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 52,
+          "yesQuote": {
+            "indicativeCents": 52,
+            "askCents": 53,
+            "bidCents": 51
+          },
+          "noQuote": {
+            "indicativeCents": 48,
+            "askCents": 49,
+            "bidCents": 47
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "fed-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional US central bank policy target upper bound effective on 2027-12-31 is strictly below 3.00%.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2028-01-01T00:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 30487915,
+        "trendingScore": 95,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 52
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 47
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 54
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 49
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 55
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 52
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 50
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 52
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 52
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "inflation-2026",
+      "category": "Economy & Finance",
+      "type": "THRESHOLD",
+      "question": "Will US inflation be above 3.0% for December 2026?",
+      "title": "US inflation",
+      "closeAt": "2027-01-20T23:59:59-05:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 44,
+          "yesQuote": {
+            "indicativeCents": 44,
+            "askCents": 45,
+            "bidCents": 43
+          },
+          "noQuote": {
+            "indicativeCents": 56,
+            "askCents": 57,
+            "bidCents": 55
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "inflation-2026",
+      "resolutionRule": {
+        "yesCondition": "The fictional December 2026 US CPI 12-month year-over-year inflation measurement is strictly above 3.00%.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-01-20T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 27991972,
+        "trendingScore": 92,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 48
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 41
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 49
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 44
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 45
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 41
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 46
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 43
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 45
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 44
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 43
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 44
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "oil-2027",
+      "category": "Economy & Finance",
+      "type": "THRESHOLD",
+      "question": "Will oil trade above $110 in 2027?",
+      "title": "Oil price",
+      "closeAt": "2027-12-31T23:59:59-05:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 31,
+          "yesQuote": {
+            "indicativeCents": 31,
+            "askCents": 32,
+            "bidCents": 30
+          },
+          "noQuote": {
+            "indicativeCents": 69,
+            "askCents": 70,
+            "bidCents": 68
+          }
+        }
+      ],
+      "tags": [
+        "Volatile"
+      ],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "oil-2027",
+      "resolutionRule": {
+        "yesCondition": "At least one fictional Brent crude front-month trade price strictly exceeds 110.00 USD/bbl in calendar year 2027.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-12-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 2908153,
+        "trendingScore": 43,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 29
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 31
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 26
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 33
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 29
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 30
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 28
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 31
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 30
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 31
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 31
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "music-tour-2027",
+      "category": "Entertainment",
+      "type": "BINARY",
+      "question": "Will fictional artist Aurora Vale announce a 2027 world tour?",
+      "title": "World tour",
+      "closeAt": "2027-08-31T23:59:59+02:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 65,
+          "yesQuote": {
+            "indicativeCents": 65,
+            "askCents": 66,
+            "bidCents": 64
+          },
+          "noQuote": {
+            "indicativeCents": 35,
+            "askCents": 36,
+            "bidCents": 34
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "music-tour-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional artist Aurora Vale publicly announces an international tour scheduled for 2027 by the scenario cutoff.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-08-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 1356700,
+        "trendingScore": 70,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 71
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 65
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 66
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 67
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 64
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 67
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 65
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 64
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 65
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 65
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "film-award-2027",
+      "category": "Entertainment",
+      "type": "MULTI_OUTCOME",
+      "question": "Which genre will win Best Picture at the fictional 2027 Film Awards?",
+      "title": "Film award 2027",
+      "closeAt": "2027-03-31T23:59:59+02:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "drama",
+          "label": "Drama",
+          "probabilityCents": 45,
+          "yesQuote": {
+            "indicativeCents": 45,
+            "askCents": 46,
+            "bidCents": 44
+          },
+          "noQuote": {
+            "indicativeCents": 55,
+            "askCents": 56,
+            "bidCents": 54
+          }
+        },
+        {
+          "id": "comedy",
+          "label": "Comedy",
+          "probabilityCents": 17,
+          "yesQuote": {
+            "indicativeCents": 17,
+            "askCents": 18,
+            "bidCents": 16
+          },
+          "noQuote": {
+            "indicativeCents": 83,
+            "askCents": 84,
+            "bidCents": 82
+          }
+        },
+        {
+          "id": "science-fiction",
+          "label": "Science fiction",
+          "probabilityCents": 27,
+          "yesQuote": {
+            "indicativeCents": 27,
+            "askCents": 28,
+            "bidCents": 26
+          },
+          "noQuote": {
+            "indicativeCents": 73,
+            "askCents": 74,
+            "bidCents": 72
+          }
+        },
+        {
+          "id": "other",
+          "label": "Other",
+          "probabilityCents": 11,
+          "yesQuote": {
+            "indicativeCents": 11,
+            "askCents": 12,
+            "bidCents": 10
+          },
+          "noQuote": {
+            "indicativeCents": 89,
+            "askCents": 90,
+            "bidCents": 88
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "film-award-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional 2027 film awards ledger names one Best Picture winner; its assigned genre determines exactly one winning outcome (Drama, Comedy, Science fiction, Other).",
+        "noCondition": "For each named outcome, NO wins if another mutually exclusive outcome wins; never infer which rival wins from a NO contract.",
+        "evaluatedAt": "2027-03-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 22098613,
+        "trendingScore": 63,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 50,
+            "comedy": 12,
+            "science-fiction": 23,
+            "other": 15
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 37,
+            "comedy": 18,
+            "science-fiction": 27,
+            "other": 18
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 49,
+            "comedy": 11,
+            "science-fiction": 33,
+            "other": 7
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 46,
+            "comedy": 18,
+            "science-fiction": 25,
+            "other": 11
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 48,
+            "comedy": 11,
+            "science-fiction": 28,
+            "other": 13
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 50,
+            "comedy": 19,
+            "science-fiction": 25,
+            "other": 6
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 48,
+            "comedy": 19,
+            "science-fiction": 25,
+            "other": 8
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 45,
+            "comedy": 16,
+            "science-fiction": 28,
+            "other": 11
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 44,
+            "comedy": 19,
+            "science-fiction": 25,
+            "other": 12
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 48,
+            "comedy": 16,
+            "science-fiction": 27,
+            "other": 9
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 44,
+            "comedy": 18,
+            "science-fiction": 28,
+            "other": 10
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 47,
+            "comedy": 16,
+            "science-fiction": 26,
+            "other": 11
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "drama": 45,
+            "comedy": 17,
+            "science-fiction": 27,
+            "other": 11
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "festival-2027",
+      "category": "Entertainment",
+      "type": "BINARY",
+      "question": "Will the fictional Horizon Sound festival be announced by 2027?",
+      "title": "New global festival",
+      "closeAt": "2027-12-31T23:59:59+01:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 38,
+          "yesQuote": {
+            "indicativeCents": 38,
+            "askCents": 39,
+            "bidCents": 37
+          },
+          "noQuote": {
+            "indicativeCents": 62,
+            "askCents": 63,
+            "bidCents": 61
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "festival-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional event ledger announces a new festival called Horizon Sound with events in at least three world regions by the cutoff.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-12-31T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 29613894,
+        "trendingScore": 74,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 34
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 43
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 37
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 32
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 39
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 35
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 40
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 36
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 40
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 36
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 38
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "peace-talks-2027",
+      "category": "Global Events",
+      "type": "BINARY",
+      "question": "Will a new peace negotiation process begin by June 2027 in the demo scenario?",
+      "title": "Peace talks",
+      "closeAt": "2027-06-30T23:59:59+02:00",
+      "status": "OPEN",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 55,
+          "yesQuote": {
+            "indicativeCents": 55,
+            "askCents": 56,
+            "bidCents": 54
+          },
+          "noQuote": {
+            "indicativeCents": 45,
+            "askCents": 46,
+            "bidCents": 44
+          }
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "peace-talks-2027",
+      "resolutionRule": {
+        "yesCondition": "The fictional diplomatic ledger records an official first face-to-face session of a named new peace negotiation process by the scenario cutoff.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2027-06-30T23:59:59Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 1000,
+        "maxImmediateSellContractsPerOutcome": 1000
+      },
+      "demoActivity": {
+        "volume24hCents": 27894005,
+        "trendingScore": 35,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-18T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 57
+          }
+        },
+        {
+          "at": "2026-07-25T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 51
+          }
+        },
+        {
+          "at": "2026-08-01T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-08-08T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 53
+          }
+        },
+        {
+          "at": "2026-08-15T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 60
+          }
+        },
+        {
+          "at": "2026-08-22T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 55
+          }
+        },
+        {
+          "at": "2026-08-29T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 52
+          }
+        },
+        {
+          "at": "2026-09-05T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-09-12T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 53
+          }
+        },
+        {
+          "at": "2026-09-19T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 56
+          }
+        },
+        {
+          "at": "2026-09-26T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 54
+          }
+        },
+        {
+          "at": "2026-10-03T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 54
+          }
+        },
+        {
+          "at": "2026-10-10T12:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 55
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "global-event-pending",
+      "category": "Global Events",
+      "type": "BINARY",
+      "question": "Will the fictional October 2026 summit announce a signed joint initiative?",
+      "title": "International summit",
+      "closeAt": "2026-10-02T23:59:59+02:00",
+      "status": "PENDING_RESOLUTION",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 63,
+          "yesQuote": null,
+          "noQuote": null
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "global-event-pending",
+      "resolutionRule": {
+        "yesCondition": "The fictional summit ledger records a signed, publicly announced joint initiative at the designated October 2026 summit.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2026-10-04T12:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 0,
+        "maxImmediateSellContractsPerOutcome": 0
+      },
+      "demoActivity": {
+        "volume24hCents": 24711043,
+        "trendingScore": 63,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-10T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 58
+          }
+        },
+        {
+          "at": "2026-07-17T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 67
+          }
+        },
+        {
+          "at": "2026-07-24T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        },
+        {
+          "at": "2026-07-31T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 68
+          }
+        },
+        {
+          "at": "2026-08-07T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 63
+          }
+        },
+        {
+          "at": "2026-08-14T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 59
+          }
+        },
+        {
+          "at": "2026-08-21T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 64
+          }
+        },
+        {
+          "at": "2026-08-28T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        },
+        {
+          "at": "2026-09-04T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 65
+          }
+        },
+        {
+          "at": "2026-09-11T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 62
+          }
+        },
+        {
+          "at": "2026-09-18T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 61
+          }
+        },
+        {
+          "at": "2026-09-25T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 63
+          }
+        },
+        {
+          "at": "2026-10-02T23:59:59+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 63
+          }
+        }
+      ],
+      "demoUpdates": []
+    },
+    {
+      "id": "global-event-resolved",
+      "category": "Global Events",
+      "type": "BINARY",
+      "question": "Did the demo climate summit adopt its planned declaration?",
+      "title": "Demo summit result",
+      "closeAt": "2026-10-07T18:00:00+02:00",
+      "status": "RESOLVED",
+      "outcomes": [
+        {
+          "id": "yes",
+          "label": "Yes",
+          "probabilityCents": 71,
+          "yesQuote": null,
+          "noQuote": null
+        }
+      ],
+      "tags": [],
+      "resolutionSummary": "Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule.",
+      "resolutionSource": "DEMO SCENARIO — fictional source, not a live feed",
+      "isFeatured": false,
+      "storylineIsFictional": true,
+      "pricePathKey": "global-event-resolved",
+      "resolvedAt": "2026-10-08T12:00:00+02:00",
+      "winningOutcomeId": "yes",
+      "resolutionRule": {
+        "yesCondition": "The fictional climate summit minutes record adoption of the planned declaration; the supplied demo winner is YES.",
+        "noCondition": "The precise YES condition is not met by the stated cutoff, except if the market is voided by the demo resolver.",
+        "evaluatedAt": "2026-10-08T12:00:00Z",
+        "sourceLabel": "FICTIONAL DEMO EVENT LEDGER — no live external resolution source",
+        "isSimulated": true,
+        "voidCondition": "Void only if the fixture explicitly triggers VOIDED (e.g., the designated synthetic source cannot produce a valid result).",
+        "settlementCentsPerWinningContract": 100,
+        "settlementCentsPerLosingContract": 0
+      },
+      "demoLiquidity": {
+        "maxImmediateBuyContractsPerOutcome": 0,
+        "maxImmediateSellContractsPerOutcome": 0
+      },
+      "demoActivity": {
+        "volume24hCents": 27440246,
+        "trendingScore": 56,
+        "simulated": true
+      },
+      "chartPoints": [
+        {
+          "at": "2026-07-15T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 77
+          }
+        },
+        {
+          "at": "2026-07-22T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 70
+          }
+        },
+        {
+          "at": "2026-07-29T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 64
+          }
+        },
+        {
+          "at": "2026-08-05T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 72
+          }
+        },
+        {
+          "at": "2026-08-12T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 67
+          }
+        },
+        {
+          "at": "2026-08-19T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 73
+          }
+        },
+        {
+          "at": "2026-08-26T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 69
+          }
+        },
+        {
+          "at": "2026-09-02T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 73
+          }
+        },
+        {
+          "at": "2026-09-09T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 71
+          }
+        },
+        {
+          "at": "2026-09-16T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 69
+          }
+        },
+        {
+          "at": "2026-09-23T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 71
+          }
+        },
+        {
+          "at": "2026-09-30T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 70
+          }
+        },
+        {
+          "at": "2026-10-07T18:00:00+02:00",
+          "probabilityCentsByOutcome": {
+            "yes": 71
+          }
+        }
+      ],
+      "demoUpdates": []
+    }
+  ],
+  "initialState": {
+    "initialDepositCents": 100000,
+    "cashTotalCents": 87640,
+    "reservedCashCents": 440,
+    "availableCashCents": 87200,
+    "portfolioValueCents": 100480,
+    "unrealizedPnLCents": 480,
+    "realizedPnLCents": 0,
+    "positions": [
+      {
+        "id": "pos-1",
+        "marketId": "mars-2035",
+        "outcomeId": "yes",
+        "side": "YES",
+        "quantity": 100,
+        "averageBuyPriceCents": 40,
+        "costBasisCents": 4000,
+        "currentMarkCents": 48,
+        "currentMarkedValueCents": 4800,
+        "unrealizedPnLCents": 800
+      },
+      {
+        "id": "pos-2",
+        "marketId": "bitcoin-150k-2027",
+        "outcomeId": "yes",
+        "side": "NO",
+        "quantity": 80,
+        "averageBuyPriceCents": 52,
+        "costBasisCents": 4160,
+        "currentMarkCents": 46,
+        "currentMarkedValueCents": 3680,
+        "unrealizedPnLCents": -480
+      },
+      {
+        "id": "pos-3",
+        "marketId": "harris-election-2028",
+        "outcomeId": "yes",
+        "side": "YES",
+        "quantity": 60,
+        "averageBuyPriceCents": 30,
+        "costBasisCents": 1800,
+        "currentMarkCents": 34,
+        "currentMarkedValueCents": 2040,
+        "unrealizedPnLCents": 240
+      },
+      {
+        "id": "pos-4",
+        "marketId": "ucl-2027",
+        "outcomeId": "real-madrid",
+        "side": "YES",
+        "quantity": 40,
+        "averageBuyPriceCents": 60,
+        "costBasisCents": 2400,
+        "currentMarkCents": 58,
+        "currentMarkedValueCents": 2320,
+        "unrealizedPnLCents": -80
+      }
+    ],
+    "orders": [
+      {
+        "id": "order-001",
+        "marketId": "apple-foldable-2027",
+        "outcomeId": "yes",
+        "side": "YES",
+        "action": "BUY",
+        "type": "LIMIT",
+        "limitPriceCents": 22,
+        "requestedQuantity": 20,
+        "filledQuantity": 0,
+        "status": "OPEN",
+        "reservedCashCents": 440,
+        "createdAt": "2026-10-10T12:00:00+02:00"
+      }
+    ],
+    "savedMarketIds": [
+      "mars-2035",
+      "robotaxi-2027",
+      "film-award-2027"
+    ],
+    "notifications": [
+      {
+        "id": "n-1",
+        "kind": "MARKET_MOVE",
+        "targetMarketId": "mars-2035",
+        "text": "Your prediction about a crewed Mars landing moved 4 pp in the demo storyline.",
+        "readAt": null
+      }
+    ],
+    "history": [
+      {
+        "id": "fill-seed-1",
+        "action": "BUY",
+        "positionId": "pos-1",
+        "amountCents": 4000,
+        "quantity": 100,
+        "priceCents": 40,
+        "createdAt": "2026-10-09T11:00:00+02:00"
+      },
+      {
+        "id": "fill-seed-2",
+        "action": "BUY",
+        "positionId": "pos-2",
+        "amountCents": 4160,
+        "quantity": 80,
+        "priceCents": 52,
+        "createdAt": "2026-10-09T11:00:00+02:00"
+      },
+      {
+        "id": "fill-seed-3",
+        "action": "BUY",
+        "positionId": "pos-3",
+        "amountCents": 1800,
+        "quantity": 60,
+        "priceCents": 30,
+        "createdAt": "2026-10-09T11:00:00+02:00"
+      },
+      {
+        "id": "fill-seed-4",
+        "action": "BUY",
+        "positionId": "pos-4",
+        "amountCents": 2400,
+        "quantity": 40,
+        "priceCents": 60,
+        "createdAt": "2026-10-09T11:00:00+02:00"
+      }
+    ]
+  },
+  "scenarioPresets": [
+    "portfolio-ready",
+    "fresh-start",
+    "pending-order",
+    "market-suspended",
+    "resolved-market",
+    "price-change-before-confirm",
+    "limited-liquidity"
+  ],
+  "designAssetsPolicy": "Approved screenshots guide visual style only; they are not market imagery or production UI data.",
+  "compatibilityNote": "v1.7 adds explicit demo-only resolutionRule, chartPoints, liquidity and activity; v1.6 financial seed values are retained.",
+  "simulationRules": {
+    "marketClock": "Frozen at displayAsOf; no real-time updates.",
+    "orderExecution": "Immediate: full fill or reject at scenario ask/bid; limit: OPEN until explicit deterministic scenario event or cancelled.",
+    "fees": "0 cents; display Demo fees $0; do not reuse fees from generated images.",
+    "contractSizeCents": 100,
+    "moneyRepresentation": "integer cents only",
+    "quantityRepresentation": "nonnegative integer number of contracts",
+    "liquidityPolicy": "maxImmediateBuyContractsPerOutcome/maxImmediateSellContractsPerOutcome snapshot cap, not a real order book",
+    "markingPolicy": "mark positions at indicative price; sale preview uses bid and cannot guarantee later execution",
+    "copyrightPolicy": "Do not attribute fabricated headlines to real publishers; images are layout references not licensed production assets."
+  },
+  "scenarioDefinitions": {
+    "portfolio-ready": {
+      "mode": "BASELINE",
+      "description": "Four open positions, one pending limit BUY, three saved markets; accounting totals match initialState",
+      "initialStateRef": "initialState"
+    },
+    "fresh-start": {
+      "mode": "RESET_USER_STATE",
+      "description": "Keep all market fixture prices; reset user account to $1,000 virtual cash and zero positions/orders/history/saved/notifications",
+      "cashTotalCents": 100000,
+      "reservedCashCents": 0,
+      "positions": [],
+      "orders": [],
+      "savedMarketIds": [],
+      "history": [],
+      "notifications": []
+    },
+    "pending-order": {
+      "mode": "BASELINE_PENDING",
+      "description": "Select the seeded 20 contract BUY YES LIMIT at 22 cents on apple-foldable-2027; it is OPEN until explicitly cancelled",
+      "orderId": "order-001"
+    },
+    "market-suspended": {
+      "mode": "STATE_OVERRIDE",
+      "description": "Set the Mars market to SUSPENDED for an explicit demo test; no new orders allowed; retain holdings/history",
+      "marketId": "mars-2035",
+      "newStatus": "SUSPENDED",
+      "removeExecutableQuotes": true
+    },
+    "resolved-market": {
+      "mode": "INSPECT",
+      "description": "Open the already-resolved demo summit, show YES result and rules, block trading. No cash adjustment because seed has no position in this market",
+      "marketId": "global-event-resolved",
+      "winningOutcomeId": "yes"
+    },
+    "price-change-before-confirm": {
+      "mode": "QUOTE_CHANGE_ON_EXPLICIT_TEST_ACTION",
+      "description": "When reviewing BUY YES on Mars, tester explicitly simulates a price change; do not execute stale order; ask for new Review",
+      "marketId": "mars-2035",
+      "outcomeId": "yes",
+      "side": "YES",
+      "oldAskCents": 49,
+      "newYesQuote": {
+        "indicativeCents": 51,
+        "askCents": 52,
+        "bidCents": 50
+      },
+      "newNoQuote": {
+        "indicativeCents": 49,
+        "askCents": 50,
+        "bidCents": 48
+      },
+      "requiresNewReview": true
+    },
+    "limited-liquidity": {
+      "mode": "LIQUIDITY_OVERRIDE",
+      "description": "Override max immediate fill on Mars for testing full reject (no P0 partial fills)",
+      "marketId": "mars-2035",
+      "maxImmediateBuyContractsPerOutcome": 5,
+      "maxImmediateSellContractsPerOutcome": 5
+    }
+  }
+}

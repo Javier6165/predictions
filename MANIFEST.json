@@ -1,0 +1,95 @@
+{
+  "title": "Prediction Market 2.0 - Claude Code Ready",
+  "version": "1.7",
+  "createdAt": "2026-10-10",
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "sha256": "8a5db29dad615fa68ad4a3a7b4da97f60932e500ed180a30bfc91c4548378795",
+      "bytes": 8870
+    },
+    {
+      "path": "PROMPT_MAESTRO_PARA_CLAUDE_CODE.md",
+      "sha256": "0c1b04530107bcb5d49f330650aa68cf092be91ad5230fbfe9b9c312d3ec4a5e",
+      "bytes": 12975
+    },
+    {
+      "path": "README_EMPEZAR_AQUI.md",
+      "sha256": "f58ad8f9f30235a25570e5a706dbab650483c89cdc646a95aaa22a1e7b94f4b6",
+      "bytes": 2758
+    },
+    {
+      "path": "data/demo-fixtures.v1.7.json",
+      "sha256": "ef36d8cc0871e9b62519e5574cd070bc0c91f1e6180784489f94c46dca92431b",
+      "bytes": 107959
+    },
+    {
+      "path": "docs/DESIGN_REFERENCES.md",
+      "sha256": "a8bbd3de5dce07b07db99a34ddc60a8479d479e8d6eddea4485b5285c8c1e0c7",
+      "bytes": 2932
+    },
+    {
+      "path": "docs/IMPLEMENTATION_CONTRACT.md",
+      "sha256": "f80955dbf78368ce89b5a96521817b685f66dcdd08904537c383295fa79f4293",
+      "bytes": 15041
+    },
+    {
+      "path": "docs/MASTER_BLUEPRINT_v1.7.md",
+      "sha256": "2c05e51e0d8384012c850eccaeacaef1eb96f0eebfb8943461cb27cf8086042f",
+      "bytes": 211557
+    },
+    {
+      "path": "docs/QA_AND_SCENARIOS.md",
+      "sha256": "cc1bdc472ebd6ee089b13fc98ee443f5d2de2275faf7d2f6937b2a89beea40be",
+      "bytes": 9036
+    },
+    {
+      "path": "docs/READINESS_AUDIT.md",
+      "sha256": "272e742732239e61c2d3f68dbf07cd4d9d3b03d2dca4075663361c9530131017",
+      "bytes": 5824
+    },
+    {
+      "path": "references/a_clean_modern_dark_themed_ui_ux_screenshot_of_a.png",
+      "sha256": "04761c7b0c370ba3eff0c994aae203f80ec2706d0ca6c51a65d7868ab4232b49",
+      "bytes": 1833496
+    },
+    {
+      "path": "references/a_clean_modern_dark_themed_web_app_dashboard_scre.png",
+      "sha256": "f849b61286353e9ecf803ff22bdb56c977e06a85c247b560d7212c231591a266",
+      "bytes": 1795466
+    },
+    {
+      "path": "references/a_dark_sleek_modern_ui_dashboard_in_a_neon_glow.png",
+      "sha256": "f79942f332a62a6efe682f8f41421db7380937975f732b24745082f548a6553e",
+      "bytes": 1774908
+    },
+    {
+      "path": "references/a_sleek_dark_futuristic_ui_dashboard_website_moc.png",
+      "sha256": "2bd2cbb6536750242b371239033988fd18d47c69e4e39041b44e0a58aebe967e",
+      "bytes": 1704100
+    },
+    {
+      "path": "references/a_sleek_dark_futuristic_web_app_dashboard_ui_des.png",
+      "sha256": "2cea3e6cf6d9c256d564838da1bdc0b1fc6246a4567d93efea0723bce972d5c8",
+      "bytes": 1935112
+    },
+    {
+      "path": "references/a_wide_clean_dark_blue_themed_ui_mockup_tutorial.png",
+      "sha256": "1df5765e0ad6971435abe5be65dd159cbee7bf404df36296e308e03cbdef7f90",
+      "bytes": 1688916
+    },
+    {
+      "path": "references/wide_desktop_ui_screenshot_of_a_dark_themed_tradin.png",
+      "sha256": "353ccf05cf76b721846243444fc79d435697fd549dd23e26c31e65d79fdfc7cd",
+      "bytes": 1711072
+    },
+    {
+      "path": "scripts/validate-fixtures.py",
+      "sha256": "1c083b1bf7fbe087873c38997a6bae621eb6de1c82aedfcb3e55fbd268fb13ff",
+      "bytes": 6835
+    }
+  ],
+  "approvedReferences": 7,
+  "sourceOfTruth": "data/demo-fixtures.v1.7.json",
+  "validation": "PASS: 24 markets / 8 categories / 4 positions / 1 resting order / balances reconciled"
+}
