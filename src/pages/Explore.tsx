@@ -342,8 +342,8 @@ export function ExplorePage() {
                       active ? 'ring-2 ring-accent' : 'ring-white/10 hover:ring-white/30',
                     )}
                   >
-                    <SceneArt art={c.art} seed={c.slug} />
-                    <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+                    <SceneArt art={c.art} seed={c.slug} sizes="120px" />
+                    <span className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/5" />
                     <span className="absolute inset-x-0 bottom-0 p-2.5">
                       <span className="block text-[13px] font-semibold text-white">{c.shortName}</span>
                       <span className="text-[11px] text-white/70">{markets.filter((m) => m.category === c.name).length}</span>

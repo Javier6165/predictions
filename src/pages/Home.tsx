@@ -185,7 +185,7 @@ function Categories({ markets }: { markets: Market[] }) {
                 to={`/explore?category=${c.slug}`}
                 className="group relative block aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-white/30"
               >
-                <SceneArt art={c.art} seed={c.slug} className="transition duration-500 group-hover:scale-105" />
+                <SceneArt art={c.art} seed={c.slug} sizes="(min-width: 1024px) 160px, 144px" className="transition duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-3">
                   <div>

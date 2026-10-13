@@ -142,7 +142,7 @@ Not done: no manual screen-reader pass, no testing on Safari/Firefox or real pho
 ## Differences from the references (deliberate)
 
 - **No Insights tab** and **"Demo funds"** instead of *Deposit* (per the spec); Insights live as notes on Home and in each market's News tab.
-- **Placeholder art is generated in code** (SVG scenes per category). No photos, logos or real people are used. Replacing them with licensed or commissioned images is a production task.
+- **Placeholder photography** from Pexels (Pexels License) for every market, category and page header — see [docs/PHOTO_CREDITS.md](docs/PHOTO_CREDITS.md). Each was checked for people, logos, text and real institutions. Any seed without a photo falls back to the code-generated SVG scene. Bespoke art/branding replaces these later.
 - A **fictional candidate (Elena Marlowe)** replaces the real politician used in the original fixture and blueprint examples.
 - Market **News** notes were rewritten as richer fictional storyline notes, all signed *NOVA Demo* and marked *Simulated*; any numbers they mention match the fixture charts.
 - Home's *Upcoming key events* became **Closing soon** (real links to markets), since "Set reminder" would have been a fake button.

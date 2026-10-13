@@ -29,10 +29,19 @@ for (const [path, url] of Object.entries(files)) {
 }
 
 /** Per-photo focal points where the subject is off-centre. */
-const POSITION: Record<string, string> = {};
+const POSITION: Record<string, string> = {
+  'nba-2027': '30% 35%',
+  'midterm-turnout-2026': '40% 45%',
+  'apple-foldable-2027': '55% 40%',
+  'peace-talks-2027': '55% 50%',
+  'exoplanet-2027': '35% 60%',
+};
 
 /** Scene seeds that should borrow another photo. */
-const ALIASES: Record<string, string> = {};
+const ALIASES: Record<string, string> = {
+  hero: 'hero-space',
+  'insights-dunes': 'exoplanet-2027',
+};
 
 const CATEGORY_SLUGS = new Set(CATEGORIES.map((c) => c.slug));
 
