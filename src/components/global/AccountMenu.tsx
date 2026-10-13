@@ -1,4 +1,4 @@
-import { Info, PlusCircle, RotateCcw, Settings, Sparkles } from 'lucide-react';
+import { Info, PlusCircle, RotateCcw, Settings } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,16 +38,15 @@ export function AccountMenu() {
           <Avatar className="h-11 w-11" />
           <div className="min-w-0">
             <p className="text-sm font-semibold">Demo Explorer</p>
-            <p className="text-xs text-muted">Guest demo account · no sign-in</p>
+            <p className="text-xs text-muted">Guest account</p>
           </div>
         </div>
         <div className="mx-1 mb-1.5 rounded-xl border border-line bg-white/[0.03] px-3 py-2.5">
-          <p className="text-[11px] uppercase tracking-wide text-subtle">Available demo cash</p>
+          <p className="text-[11px] uppercase tracking-wide text-subtle">Available cash</p>
           <p className="text-lg font-semibold tabular">{formatMoney(availableCents(user))}</p>
-          <p className="text-[11px] text-subtle">Virtual dollars — not real money</p>
         </div>
         <DropdownMenuItem onSelect={() => setDialog('funds')}>
-          <PlusCircle /> Add demo funds
+          <PlusCircle /> Add funds
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => setDialog('reset')}>
           <RotateCcw /> Reset demo
@@ -59,9 +58,6 @@ export function AccountMenu() {
         <DropdownMenuItem onSelect={() => setDialog('about')}>
           <Info /> About this demo
         </DropdownMenuItem>
-        <div className="flex items-center gap-2 px-3 pb-1.5 pt-2 text-[11px] text-subtle">
-          <Sparkles className="h-3.5 w-3.5" aria-hidden /> Interactive demo · Simulated markets
-        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

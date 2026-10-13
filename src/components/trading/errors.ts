@@ -16,15 +16,15 @@ export function errorCopy(e: EngineError): string {
     case 'BUDGET_BELOW_PRICE':
       return `Your amount is below the price of one contract (${formatPrice(e.askCents)}).`;
     case 'INSUFFICIENT_FUNDS':
-      return `You need ${formatMoney(e.requiredCents)} but have ${formatMoney(e.availableCents)} of demo cash available.`;
+      return `You need ${formatMoney(e.requiredCents)} but have ${formatMoney(e.availableCents)} of cash available.`;
     case 'INSUFFICIENT_LIQUIDITY':
-      return `Not enough demo liquidity at this price: at most ${e.maxQuantity.toLocaleString('en-US')} contracts fill immediately. Reduce the amount or use a limit order.`;
+      return `Not enough liquidity at this price: at most ${e.maxQuantity.toLocaleString('en-US')} contracts fill immediately. Reduce the amount or use a limit order.`;
     case 'INSUFFICIENT_POSITION':
       return `You only hold ${e.heldQuantity} contracts.`;
     case 'UNKNOWN_POSITION':
       return 'This position no longer exists — it may have been sold or settled.';
     case 'QUOTE_CHANGED':
-      return `The demo price moved from ${formatPrice(e.previousCents)} to ${formatPrice(e.currentCents)}. Nothing was executed.`;
+      return `The price moved from ${formatPrice(e.previousCents)} to ${formatPrice(e.currentCents)}. Nothing was executed.`;
     case 'INVALID_LIMIT_PRICE':
       return `A limit buy must be below the current price of ${formatPrice(e.askCents)} — at that price, buy now instead.`;
     case 'UNKNOWN_ORDER':

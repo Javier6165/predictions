@@ -76,7 +76,7 @@ test('axe: overlays, dialogs and sheets', async ({ page }) => {
   await page.getByRole('button', { name: /Notifications/ }).click();
   await axe(page, 'bell', found);
   await page.keyboard.press('Escape');
-  for (const item of ['Add demo funds', 'Reset demo', /Settings/, 'About this demo']) {
+  for (const item of ['Add funds', 'Reset demo', /Settings/, 'About this demo']) {
     await page.getByRole('button', { name: 'Demo Explorer account menu' }).click();
     await page.getByRole('menuitem', { name: item }).click();
     await axe(page, `dialog ${item}`, found);

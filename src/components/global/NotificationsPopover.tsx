@@ -138,7 +138,7 @@ export function NotificationsPopover() {
             <div className="px-6 py-10 text-center">
               <Bell className="mx-auto h-6 w-6 text-subtle" aria-hidden />
               <p className="mt-2 text-sm text-ink-2">{filter === 'unread' ? 'You’re all caught up.' : 'No notifications yet.'}</p>
-              <p className="mt-1 text-xs text-muted">Trades, orders and demo events will appear here.</p>
+              <p className="mt-1 text-xs text-muted">Trades, orders and market events will appear here.</p>
             </div>
           ) : (
             <ul>
@@ -148,7 +148,6 @@ export function NotificationsPopover() {
             </ul>
           )}
         </div>
-        <p className="border-t border-line px-4 py-2.5 text-[11px] text-subtle">Simulated alerts from your demo session only.</p>
       </PopoverContent>
     </Popover>
   );

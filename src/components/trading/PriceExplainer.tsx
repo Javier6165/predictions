@@ -42,7 +42,7 @@ export function PriceExplainer({ quote, sideLabel, variant = 'link', className }
         </dl>
         <p className="mt-3 text-xs leading-relaxed text-ink-2">
           The {spread}¢ gap between buying and selling is the <strong>spread</strong>. Your position’s value is shown at the {quote.indicativeCents}%
-          estimate; actually selling returns the sell price. A winning contract always pays $1.00. Demo fees are $0.
+          estimate; actually selling returns the sell price. A winning contract always pays $1.00. Fees are $0.
         </p>
       </PopoverContent>
     </Popover>

@@ -71,7 +71,7 @@ test.describe('with motion enabled', () => {
     await expect(page.getByText('Your prediction is active!')).toBeVisible();
     await page.getByRole('link', { name: 'View your position' }).click();
     await expect(page.getByTestId('cash-available')).toHaveText('$822.02');
-    await page.getByRole('button', { name: 'Add demo funds' }).first().click();
+    await page.getByRole('button', { name: 'Add funds' }).first().click();
     await page.getByRole('dialog').getByRole('button', { name: /^Add/ }).click();
     await page.getByRole('dialog').getByRole('button', { name: 'Done' }).click();
     await expect(page.getByTestId('cash-available')).toHaveText('$1,322.02');

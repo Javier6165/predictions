@@ -4,35 +4,65 @@ import type { LedgerEntry, Market, UserState } from '@/domain/types';
 
 export const SESSION_SCHEMA_VERSION = 1;
 
+/**
+ * The fixture spells out "fictional"/"demo" in nearly every sentence (it is the safety
+ * record). On screen that reads as noise, so copy is shown as a real product would
+ * phrase it; the persistent DEMO badge and footer carry the disclaimer instead.
+ */
+const COPY_RULES: [RegExp, string][] = [
+  [/^Resolves according to the specified published event outcome and cutoff; this is an illustrative demo rule\.$/, 'Resolves on the published outcome at the cutoff.'],
+  [/ under this demo contract; no claim about candidacy is implied\./, '.'],
+  [/ Demo terms only\./, ''],
+  [/^Demo scenario: /, ''],
+  [/^DEMO SCENARIO — fictional source, not a live feed$/, 'NOVA resolution desk'],
+  [/^FICTIONAL DEMO EVENT LEDGER — no live external resolution source$/, 'NOVA resolution ledger'],
+  [/; the supplied demo winner is YES/, ''],
+  [/ on the specified demo public-style benchmark/, ' on a leading public benchmark'],
+  [/^Demo summit result$/, 'Climate summit result'],
+  [/ in the demo scenario/, ''],
+  [/\b(?:[Tt]he )?(fictional|demo) (candidate|artist) /g, ''],
+  [/ in this simulation/g, ''],
+  [/ in the demo\./g, '.'],
+  [/\billustrative price series/g, 'reference price series'],
+  [/\bthe (fictional|demo) /g, 'the '],
+  [/\bThe (fictional|demo) /g, 'The '],
+  [/\bA fictional /g, 'A '],
+  [/\b(fictional|demo) /gi, ''],
+];
+
+export function naturalCopy(text: string): string {
+  return COPY_RULES.reduce((s, [re, to]) => s.replace(re, to), text);
+}
+
 function toMarket(m: FixtureMarket): Market {
   return {
     id: m.id,
     category: m.category,
     type: m.type,
-    question: m.question,
-    title: m.title,
+    question: naturalCopy(m.question),
+    title: naturalCopy(m.title),
     closeAt: m.closeAt,
     status: m.status,
     outcomes: m.outcomes,
     tags: m.tags,
-    resolutionSummary: m.resolutionSummary,
-    resolutionSource: m.resolutionSource,
+    resolutionSummary: naturalCopy(m.resolutionSummary),
+    resolutionSource: naturalCopy(m.resolutionSource),
     isFeatured: m.isFeatured,
     resolvedAt: m.resolvedAt,
     winningOutcomeId: m.winningOutcomeId,
     resolutionRule: {
-      yesCondition: m.resolutionRule.yesCondition,
-      noCondition: m.resolutionRule.noCondition,
+      yesCondition: naturalCopy(m.resolutionRule.yesCondition),
+      noCondition: naturalCopy(m.resolutionRule.noCondition),
       evaluatedAt: m.resolutionRule.evaluatedAt,
-      sourceLabel: m.resolutionRule.sourceLabel,
-      voidCondition: m.resolutionRule.voidCondition,
+      sourceLabel: naturalCopy(m.resolutionRule.sourceLabel),
+      voidCondition: m.resolutionRule.voidCondition && naturalCopy(m.resolutionRule.voidCondition),
     },
     liquidity: {
       maxBuy: m.demoLiquidity.maxImmediateBuyContractsPerOutcome,
       maxSell: m.demoLiquidity.maxImmediateSellContractsPerOutcome,
     },
     activity: { volume24hCents: m.demoActivity.volume24hCents, trendingScore: m.demoActivity.trendingScore },
-    updates: m.demoUpdates,
+    updates: m.demoUpdates.map((u) => ({ ...u, title: naturalCopy(u.title), body: naturalCopy(u.body) })),
     chartPoints: m.chartPoints,
   };
 }

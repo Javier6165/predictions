@@ -43,10 +43,10 @@ test('limit order on a multi-outcome NO', async ({ page }) => {
   await page.getByLabel('Limit price (¢)').fill('80');
   await page.getByLabel('Contracts').fill('5');
   await page.getByRole('button', { name: 'Review limit order' }).click();
-  await expect(page.getByRole('dialog').getByText('A comedy will not win Best Picture at the fictional 2027 Film Awards.')).toBeVisible();
+  await expect(page.getByRole('dialog').getByText('A comedy will not win Best Picture at the 2027 Film Awards.')).toBeVisible();
   await page.getByRole('button', { name: 'Place limit order' }).click();
   await page.getByRole('link', { name: 'View pending orders' }).click();
-  await expect(page.getByText('A comedy will not win Best Picture at the fictional 2027 Film Awards.')).toBeVisible();
+  await expect(page.getByText('A comedy will not win Best Picture at the 2027 Film Awards.')).toBeVisible();
   await expect(page.getByTestId('cash-available')).toHaveText('$868.00');
 });
 
@@ -130,5 +130,5 @@ test('save from detail appears in portfolio saved', async ({ page }) => {
   await page.getByRole('button', { name: 'Save New global festival' }).first().click();
   await page.getByRole('link', { name: 'Portfolio' }).first().click();
   await page.getByRole('tab', { name: /Saved/ }).click();
-  await expect(page.getByRole('link', { name: 'Will the fictional Horizon Sound festival be announced by 2027?' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Will the Horizon Sound festival be announced by 2027?' })).toBeVisible();
 });

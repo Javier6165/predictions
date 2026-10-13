@@ -20,7 +20,7 @@ async function runScenario(page: Page, title: string) {
 test('E2E-01 cold entry lands on Home with demo badge and three destinations', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Will a crewed mission land on Mars');
-  await expect(page.getByText('Interactive demo · Simulated markets').first()).toBeVisible();
+  await expect(page.getByText(/Interactive demo/).first()).toBeVisible();
   const nav = page.getByRole('navigation', { name: 'Primary' }).first();
   await expect(nav.getByRole('link')).toHaveText(['Home', 'Explore', 'Portfolio']);
   await expect(page.getByText(/sign in|log in/i)).toHaveCount(0);
@@ -87,12 +87,12 @@ test('E2E-07/08/09 Buy YES: review, back keeps form, confirm reconciles portfoli
   await expect(dialog.getByText('A crewed mission will land on Mars before 2035.')).toBeVisible();
   await expect(dialog.getByText('$49.98').first()).toBeVisible();
   await expect(dialog.getByText('−$49.98 (−100%)')).toBeVisible();
-  await expect(dialog.getByText('Demo fees', { exact: true })).toBeVisible();
+  await expect(dialog.getByText('Fees', { exact: true })).toBeVisible();
 
   // E2E-08: cancel review → nothing changed, form preserved.
   await dialog.getByRole('button', { name: 'Back to edit' }).click();
   await expect(page.getByLabel('Amount to invest')).toHaveValue('50');
-  await expect(page.getByText('Available demo cash: $872.00')).toBeVisible();
+  await expect(page.getByText('Available cash: $872.00')).toBeVisible();
 
   // E2E-09: confirm → receipt → portfolio.
   await page.getByRole('button', { name: 'Review prediction' }).click();
@@ -203,10 +203,10 @@ test('E2E-16 Bell notification navigates and marks read; Search closes Bell', as
 
 test('E2E-17 Add demo funds grows cash but not P&L', async ({ page }) => {
   await page.goto('/portfolio');
-  await page.getByRole('button', { name: 'Add demo funds' }).first().click();
+  await page.getByRole('button', { name: 'Add funds' }).first().click();
   await page.getByText('$500', { exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Add $500' }).click();
-  await expect(page.getByRole('dialog').getByText('$500.00 demo funds added')).toBeVisible();
+  await expect(page.getByRole('dialog').getByText('$500.00 added to your cash')).toBeVisible();
   await page.getByRole('dialog').getByRole('button', { name: 'Done' }).click();
   await expect(money(page, 'cash-available')).toHaveText('$1,372.00');
   await expect(money(page, 'portfolio-value')).toHaveText('$1,504.80');
@@ -229,7 +229,7 @@ test('E2E-18 Reload in the same tab keeps the trade without repeating it', async
 
 test('E2E-19/20 Restore showcase and Start fresh', async ({ page }) => {
   await page.goto('/portfolio');
-  await page.getByRole('button', { name: 'Add demo funds' }).first().click();
+  await page.getByRole('button', { name: 'Add funds' }).first().click();
   await page.getByRole('dialog').getByRole('button', { name: /^Add/ }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Done' }).click();
 

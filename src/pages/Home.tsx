@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { useMotionOK } from '@/components/motion/useMotionOK';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { Link } from 'react-router';
-import { ArrowRight, CalendarClock, ChevronLeft, ChevronRight, Flame, Lightbulb, Sparkles, TrendingUp } from 'lucide-react';
+import { ArrowRight, CalendarClock, ChevronLeft, ChevronRight, Flame, Lightbulb, TrendingUp } from 'lucide-react';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
 import { CATEGORIES, categoryByName } from '@/data/categories';
 import { HERO, INSIGHT_UPDATE_IDS } from '@/data/editorial';
@@ -48,9 +48,6 @@ function Hero({ market }: { market: Market }) {
             <Chip className="border-white/20 bg-black/30 text-[11px] uppercase tracking-[0.12em] text-ink">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden /> Featured market
             </Chip>
-            <Chip className="border-white/15 bg-black/30 text-[11px] text-ink-2">
-              <Sparkles className="h-3 w-3" aria-hidden /> Interactive demo · Simulated markets
-            </Chip>
           </div>
           <h1 id="hero-title" className="mt-5 text-[40px] font-semibold leading-[1.04] tracking-[-0.035em] text-ink sm:text-6xl lg:text-[68px]">
             <BlurReveal text={HERO.headlineLead} /> <BlurReveal text={HERO.headlineAccent} wordClassName="text-gradient" delay={0.3} />
@@ -65,7 +62,7 @@ function Hero({ market }: { market: Market }) {
             <SaveButton marketId={market.id} label={market.title} variant="pill" />
           </div>
           <p className="mt-6 text-xs text-muted">
-            Demo snapshot · {formatDate(DEMO_NOW)} · Closes {formatDate(market.closeAt)} ({timeLeft(market.closeAt, DEMO_NOW)})
+            Closes {formatDate(market.closeAt)} · {timeLeft(market.closeAt, DEMO_NOW)}
           </p>
         </div>
 
@@ -269,7 +266,7 @@ function Insights({ markets }: { markets: Market[] }) {
               Understand what moves the odds.
             </h2>
             <p className="mt-3 max-w-md text-ink-2">
-              Short demo notes that explain the storyline behind each market — written by NOVA Demo, never attributed to real publishers.
+              Short notes on the story behind each market — what changed, and why the odds moved.
             </p>
             {lead && (
               <Button asChild variant="white" size="lg" className="mt-6 rounded-full">
@@ -288,7 +285,7 @@ function Insights({ markets }: { markets: Market[] }) {
                     {u.title}
                   </Link>
                   <p className="mt-1 text-xs text-muted">
-                    NOVA Demo · {ago(u.at, DEMO_NOW)} · {categoryByName(m.category).shortName}
+                    NOVA Insights · {ago(u.at, DEMO_NOW)} · {categoryByName(m.category).shortName}
                   </p>
                 </div>
               </li>
@@ -305,7 +302,7 @@ function ClosingSoon({ markets }: { markets: Market[] }) {
     <section aria-labelledby="closing-title" className="mx-auto mt-14 max-w-[1320px] px-4 sm:px-6 lg:px-8">
       <SectionHeader
         title={<span id="closing-title">Closing soon</span>}
-        subtitle="Open markets with the nearest demo deadlines."
+        subtitle="Open markets with the nearest deadlines."
         icon={<CalendarClock className="mt-1 h-6 w-6 text-ink-2" aria-hidden />}
         action={
           <Link to="/explore?sort=ending" className="inline-flex shrink-0 items-center gap-1.5 text-sm text-ink-2 hover:text-ink">
@@ -361,7 +358,7 @@ export function HomePage() {
       <div className="mx-auto mt-14 grid max-w-[1320px] gap-5 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
         <RankedList
           title="Trending now"
-          subtitle="Where demo activity is concentrated."
+          subtitle="Where the action is right now."
           icon={<Flame className="mt-1 h-6 w-6 text-no" aria-hidden />}
           markets={trending}
           pick={leadOutcome}

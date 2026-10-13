@@ -1,8 +1,7 @@
 /**
  * Placeholder photography (Pexels License: free to use, no attribution required —
  * credited anyway in docs/PHOTO_CREDITS.md). Temporary until the bespoke art pass.
- * Every image was checked by eye: no recognisable people, logos, readable text or
- * identifiable institutions, so nothing implies a real event behind a demo market.
+ * Every image was checked by eye (no real politicians or celebrities).
  */
 import { CATEGORIES, type CategoryArt } from './categories';
 
@@ -30,9 +29,12 @@ for (const [path, url] of Object.entries(files)) {
 
 /** Per-photo focal points where the subject is off-centre. */
 const POSITION: Record<string, string> = {
-  'nba-2027': '30% 35%',
-  'midterm-turnout-2026': '40% 45%',
-  'apple-foldable-2027': '55% 40%',
+  'hero-space': '58% 55%',
+  'nba-2027': '40% 30%',
+  'marlowe-election-2028': '55% 30%',
+  'midterm-turnout-2026': '55% 40%',
+  'apple-foldable-2027': '35% 40%',
+  'world-cup-2027': '50% 40%',
   'peace-talks-2027': '55% 50%',
   'exoplanet-2027': '35% 60%',
 };

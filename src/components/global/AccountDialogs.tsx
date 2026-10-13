@@ -38,9 +38,9 @@ function FundsDialog() {
         {done ? (
           <div className="py-2 text-center">
             <AnimatedCheck className="mx-auto h-14 w-14" />
-            <DialogTitle className="mt-3 text-xl">{formatMoney(done)} demo funds added</DialogTitle>
+            <DialogTitle className="mt-3 text-xl">{formatMoney(done)} added to your cash</DialogTitle>
             <DialogDescription className="mt-1.5">
-              Available demo cash is now <span className="font-semibold text-ink">{formatMoney(summary.availableCents)}</span>. Your
+              Available cash is now <span className="font-semibold text-ink">{formatMoney(summary.availableCents)}</span>. Your
               profit &amp; loss is unchanged at {formatSignedMoney(summary.totalPnLCents)} — top-ups are never counted as gains.
             </DialogDescription>
             <Button className="mt-6 w-full" size="lg" onClick={close}>
@@ -54,7 +54,7 @@ function FundsDialog() {
                 <Wallet className="h-5 w-5" aria-hidden />
               </span>
               <div>
-                <DialogTitle>Add demo funds</DialogTitle>
+                <DialogTitle>Add funds</DialogTitle>
                 <DialogDescription>Virtual dollars for this demo session. No card, bank or payment involved.</DialogDescription>
               </div>
             </div>
@@ -76,7 +76,7 @@ function FundsDialog() {
               </div>
             </fieldset>
             <p className="mt-4 rounded-xl border border-line bg-white/[0.03] px-3.5 py-3 text-xs leading-relaxed text-muted">
-              Adds to your cash and portfolio value, and to “Demo funds added”. It does <strong className="text-ink-2">not</strong> change profit &amp; loss.
+              Adds to your cash and portfolio value, and to “Funds added”. It does <strong className="text-ink-2">not</strong> change profit &amp; loss.
             </p>
             <div className="mt-6 flex gap-3">
               <Button variant="secondary" className="flex-1" size="lg" onClick={close}>

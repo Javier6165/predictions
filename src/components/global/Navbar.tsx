@@ -115,7 +115,7 @@ export function Navbar() {
             onClick={() => setDialog('funds')}
             className="ml-1 hidden h-10 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-semibold text-slate-900 transition hover:bg-slate-100 sm:inline-flex"
           >
-            <Plus className="h-4 w-4" aria-hidden /> Demo funds
+            <Plus className="h-4 w-4" aria-hidden /> Add funds
           </button>
         </div>
       </div>

@@ -24,7 +24,7 @@ const PRESETS = [1000, 2500, 5000, 10000];
 export function DemoLabel({ className }: { className?: string }) {
   return (
     <p className={cn('flex items-center justify-center gap-1.5 text-[11px] text-subtle', className)}>
-      <Sparkles className="h-3 w-3" aria-hidden /> Interactive demo · Simulated markets · Demo fees $0
+      <Sparkles className="h-3 w-3" aria-hidden /> No fees · You’ll review before anything is bought
     </p>
   );
 }
@@ -176,7 +176,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             </button>
           ))}
         </div>
-        <p className="mt-2 text-xs text-muted">Available demo cash: {formatMoney(available)}</p>
+        <p className="mt-2 text-xs text-muted">Available cash: {formatMoney(available)}</p>
       </div>
 
       <div id={`${uid}-estimate`} aria-live="polite">
@@ -187,7 +187,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
               {error}{' '}
               {fundsError && (
                 <button type="button" onClick={() => setDialog('funds')} className="font-semibold underline underline-offset-2">
-                  Add demo funds
+                  Add funds
                 </button>
               )}
             </span>
@@ -197,7 +197,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             <p className="flex gap-2 text-ink-2">
               <Info className="mt-0.5 h-4 w-4 shrink-0 text-muted" aria-hidden />
               <span>
-                At the current demo price this buys{' '}
+                At the current price this buys{' '}
                 <strong className="text-ink">
                   <AnimatedNumber value={preview.quantity} format={formatContracts} duration={0.35} /> at {formatPrice(quote.askCents)}
                 </strong>{' '}

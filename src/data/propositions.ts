@@ -18,8 +18,8 @@ const club = (name: string): PropositionPair => ({
 });
 
 const genre = (article: string): PropositionPair => ({
-  yes: `${article} will win Best Picture at the fictional 2027 Film Awards.`,
-  no: `${article} will not win Best Picture at the fictional 2027 Film Awards.`,
+  yes: `${article} will win Best Picture at the 2027 Film Awards.`,
+  no: `${article} will not win Best Picture at the 2027 Film Awards.`,
 });
 
 export const PROPOSITIONS: Record<string, BinaryEntry | MultiEntry> = {
@@ -132,8 +132,8 @@ export const PROPOSITIONS: Record<string, BinaryEntry | MultiEntry> = {
       comedy: genre('A comedy'),
       'science-fiction': genre('A science-fiction film'),
       other: {
-        yes: 'A film outside drama, comedy and science fiction will win Best Picture at the fictional 2027 Film Awards.',
-        no: 'No film outside drama, comedy and science fiction will win Best Picture at the fictional 2027 Film Awards.',
+        yes: 'A film outside drama, comedy and science fiction will win Best Picture at the 2027 Film Awards.',
+        no: 'No film outside drama, comedy and science fiction will win Best Picture at the 2027 Film Awards.',
       },
     },
   },

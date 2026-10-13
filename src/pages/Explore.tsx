@@ -22,7 +22,7 @@ import { formatCompactMoney, formatDate } from '@/lib/format';
 const SORTS = [
   { id: 'trending', label: 'Trending' },
   { id: 'movers', label: 'Biggest move (7d)' },
-  { id: 'volume', label: 'Highest demo volume' },
+  { id: 'volume', label: 'Highest volume' },
   { id: 'ending', label: 'Ending soon' },
 ] as const;
 const STATUSES = [
@@ -210,7 +210,7 @@ function MarketCard({ market }: { market: Market }) {
           </div>
           <div className="text-right">
             {market.status !== 'OPEN' ? <StatusBadge status={market.status} /> : <PpDelta value={changePp(market, lead.id)} suffix="7d" />}
-            <p className="mt-1 text-[11px] text-subtle">{formatCompactMoney(market.activity.volume24hCents)} demo vol.</p>
+            <p className="mt-1 text-[11px] text-subtle">{formatCompactMoney(market.activity.volume24hCents)} vol.</p>
           </div>
         </div>
       </div>
@@ -308,7 +308,7 @@ export function ExplorePage() {
             <BlurReveal text="Discover what the world" /> <BlurReveal text="is predicting." wordClassName="text-gradient" delay={0.25} />
           </h1>
           <p className="mt-4 max-w-xl text-ink-2">
-            From politics to science, browse every demo market. Compare the odds, save what interests you and dig into the rules.
+            From politics to science, browse every market. Compare the odds, save what interests you and dig into the rules.
           </p>
 
           <ul className="stagger scrollbar-none -mx-4 mt-8 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0" aria-label="Categories">
@@ -387,7 +387,7 @@ export function ExplorePage() {
                 </>
               ) : (
                 <>
-                  <span className="font-semibold text-ink tabular">{markets.length}</span> demo markets
+                  <span className="font-semibold text-ink tabular">{markets.length}</span> markets
                 </>
               )}
             </p>
@@ -501,7 +501,7 @@ export function ExplorePage() {
             )}
           </div>
           <p className="mt-6 text-xs text-subtle">
-            Probabilities are indicative demo values as of {formatDate(DEMO_NOW)}. Changes are shown in percentage points (pp).
+            Probabilities as of {formatDate(DEMO_NOW)}. Changes are shown in percentage points (pp).
           </p>
         </div>
       </div>
@@ -509,7 +509,7 @@ export function ExplorePage() {
       <Sheet open={mobileFilters} onOpenChange={setMobileFilters}>
         <SheetContent side="bottom" className="px-5 pb-6 pt-3">
           <SheetTitle className="sr-only">Filters</SheetTitle>
-          <SheetDescription className="sr-only">Filter and sort demo markets</SheetDescription>
+          <SheetDescription className="sr-only">Filter and sort markets</SheetDescription>
           {form}
           <Button className="mt-5 w-full" size="lg" onClick={() => setMobileFilters(false)}>
             Show {results.length} result{results.length === 1 ? '' : 's'}

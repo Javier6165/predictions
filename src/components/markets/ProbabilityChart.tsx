@@ -145,7 +145,7 @@ export function ProbabilityChart({
         cursor={{ stroke: 'rgba(148,163,184,0.35)' }}
         contentStyle={{ background: '#0c1424', border: '1px solid rgba(148,163,184,0.22)', borderRadius: 12, fontSize: 12 }}
         labelStyle={{ color: '#c5cee0', marginBottom: 4 }}
-        labelFormatter={(v) => `${formatDate(String(v))} · demo data`}
+        labelFormatter={(v) => `${formatDate(String(v))}`}
         formatter={(v, name) => [`${v}%`, labels[String(name)] ?? String(name)]}
       />
     </>
@@ -153,7 +153,7 @@ export function ProbabilityChart({
 
   return (
     <figure className="m-0" style={{ height }}>
-      <figcaption className="sr-only">Implied probability, demo data: {summary}.</figcaption>
+      <figcaption className="sr-only">Implied probability: {summary}.</figcaption>
       <div aria-hidden className="h-full w-full">
         <ResponsiveContainer width="100%" height="100%">
           {single ? (

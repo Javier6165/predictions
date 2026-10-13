@@ -3,7 +3,7 @@ import { ActivePill } from '@/components/motion/ActivePill';
 import { ProbabilityBar } from '@/components/motion/ProbabilityBar';
 import { useMotionOK } from '@/components/motion/useMotionOK';
 import { Link, useParams, useSearchParams } from 'react-router';
-import { ArrowRight, CalendarClock, ChevronRight, Flame, Gavel, Newspaper, ShieldCheck, Sparkles, Trophy } from 'lucide-react';
+import { ArrowRight, CalendarClock, ChevronRight, Flame, Gavel, Newspaper, ShieldCheck, Trophy } from 'lucide-react';
 import { useMarket, DEMO_NOW } from '@/lib/hooks';
 import { categoryByName } from '@/data/categories';
 import { catalog } from '@/data/fixtures';
@@ -197,7 +197,7 @@ function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: Tic
           onAnnotationHover={setActive}
         />
       </div>
-      <p className="mt-2 text-[11px] text-subtle">Weekly demo snapshots, indicative probability. Not live data.</p>
+      <p className="mt-2 text-[11px] text-subtle">Weekly snapshots · indicative probability.</p>
       {notes.length > 0 && (
         <div className="mt-4 border-t border-line pt-4">
           <h3 className="text-sm font-semibold">
@@ -229,7 +229,7 @@ function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: Tic
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-medium">{a.title}</span>
-                    <span className="text-xs text-muted">NOVA Demo note · {formatDate(a.noteAt)}</span>
+                    <span className="text-xs text-muted">NOVA Insights · {formatDate(a.noteAt)}</span>
                   </span>
                   <span className="shrink-0 text-right">
                     {a.deltaPp === null ? (
@@ -246,7 +246,7 @@ function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: Tic
             ))}
           </ol>
           <p className="mt-2 text-[11px] text-subtle">
-            Notes are fictional storyline context pinned to the nearest weekly snapshot — not a claim that they caused the move.
+            Notes are pinned to the nearest weekly snapshot — context, not proof they caused the move.
           </p>
         </div>
       )}
@@ -426,7 +426,7 @@ export function MarketDetailPage() {
               <CalendarClock className="h-4 w-4" aria-hidden />
               {market.status === 'RESOLVED' ? `Resolved ${formatDate(market.resolvedAt ?? market.closeAt)}` : `Closes ${formatDate(market.closeAt)} · ${timeLeft(market.closeAt, DEMO_NOW)}`}
             </Chip>
-            <Chip className="border-white/15 bg-black/30 px-3 py-1.5 text-[13px]">{formatCompactMoney(market.activity.volume24hCents)} demo volume (24h)</Chip>
+            <Chip className="border-white/15 bg-black/30 px-3 py-1.5 text-[13px]">{formatCompactMoney(market.activity.volume24hCents)} volume (24h)</Chip>
             {market.activity.trendingScore >= 80 && (
               <Chip className="border-white/15 bg-black/30 px-3 py-1.5 text-[13px]">
                 <Flame className="h-4 w-4 text-no" aria-hidden /> Trending
@@ -445,7 +445,7 @@ export function MarketDetailPage() {
               <div>
                 <p className="font-semibold">{resolved}</p>
                 <p className="text-sm text-muted">
-                  Settled {formatDate(market.resolvedAt ?? market.closeAt)} by the demo resolver. Winning contracts paid $1.00, others $0. Trading is closed.
+                  Settled {formatDate(market.resolvedAt ?? market.closeAt)} by the resolver. Winning contracts paid $1.00, others $0. Trading is closed.
                 </p>
               </div>
             </div>
@@ -485,7 +485,7 @@ export function MarketDetailPage() {
                 </section>
                 <section className="card p-5" aria-labelledby="notes-title">
                   <h2 id="notes-title" className="flex items-center gap-2 font-semibold">
-                    <Newspaper className="h-4 w-4 text-accent" aria-hidden /> Latest demo notes
+                    <Newspaper className="h-4 w-4 text-accent" aria-hidden /> Latest notes
                   </h2>
                   {updates.length === 0 ? (
                     <p className="mt-3 text-sm text-muted">No notes for this market yet.</p>
@@ -494,7 +494,7 @@ export function MarketDetailPage() {
                       {updates.slice(0, 2).map((u) => (
                         <li key={u.id}>
                           <p className="text-sm font-medium">{u.title}</p>
-                          <p className="text-xs text-muted">NOVA Demo · {ago(u.at, DEMO_NOW)}</p>
+                          <p className="text-xs text-muted">NOVA Insights · {ago(u.at, DEMO_NOW)}</p>
                         </li>
                       ))}
                     </ul>
@@ -507,9 +507,6 @@ export function MarketDetailPage() {
             </TabsContent>
 
             <TabsContent value="news" className="mt-5 outline-none">
-              <p className="mb-4 flex items-center gap-2 text-xs text-muted">
-                <Sparkles className="h-3.5 w-3.5" aria-hidden /> Fictional storyline notes written for this demo by NOVA Demo. Not real reporting.
-              </p>
               {updates.length === 0 ? (
                 <p className="card p-6 text-sm text-muted">No notes for this market yet.</p>
               ) : (
@@ -517,11 +514,10 @@ export function MarketDetailPage() {
                   {updates.map((u) => (
                     <li key={u.id} id={`note-${u.id}`} tabIndex={-1} className="card scroll-mt-24 p-5 outline-none focus-visible:ring-2 focus-visible:ring-accent">
                       <p className="flex items-center gap-2 text-xs text-muted">
-                        <span className="rounded bg-white/8 px-1.5 py-0.5 font-semibold text-ink-2">NOVA DEMO</span>
+                        <span className="rounded bg-white/8 px-1.5 py-0.5 font-semibold text-ink-2">NOVA INSIGHTS</span>
                         <span>{formatDate(u.at)}</span>
                         <span aria-hidden>·</span>
                         <span>{ago(u.at, DEMO_NOW)}</span>
-                        <span className="ml-auto rounded-full border border-line-strong px-2 py-0.5 text-[10px] uppercase tracking-wide">Simulated</span>
                       </p>
                       <h3 className="mt-2 text-lg font-semibold">{u.title}</h3>
                       <p className="mt-1.5 text-sm leading-relaxed text-ink-2">{u.body}</p>
@@ -532,9 +528,9 @@ export function MarketDetailPage() {
             </TabsContent>
 
             <TabsContent value="data" className="mt-5 grid gap-5 outline-none">
-              <section className="card relative overflow-x-auto p-1" tabIndex={0} aria-label="Demo quotes table, scrolls horizontally on small screens">
+              <section className="card relative overflow-x-auto p-1" tabIndex={0} aria-label="Quotes table, scrolls horizontally on small screens">
                 <table className="w-full min-w-[520px] text-sm">
-                  <caption className="px-4 pb-1 pt-4 text-left text-sm font-semibold text-ink">Demo quotes per contract</caption>
+                  <caption className="px-4 pb-1 pt-4 text-left text-sm font-semibold text-ink">Quotes per contract</caption>
                   <thead>
                     <tr className="text-left text-xs text-muted">
                       <th className="px-4 py-2 font-medium">Outcome</th>
@@ -567,12 +563,12 @@ export function MarketDetailPage() {
                 <h2 className="font-semibold">Market facts</h2>
                 <dl className="mt-3 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
                   {[
-                    ['Status', market.status === 'OPEN' ? 'Open for demo trading' : resolved ?? market.status.replace('_', ' ').toLowerCase()],
-                    ['Demo volume (24h)', formatMoney(market.activity.volume24hCents)],
+                    ['Status', market.status === 'OPEN' ? 'Open for trading' : resolved ?? market.status.replace('_', ' ').toLowerCase()],
+                    ['Volume (24h)', formatMoney(market.activity.volume24hCents)],
                     ['Immediate fill limit', market.liquidity.maxBuy > 0 ? `${market.liquidity.maxBuy.toLocaleString('en-US')} contracts per order` : 'Trading closed'],
                     ['Payout per winning contract', '$1.00 (losing: $0)'],
                     ['Price increment', '1¢'],
-                    ['Demo fees', '$0.00'],
+                    ['Fees', '$0.00'],
                     ['Closes', formatDate(market.closeAt)],
                     ['Evaluated', formatDate(market.resolutionRule.evaluatedAt)],
                   ].map(([k, v]) => (
@@ -591,7 +587,7 @@ export function MarketDetailPage() {
             <TabsContent value="rules" className="mt-5 outline-none">
               <section className="card p-5 sm:p-6">
                 <h2 className="text-lg font-semibold">Resolution rules</h2>
-                <p className="mt-1 text-xs text-muted">Demo terms for a fictional market. {market.resolutionRule.sourceLabel}.</p>
+                <p className="mt-1 text-xs text-muted">{market.resolutionRule.sourceLabel}.</p>
                 <dl className="mt-5 grid gap-4 text-sm">
                   {[
                     ['Resolves YES if', market.resolutionRule.yesCondition],

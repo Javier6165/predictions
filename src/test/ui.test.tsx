@@ -67,7 +67,7 @@ describe('Market detail ticket', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('below the price of one contract (49¢)');
     await user.clear(input);
     await user.type(input, '900');
-    expect(screen.getByRole('alert')).toHaveTextContent('have $872.00 of demo cash available');
+    expect(screen.getByRole('alert')).toHaveTextContent('have $872.00 of cash available');
     expect(screen.getByRole('button', { name: 'Review prediction' })).toBeDisabled();
   });
 

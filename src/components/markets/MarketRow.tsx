@@ -30,7 +30,7 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
             <span aria-hidden>·</span>
             <span>{resolved ? `Resolved ${formatDate(market.resolvedAt ?? market.closeAt)}` : `Closes ${formatDate(market.closeAt)}`}</span>
             <span aria-hidden className="hidden sm:inline">·</span>
-            <span className="hidden sm:inline">{formatCompactMoney(market.activity.volume24hCents)} demo vol.</span>
+            <span className="hidden sm:inline">{formatCompactMoney(market.activity.volume24hCents)} vol.</span>
             {market.status !== 'OPEN' && <StatusBadge status={market.status} />}
           </p>
         )}

@@ -204,7 +204,7 @@ export function TradeFlowDialog({
       <p className="flex gap-2 rounded-xl border border-warn/40 bg-warn-soft px-3.5 py-3 text-sm text-warn" role="alert">
         <RefreshCw className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
         <span>
-          The demo price changed from {formatPrice(requoted.from)} to {formatPrice(requoted.to)} before you confirmed. Nothing was executed — please review the
+          The price changed from {formatPrice(requoted.from)} to {formatPrice(requoted.to)} before you confirmed. Nothing was executed — please review the
           updated details.
         </span>
       </p>
@@ -262,7 +262,7 @@ export function TradeFlowDialog({
                   </dl>
                 </div>
                 <dl className="px-1">
-                  <Row label="Demo fees" value="$0.00" />
+                  <Row label="Fees" value="$0.00" />
                   <Row label="Total cost" value={formatMoney(p.costCents)} strong />
                 </dl>
               </>
@@ -317,7 +317,7 @@ export function TradeFlowDialog({
                 </dl>
               </div>
               <dl className="px-1">
-                <Row label="Demo fees" value="$0.00" />
+                <Row label="Fees" value="$0.00" />
                 {!all && <Row label="Contracts you’ll keep" value={p.remainingQuantity} />}
               </dl>
               <p className="text-xs text-muted">Selling early is different from being paid out: if you held to resolution and were right, these contracts would pay {formatMoney(p.quantity * 100)}.</p>
@@ -350,7 +350,7 @@ export function TradeFlowDialog({
               <Row label="Current price" value={q ? formatPrice(q.askCents) : '—'} />
               <Row label="Cash held while open" value={formatMoney(reserve)} strong />
               <Row label="If it fills and you’re right" value={formatMoney(draft.quantity * 100)} />
-              <Row label="Demo fees" value="$0.00" />
+              <Row label="Fees" value="$0.00" />
             </dl>
             <p className="flex gap-2 rounded-xl border border-line bg-white/[0.03] px-3.5 py-3 text-xs leading-relaxed text-muted">
               <Timer className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
@@ -423,7 +423,7 @@ export function TradeFlowDialog({
                 <Row label="Contracts purchased" value={receipt.quantity.toLocaleString('en-US')} strong />
                 <Row label="Price per contract" value={formatPrice(receipt.priceCents)} />
                 <Row label="Total paid" value={formatMoney(receipt.amountCents)} />
-                <Row label="Demo fees" value="$0.00" />
+                <Row label="Fees" value="$0.00" />
               </>
             )}
           </dl>
@@ -454,7 +454,7 @@ export function TradeFlowDialog({
     body = (
       <>
         <DialogTitle>Trading unavailable</DialogTitle>
-        <DialogDescription className="mt-2">This market no longer has an executable demo price.</DialogDescription>
+        <DialogDescription className="mt-2">This market no longer has an executable price.</DialogDescription>
         <Button className="mt-5 w-full" variant="secondary" onClick={close}>
           Close
         </Button>

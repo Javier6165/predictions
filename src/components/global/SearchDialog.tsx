@@ -163,7 +163,7 @@ export function SearchDialog() {
                   <Command.Group
                     heading={
                       <span className="inline-flex items-center gap-1.5">
-                        <TrendingUp className="h-3.5 w-3.5" aria-hidden /> Trending in the demo
+                        <TrendingUp className="h-3.5 w-3.5" aria-hidden /> Trending
                       </span>
                     }
                     className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted"
@@ -179,7 +179,6 @@ export function SearchDialog() {
               <span>↑↓ to navigate</span>
               <span>↵ to open</span>
               <span>Esc to close</span>
-              <span className="ml-auto">Simulated markets only</span>
             </div>
           </Command>
         </D.Content>

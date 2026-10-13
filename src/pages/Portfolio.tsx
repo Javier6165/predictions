@@ -11,7 +11,6 @@ import {
   Gavel,
   Info,
   LineChart,
-  ShieldCheck,
   Timer,
   Trophy,
   Wallet,
@@ -83,7 +82,7 @@ function Summary() {
             <p className="mt-1 text-xs text-muted">Nothing held for pending orders</p>
           )}
           <Button size="sm" className="mt-3 w-full sm:w-auto" onClick={() => setDialog('funds')}>
-            Add demo funds
+            Add funds
           </Button>
         </div>
       </section>
@@ -103,7 +102,7 @@ function Summary() {
             ['Their current value', formatMoney(s.positionsMarkedCents), ''],
             ['Unrealized P&L', formatSignedMoney(s.unrealizedPnLCents), pnlClass(s.unrealizedPnLCents)],
             ['Realized P&L', formatSignedMoney(s.realizedPnLCents), pnlClass(s.realizedPnLCents)],
-            ['Demo funds added', formatMoney(s.depositsCents), ''],
+            ['Funds added', formatMoney(s.depositsCents), ''],
           ].map(([k, v, c]) => (
             <div key={k} className="flex justify-between gap-3">
               <dt className="text-muted">{k}</dt>
@@ -298,7 +297,7 @@ function EmptyActive() {
       <div className="max-w-lg">
         <h2 className="text-xl font-semibold">You don’t have any predictions yet</h2>
         <p className="mt-2 text-sm text-ink-2">
-          Pick a question, choose Yes or No and decide how much demo money to put behind it. You’ll always review the full picture — what you could win and
+          Pick a question, choose Yes or No and decide how much to put behind it. You’ll always review the full picture — what you could win and
           what you could lose — before confirming.
         </p>
         <Button asChild size="lg" className="mt-5">
@@ -307,7 +306,7 @@ function EmptyActive() {
           </Link>
         </Button>
       </div>
-      <h3 className="mt-8 text-sm font-semibold text-ink-2">Popular in the demo right now</h3>
+      <h3 className="mt-8 text-sm font-semibold text-ink-2">Popular right now</h3>
       <div className="mt-2 divide-y divide-line">
         {ideas.map((m) => (
           <MarketRow key={m.id} market={m} />
@@ -323,7 +322,7 @@ const KIND_META: Record<LedgerEntry['kind'], { label: string; icon: typeof Clock
   LIMIT_PLACED: { label: 'Limit order placed', icon: Timer, cls: 'bg-white/6 text-ink-2' },
   LIMIT_CANCELLED: { label: 'Limit order cancelled', icon: Ban, cls: 'bg-white/6 text-ink-2' },
   LIMIT_FILLED: { label: 'Limit order filled', icon: ArrowUpRight, cls: 'bg-accent-soft text-accent' },
-  DEPOSIT: { label: 'Demo funds added', icon: Wallet, cls: 'bg-accent-soft text-accent' },
+  DEPOSIT: { label: 'Funds added', icon: Wallet, cls: 'bg-accent-soft text-accent' },
   SETTLEMENT: { label: 'Settled', icon: Gavel, cls: 'bg-warn-soft text-warn' },
 };
 
@@ -500,13 +499,6 @@ export function PortfolioPage() {
         <div>
           <h1 className="text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">Your predictions</h1>
           <p className="mt-2 text-ink-2">Track what you’ve predicted, manage positions and see how they’re doing.</p>
-        </div>
-        <div className="glass flex max-w-md items-start gap-3 rounded-2xl px-4 py-3">
-          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden />
-          <div>
-            <p className="text-sm font-semibold">You’re using demo funds</p>
-            <p className="text-xs text-muted">Virtual money and simulated markets. No real money is involved.</p>
-          </div>
         </div>
       </div>
 
