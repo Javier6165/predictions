@@ -64,20 +64,35 @@
   to { transform: none; }
 }
 
+/*
+ * Document-level colours live outside @layer on purpose: unlayered CSS always beats
+ * layered CSS, so a host page's own reset (e.g. an embed skeleton setting
+ * `body { color: #000 }`) can never turn the app's inherited text black.
+ */
+html {
+  color-scheme: dark;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  min-height: 100dvh;
+}
+
 @layer base {
-  html {
-    color-scheme: dark;
-    background: var(--color-bg);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-  body {
-    background: var(--color-bg);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    font-feature-settings: 'cv11', 'ss01', 'ss03';
-    min-height: 100dvh;
+  /* Text elements always follow the theme's ink unless a utility says otherwise. */
+  h1, h2, h3, h4, h5, h6, p, figcaption, label, legend, summary, li, dt, dd, blockquote, caption, th, td {
+    color: inherit;
   }
   ::selection {
     background: rgb(59 130 246 / 0.35);

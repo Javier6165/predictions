@@ -4,6 +4,7 @@
 import { build } from 'vite';
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import postcss from 'postcss';
 
 process.env.VITE_ROUTER = 'memory';
 const outDir = 'dist-preview';
@@ -21,7 +22,23 @@ await build({
 const assets = join(outDir, 'assets');
 const files = readdirSync(assets);
 const js = files.filter((f) => f.endsWith('.js')).map((f) => readFileSync(join(assets, f), 'utf8')).join('\n');
-const css = files.filter((f) => f.endsWith('.css')).map((f) => readFileSync(join(assets, f), 'utf8')).join('\n');
+const rawCss = files.filter((f) => f.endsWith('.css')).map((f) => readFileSync(join(assets, f), 'utf8')).join('\n');
+
+// Hosts inject their own unlayered reset (e.g. `body { color: #000 }`, `a { color: … }`).
+// Unlayered CSS beats any @layer, so Tailwind's layered preflight/utilities would lose.
+// Unwrap every @layer (keeping source order: theme → base → components → utilities)
+// so the app's rules compete on specificity and, coming later, win over the host's.
+const flattenLayers = {
+  postcssPlugin: 'flatten-layers',
+  OnceExit(root) {
+    root.walkAtRules('layer', (rule) => {
+      if (rule.nodes) rule.replaceWith(rule.nodes);
+      else rule.remove();
+    });
+  },
+};
+const css = (await postcss([flattenLayers]).process(rawCss, { from: undefined })).css;
+if (css.includes('@layer')) throw new Error('flatten-layers: @layer left in preview CSS');
 const html = readFileSync(join(outDir, 'index.html'), 'utf8');
 const title = /<title>(.*?)<\/title>/s.exec(html)?.[1] ?? 'NOVA';
 

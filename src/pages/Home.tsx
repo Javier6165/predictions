@@ -265,7 +265,7 @@ function Insights({ markets }: { markets: Market[] }) {
             <Chip className="border-white/15 bg-black/30 text-[11px] uppercase tracking-[0.12em]">
               <Lightbulb className="h-3 w-3 text-warn" aria-hidden /> Insights
             </Chip>
-            <h2 id="insights-title" className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h2 id="insights-title" className="mt-4 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
               Understand what moves the odds.
             </h2>
             <p className="mt-3 max-w-md text-ink-2">
