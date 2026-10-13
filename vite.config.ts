@@ -14,7 +14,8 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      output: {
+      // The single-file preview build inlines everything into one chunk instead.
+      output: process.env.VITE_ROUTER === 'memory' ? { inlineDynamicImports: true } : {
         // Keep the app chunk small: vendor libraries change rarely and cache well.
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined;

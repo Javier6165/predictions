@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, createMemoryRouter } from 'react-router';
 import { Layout } from './Layout';
 import { HomePage } from '@/pages/Home';
 import { ExplorePage } from '@/pages/Explore';
@@ -20,4 +20,6 @@ export const routes = [
   },
 ];
 
-export const router = createBrowserRouter(routes);
+// The single-file preview (npm run build:preview) runs inside hosts without their
+// own URL space, so it keeps navigation in memory instead of the address bar.
+export const router = import.meta.env.VITE_ROUTER === 'memory' ? createMemoryRouter(routes) : createBrowserRouter(routes);
