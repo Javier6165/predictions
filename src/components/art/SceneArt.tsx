@@ -1,6 +1,45 @@
 import { useId, type ReactNode } from 'react';
 import type { CategoryArt } from '@/data/categories';
+import { photoFor } from '@/data/photos';
 import { cn } from '@/lib/cn';
+
+interface SceneProps {
+  art: CategoryArt;
+  seed?: string;
+  className?: string;
+  /** Larger composition with a rocket for the Home hero. */
+  hero?: boolean;
+  /** Subtle ambient motion (twinkle/flicker, or a slow drift on photos) for large hero scenes. */
+  animated?: boolean;
+  /** Accessible label; decorative (aria-hidden) when omitted. */
+  label?: string;
+  /** `sizes` hint for photos, so thumbnails load the small file. */
+  sizes?: string;
+}
+
+/**
+ * Scene for a market, category or page: placeholder photo when one is registered
+ * for the seed (see data/photos.ts), otherwise the code-generated illustration.
+ */
+export function SceneArt({ sizes = '(min-width: 1024px) 60vw, 100vw', ...props }: SceneProps) {
+  const { art, seed = 'nova', className, hero = false, animated = false, label } = props;
+  const photo = photoFor(seed, art);
+  if (!photo) return <IllustratedScene {...props} />;
+  return (
+    <img
+      src={photo.src}
+      srcSet={`${photo.srcSm} 480w, ${photo.src} 1400w`}
+      sizes={sizes}
+      alt={label ?? ''}
+      aria-hidden={label ? undefined : true}
+      loading={hero ? 'eager' : 'lazy'}
+      decoding="async"
+      draggable={false}
+      className={cn('block h-full w-full select-none object-cover', animated && 'photo-drift', className)}
+      style={{ objectPosition: photo.position }}
+    />
+  );
+}
 
 /**
  * Original, code-generated placeholder art (no photos, logos or real people).
@@ -83,24 +122,7 @@ function Planet({ id, p, cx, cy, rad }: { id: string; p: Palette; cx: number; cy
   );
 }
 
-export function SceneArt({
-  art,
-  seed = 'nova',
-  className,
-  hero = false,
-  animated = false,
-  label,
-}: {
-  art: CategoryArt;
-  seed?: string;
-  className?: string;
-  /** Larger composition with a rocket for the Home hero. */
-  hero?: boolean;
-  /** Subtle ambient motion (twinkling stars, exhaust flicker) for large hero scenes. */
-  animated?: boolean;
-  /** Accessible label; decorative (aria-hidden) when omitted. */
-  label?: string;
-}) {
+function IllustratedScene({ art, seed = 'nova', className, hero = false, animated = false, label }: SceneProps) {
   const uid = useId().replace(/:/g, '');
   const h = hash(`${art}:${seed}`);
   const r = rng(h);

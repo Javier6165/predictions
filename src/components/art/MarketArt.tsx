@@ -18,7 +18,7 @@ export function marketArt(market: Pick<Market, 'id' | 'category'>): CategoryArt 
 export function MarketThumb({ market, className }: { market: Pick<Market, 'id' | 'category'>; className?: string }) {
   return (
     <div className={cn('thumb relative shrink-0 overflow-hidden rounded-xl bg-surface-2 ring-1 ring-white/10', className)}>
-      <SceneArt art={marketArt(market)} seed={market.id} />
+      <SceneArt art={marketArt(market)} seed={market.id} sizes="160px" />
     </div>
   );
 }
