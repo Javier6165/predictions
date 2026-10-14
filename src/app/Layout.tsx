@@ -8,6 +8,7 @@ import { Toaster } from '@/components/global/Toaster';
 import { SettlementDialog } from '@/components/portfolio/SettlementDialog';
 import { useStore } from '@/state/store';
 import { useUi } from '@/state/ui';
+import { useApplyTheme } from './theme';
 
 export function Layout() {
   const motion = useStore((s) => s.preferences.motion);
@@ -16,6 +17,7 @@ export function Layout() {
   const toast = useUi((s) => s.toast);
   const setOverlay = useUi((s) => s.setOverlay);
   const { pathname } = useLocation();
+  useApplyTheme();
 
   useEffect(() => {
     document.documentElement.dataset.motion = motion;
@@ -35,7 +37,7 @@ export function Layout() {
     <div className="flex min-h-dvh flex-col">
       <a
         href="#main"
-        className="sr-only z-[70] rounded-lg bg-cta px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        className="sr-only z-[70] rounded-lg bg-cta px-4 py-2 text-on-cta focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
       >
         Skip to content
       </a>

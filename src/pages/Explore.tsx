@@ -99,7 +99,7 @@ function RadioGroup<T extends string>({ legend, name, options, value, onChange }
             key={o.id}
             className={cn(
               'flex cursor-pointer items-center gap-2.5 rounded-xl px-3 py-2 text-sm transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent',
-              value === o.id ? 'bg-accent-soft text-ink' : 'text-ink-2 hover:bg-white/[0.04]',
+              value === o.id ? 'bg-accent-soft text-ink' : 'text-ink-2 hover:bg-ink/[0.04]',
             )}
           >
             <input type="radio" name={name} checked={value === o.id} onChange={() => onChange(o.id)} className="accent-[#3b82f6]" />
@@ -146,7 +146,7 @@ function FiltersForm({
         <label htmlFor="explore-q" className="mb-2 block text-sm font-semibold">
           Search
         </label>
-        <div className="flex items-center gap-2 rounded-xl border border-line-strong bg-white/[0.03] px-3 focus-within:border-accent">
+        <div className="flex items-center gap-2 rounded-xl border border-line-strong bg-ink/[0.03] px-3 focus-within:border-accent">
           <Search className="h-4 w-4 text-muted" aria-hidden />
           <input
             id="explore-q"
@@ -299,11 +299,11 @@ export function ExplorePage() {
       <section className="relative isolate overflow-hidden" aria-labelledby="explore-title">
         <div className="absolute inset-0 -z-10">
           <SceneArt art="global" seed="explore-hero" animated={motionOK} />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,#050912_15%,rgb(5_9_18/0.7)_55%,rgb(5_9_18/0.3))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,#0f0e0c_15%,rgb(15_14_12/0.7)_55%,rgb(15_14_12/0.3))]" />
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-bg to-transparent" />
         </div>
         <div className="mx-auto max-w-[1320px] px-4 pb-8 pt-10 sm:px-6 sm:pt-14 lg:px-8">
-          <p className="inline-flex rounded-md bg-white/10 px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-2">Explore markets</p>
+          <p className="inline-flex rounded-md bg-ink/10 px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-2">Explore markets</p>
           <h1 id="explore-title" className="mt-4 max-w-2xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
             <BlurReveal text="Discover what the world" /> <BlurReveal text="is predicting." wordClassName="text-gradient" delay={0.25} />
           </h1>
@@ -319,7 +319,7 @@ export function ExplorePage() {
                 aria-pressed={!category}
                 className={cn(
                   'flex h-[104px] w-32 flex-col justify-between rounded-2xl border p-3 text-left transition',
-                  !category ? 'border-accent bg-accent-soft ring-1 ring-accent' : 'border-line-strong bg-surface/70 hover:border-white/30',
+                  !category ? 'border-accent bg-accent-soft ring-1 ring-accent' : 'border-line-strong bg-surface/70 hover:border-ink/30',
                 )}
               >
                 <LayoutGrid className="h-6 w-6 text-accent" aria-hidden />
@@ -339,7 +339,7 @@ export function ExplorePage() {
                     aria-pressed={active}
                     className={cn(
                       'group relative h-[104px] w-[104px] overflow-hidden rounded-2xl text-left ring-1 transition sm:w-28',
-                      active ? 'ring-2 ring-accent' : 'ring-white/10 hover:ring-white/30',
+                      active ? 'ring-2 ring-accent' : 'ring-ink/10 hover:ring-ink/30',
                     )}
                   >
                     <SceneArt art={c.art} seed={c.slug} sizes="120px" />
@@ -373,12 +373,12 @@ export function ExplorePage() {
               aria-controls="explore-results"
             >
               <SlidersHorizontal className="h-4 w-4" /> {filtersOpen ? 'Hide filters' : 'Filters'}
-              {activeCount > 0 && <span className="rounded-full bg-cta px-1.5 text-xs text-white tabular">{activeCount}</span>}
+              {activeCount > 0 && <span className="rounded-full bg-cta px-1.5 text-xs text-on-cta tabular">{activeCount}</span>}
               {!filtersOpen && <ChevronRight className="h-4 w-4 text-muted" />}
             </Button>
             <Button variant="secondary" className="lg:hidden" onClick={() => setMobileFilters(true)} aria-haspopup="dialog">
               <SlidersHorizontal className="h-4 w-4" /> Filters
-              {activeCount > 0 && <span className="rounded-full bg-cta px-1.5 text-xs text-white tabular">{activeCount}</span>}
+              {activeCount > 0 && <span className="rounded-full bg-cta px-1.5 text-xs text-on-cta tabular">{activeCount}</span>}
             </Button>
             <p className="text-sm text-muted" aria-live="polite">
               {filtered ? (
@@ -400,7 +400,7 @@ export function ExplorePage() {
                   aria-pressed={view === v}
                   className={cn('relative flex items-center gap-1.5 rounded-[10px] px-3 py-1.5 text-sm transition-colors', view === v ? 'text-ink' : 'text-muted hover:text-ink')}
                 >
-                  {view === v && <ActivePill layoutId={`${pillId}-view`} className="bg-white/10" />}
+                  {view === v && <ActivePill layoutId={`${pillId}-view`} className="bg-ink/10" />}
                   <span className="relative flex items-center gap-1.5">
                     {v === 'list' ? <List className="h-4 w-4" aria-hidden /> : <LayoutGrid className="h-4 w-4" aria-hidden />}
                     {v === 'list' ? 'List' : 'Grid'}
@@ -417,7 +417,7 @@ export function ExplorePage() {
                   key={c.label}
                   type="button"
                   onClick={c.clear}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white/[0.04] px-3 py-1 text-xs text-ink-2 hover:text-ink"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-ink/[0.04] px-3 py-1 text-xs text-ink-2 hover:text-ink"
                   aria-label={`Remove filter ${c.label}`}
                 >
                   {c.label} <X className="h-3 w-3" aria-hidden />
@@ -463,7 +463,7 @@ export function ExplorePage() {
                   return (
                     <section key={c.slug} className="card overflow-hidden p-2 sm:p-3" aria-labelledby={`group-${c.slug}`}>
                       <header className="flex items-center gap-3 px-2 pb-2 pt-1 sm:px-3">
-                        <span className="h-10 w-10 shrink-0 overflow-hidden rounded-xl ring-1 ring-white/10">
+                        <span className="h-10 w-10 shrink-0 overflow-hidden rounded-xl ring-1 ring-ink/10">
                           <SceneArt art={c.art} seed={c.slug} />
                         </span>
                         <div className="min-w-0 flex-1">

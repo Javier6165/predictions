@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react';
+import { BRAND } from '@/brand';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useMotionOK } from '@/components/motion/useMotionOK';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
@@ -38,14 +39,14 @@ function Hero({ market }: { market: Market }) {
         <motion.div className="absolute inset-0" style={ok ? { y: artY, scale: artScale } : undefined}>
           <SceneArt art="science" seed="hero" hero animated={ok} className="h-full w-full" />
         </motion.div>
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#050912_0%,rgb(5_9_18/0.85)_35%,rgb(5_9_18/0.15)_70%,rgb(5_9_18/0.35)_100%)] max-lg:bg-[linear-gradient(180deg,rgb(5_9_18/0.55),rgb(5_9_18/0.8)_60%,#050912)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,#0f0e0c_0%,rgb(15_14_12/0.85)_35%,rgb(15_14_12/0.15)_70%,rgb(15_14_12/0.35)_100%)] max-lg:bg-[linear-gradient(180deg,rgb(15_14_12/0.55),rgb(15_14_12/0.8)_60%,#0f0e0c)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent" />
         <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-bg/70 to-transparent" />
       </div>
       <div className="mx-auto grid max-w-[1320px] gap-10 px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:grid-cols-[1.25fr_0.75fr] lg:items-center lg:px-8 lg:pb-24 lg:pt-40">
         <div className="max-w-xl">
           <div className="flex flex-wrap items-center gap-2">
-            <Chip className="border-white/20 bg-black/30 text-[11px] uppercase tracking-[0.12em] text-ink">
+            <Chip className="border-ink/20 bg-black/30 text-[11px] uppercase tracking-[0.12em] text-ink">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden /> Featured market
             </Chip>
           </div>
@@ -128,10 +129,10 @@ function Spotlight({ markets }: { markets: Market[] }) {
             Other markets in the spotlight
           </h2>
           <div className="flex gap-2">
-            <button type="button" onClick={() => scroll(-1)} className="rounded-full border border-line-strong p-1.5 text-ink-2 hover:bg-white/5" aria-label="Scroll spotlight left">
+            <button type="button" onClick={() => scroll(-1)} className="rounded-full border border-line-strong p-1.5 text-ink-2 hover:bg-ink/5" aria-label="Scroll spotlight left">
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <button type="button" onClick={() => scroll(1)} className="rounded-full border border-line-strong p-1.5 text-ink-2 hover:bg-white/5" aria-label="Scroll spotlight right">
+            <button type="button" onClick={() => scroll(1)} className="rounded-full border border-line-strong p-1.5 text-ink-2 hover:bg-ink/5" aria-label="Scroll spotlight right">
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
@@ -140,7 +141,7 @@ function Spotlight({ markets }: { markets: Market[] }) {
           {markets.map((m) => {
             const lead = leadOutcome(m);
             return (
-              <li key={m.id} className="group relative flex min-w-[260px] flex-1 snap-start items-center gap-3 border-r border-line p-4 transition-colors last:border-r-0 hover:bg-white/[0.03]">
+              <li key={m.id} className="group relative flex min-w-[260px] flex-1 snap-start items-center gap-3 border-r border-line p-4 transition-colors last:border-r-0 hover:bg-ink/[0.03]">
                 <MarketThumb market={m} className="h-14 w-14" />
                 <div className="min-w-0">
                   <Link to={`/markets/${m.id}`} className="line-clamp-2 text-[13px] font-medium leading-snug text-ink after:absolute after:inset-0">
@@ -180,7 +181,7 @@ function Categories({ markets }: { markets: Market[] }) {
               <SpotlightGlow className="rounded-2xl" color="rgba(255,255,255,0.12)">
               <Link
                 to={`/explore?category=${c.slug}`}
-                className="group relative block aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-white/30"
+                className="group relative block aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-ink/10 transition hover:ring-ink/30"
               >
                 <SceneArt art={c.art} seed={c.slug} sizes="(min-width: 1024px) 160px, 144px" className="transition duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
@@ -191,7 +192,7 @@ function Categories({ markets }: { markets: Market[] }) {
                       {count} market{count === 1 ? '' : 's'}
                     </p>
                   </div>
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/30 text-white transition group-hover:bg-white group-hover:text-slate-900">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-ink/30 text-white transition group-hover:bg-white group-hover:text-slate-900">
                     <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                   </span>
                 </div>
@@ -223,7 +224,7 @@ function RankedList({ title, subtitle, icon, markets, pick, href }: { title: str
         {markets.map((m, i) => {
           const o = pick(m);
           return (
-            <li key={m.id} className="group relative flex items-center gap-3 rounded-xl py-3 transition-colors hover:bg-white/[0.025]">
+            <li key={m.id} className="group relative flex items-center gap-3 rounded-xl py-3 transition-colors hover:bg-ink/[0.025]">
               <span className="hidden w-4 text-center text-sm text-subtle tabular sm:block">{i + 1}</span>
               <MarketThumb market={m} className="hidden h-12 w-12 sm:block" />
               <Link to={`/markets/${m.id}`} className="line-clamp-2 min-w-0 flex-1 text-sm font-medium leading-snug text-ink after:absolute after:inset-0">
@@ -255,11 +256,11 @@ function Insights({ markets }: { markets: Market[] }) {
       <div className="relative isolate overflow-hidden rounded-3xl border border-line">
         <div className="absolute inset-0 -z-10 opacity-70">
           <SceneArt art="science" seed="insights-dunes" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,#050912_10%,rgb(5_9_18/0.85)_50%,rgb(5_9_18/0.55))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,#0f0e0c_10%,rgb(15_14_12/0.85)_50%,rgb(15_14_12/0.55))]" />
         </div>
         <div className="grid gap-8 p-6 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div>
-            <Chip className="border-white/15 bg-black/30 text-[11px] uppercase tracking-[0.12em]">
+            <Chip className="border-ink/15 bg-black/30 text-[11px] uppercase tracking-[0.12em]">
               <Lightbulb className="h-3 w-3 text-warn" aria-hidden /> Insights
             </Chip>
             <h2 id="insights-title" className="mt-4 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
@@ -278,14 +279,14 @@ function Insights({ markets }: { markets: Market[] }) {
           </div>
           <ul className="grid gap-3">
             {notes.map(({ m, u }) => (
-              <li key={u.id} className="lift group relative flex gap-3 rounded-2xl border border-white/10 bg-black/35 p-3 backdrop-blur-md hover:border-white/25">
+              <li key={u.id} className="lift group relative flex gap-3 rounded-2xl border border-ink/10 bg-black/35 p-3 backdrop-blur-md hover:border-ink/25">
                 <MarketThumb market={m} className="h-16 w-20" />
                 <div className="min-w-0">
                   <Link to={`/markets/${m.id}?tab=news`} className="line-clamp-2 text-sm font-medium text-ink after:absolute after:inset-0">
                     {u.title}
                   </Link>
                   <p className="mt-1 text-xs text-muted">
-                    NOVA Insights · {ago(u.at, DEMO_NOW)} · {categoryByName(m.category).shortName}
+                    {BRAND.newsroom} · {ago(u.at, DEMO_NOW)} · {categoryByName(m.category).shortName}
                   </p>
                 </div>
               </li>

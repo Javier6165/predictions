@@ -6,7 +6,7 @@ import { SceneArt } from '@/components/art/SceneArt';
 export function NotFound({ title = 'This page doesn’t exist', body = 'The link may be mistyped, or the demo market it pointed to isn’t part of this snapshot.' }: { title?: string; body?: string }) {
   return (
     <section className="relative mx-auto flex max-w-[1320px] flex-col items-center px-4 pb-10 pt-16 text-center sm:px-6 lg:px-8">
-      <div className="h-40 w-64 overflow-hidden rounded-3xl ring-1 ring-white/10">
+      <div className="h-40 w-64 overflow-hidden rounded-3xl ring-1 ring-ink/10">
         <SceneArt art="science" seed="lost" />
       </div>
       <p className="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-accent">404</p>

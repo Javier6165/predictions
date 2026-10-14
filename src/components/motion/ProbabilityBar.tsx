@@ -6,7 +6,7 @@ import { useMotionOK } from './useMotionOK';
 export function ProbabilityBar({ value, className, barClassName, color }: { value: number; className?: string; barClassName?: string; color?: string }) {
   const ok = useMotionOK();
   return (
-    <div className={cn('h-1.5 overflow-hidden rounded-full bg-white/8', className)} aria-hidden>
+    <div className={cn('h-1.5 overflow-hidden rounded-full bg-ink/8', className)} aria-hidden>
       <motion.div
         className={cn('h-full rounded-full', barClassName)}
         style={{ background: color }}

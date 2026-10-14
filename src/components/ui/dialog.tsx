@@ -19,7 +19,7 @@ export function DialogContent({
   const returnTo = React.useRef<HTMLElement | null>(null);
   return (
     <D.Portal>
-      <D.Overlay className="fixed inset-0 z-50 bg-[#02050c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+      <D.Overlay className="fixed inset-0 z-50 bg-[#0f0e0c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
       <D.Content
         className={cn(
           'fixed z-50 flex max-h-[calc(100dvh-1rem)] w-full flex-col overflow-y-auto bg-bg-elev text-ink outline-none data-[state=open]:animate-pop-in',
@@ -46,7 +46,7 @@ export function DialogContent({
         {children}
         {!hideClose && (
           <D.Close
-            className="absolute right-4 top-4 rounded-full p-1.5 text-muted transition hover:bg-white/5 hover:text-ink"
+            className="absolute right-4 top-4 rounded-full p-1.5 text-muted transition hover:bg-ink/5 hover:text-ink"
             aria-label="Close"
           >
             <X className="h-5 w-5" />

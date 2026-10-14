@@ -1,5 +1,6 @@
 import raw from '@data/demo-fixtures.v1.7.json';
 import { fixtureSchema, type Fixture, type FixtureMarket } from './schema';
+import { BRAND } from '@/brand';
 import type { LedgerEntry, Market, UserState } from '@/domain/types';
 
 export const SESSION_SCHEMA_VERSION = 1;
@@ -14,8 +15,8 @@ const COPY_RULES: [RegExp, string][] = [
   [/ under this demo contract; no claim about candidacy is implied\./, '.'],
   [/ Demo terms only\./, ''],
   [/^Demo scenario: /, ''],
-  [/^DEMO SCENARIO — fictional source, not a live feed$/, 'NOVA resolution desk'],
-  [/^FICTIONAL DEMO EVENT LEDGER — no live external resolution source$/, 'NOVA resolution ledger'],
+  [/^DEMO SCENARIO — fictional source, not a live feed$/, BRAND.resolver],
+  [/^FICTIONAL DEMO EVENT LEDGER — no live external resolution source$/, BRAND.resolver],
   [/; the supplied demo winner is YES/, ''],
   [/ on the specified demo public-style benchmark/, ' on a leading public benchmark'],
   [/^Demo summit result$/, 'Climate summit result'],

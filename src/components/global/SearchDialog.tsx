@@ -19,7 +19,7 @@ function ResultItem({ market, onSelect }: { market: Market; onSelect: () => void
     <Command.Item
       value={market.id}
       onSelect={onSelect}
-      className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 outline-none data-[selected=true]:bg-white/[0.06]"
+      className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 outline-none data-[selected=true]:bg-ink/[0.06]"
     >
       <MarketThumb market={market} className="h-10 w-10 rounded-lg" />
       <div className="min-w-0 flex-1">
@@ -82,7 +82,7 @@ export function SearchDialog() {
       }}
     >
       <D.Portal>
-        <D.Overlay className="fixed inset-0 z-50 bg-[#02050c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+        <D.Overlay className="fixed inset-0 z-50 bg-[#0f0e0c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
         <D.Content
           className="fixed inset-x-0 top-0 z-50 mx-auto flex max-h-[100dvh] w-full flex-col overflow-hidden border-line-strong bg-bg-elev outline-none data-[state=open]:animate-pop-in sm:top-[10vh] sm:max-h-[75vh] sm:max-w-2xl sm:rounded-3xl sm:border"
           style={{ boxShadow: 'var(--shadow-pop)' }}
@@ -129,7 +129,7 @@ export function SearchDialog() {
                   <Command.Item
                     value="__see-all"
                     onSelect={seeAll}
-                    className="mt-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-line-strong px-3 py-3 text-sm font-medium text-ink-2 outline-none data-[selected=true]:bg-white/[0.06] data-[selected=true]:text-ink"
+                    className="mt-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-line-strong px-3 py-3 text-sm font-medium text-ink-2 outline-none data-[selected=true]:bg-ink/[0.06] data-[selected=true]:text-ink"
                   >
                     See all results for “{q.trim()}” <ArrowRight className="h-4 w-4" />
                   </Command.Item>
@@ -153,7 +153,7 @@ export function SearchDialog() {
                           key={r}
                           value={`recent:${r}`}
                           onSelect={() => setQ(r)}
-                          className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-2 outline-none data-[selected=true]:bg-white/[0.06] data-[selected=true]:text-ink"
+                          className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-2 outline-none data-[selected=true]:bg-ink/[0.06] data-[selected=true]:text-ink"
                         >
                           <Clock className="h-4 w-4 text-muted" aria-hidden /> {r}
                         </Command.Item>

@@ -1,12 +1,21 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="NOVA — an interactive prediction market concept. Simulated markets and virtual funds only." />
-    <meta name="theme-color" content="#070b16" />
-    <title>NOVA · Prediction Market 2.0 (Interactive demo)</title>
+    <meta name="description" content="Likely — a simpler, more human take on prediction markets. Interactive concept with simulated markets." />
+    <meta name="theme-color" content="#f2efe7" />
+    <title>Likely · Say what you think will happen</title>
+    <script>
+      // Apply the saved theme before first paint (no flash). Mirrors src/app/theme.ts.
+      try {
+        var p = JSON.parse(sessionStorage.getItem('nova-demo-session') || '{}').state;
+        var t = (p && p.preferences && p.preferences.theme) || 'light';
+        if (t === 'system') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (t === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

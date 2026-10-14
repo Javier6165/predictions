@@ -37,7 +37,7 @@ function Row({ label, value, strong, className }: { label: React.ReactNode; valu
 
 function PropositionCard({ market, outcomeId, side, lead }: { market: Market; outcomeId: string; side: 'YES' | 'NO'; lead: string }) {
   return (
-    <div className="flex gap-3 rounded-2xl border border-line bg-white/[0.03] p-3.5">
+    <div className="flex gap-3 rounded-2xl border border-line bg-ink/[0.03] p-3.5">
       <MarketThumb market={market} className="h-14 w-14" />
       <div className="min-w-0">
         <p className="text-xs text-muted">{lead}</p>
@@ -352,7 +352,7 @@ export function TradeFlowDialog({
               <Row label="If it fills and you’re right" value={formatMoney(draft.quantity * 100)} />
               <Row label="Fees" value="$0.00" />
             </dl>
-            <p className="flex gap-2 rounded-xl border border-line bg-white/[0.03] px-3.5 py-3 text-xs leading-relaxed text-muted">
+            <p className="flex gap-2 rounded-xl border border-line bg-ink/[0.03] px-3.5 py-3 text-xs leading-relaxed text-muted">
               <Timer className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
               The order rests at your price and appears under Portfolio → Pending. It holds {formatMoney(reserve)} of available cash until you cancel it. In
               this demo, limit orders don’t fill automatically.

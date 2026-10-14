@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BRAND } from '@/brand';
 import { useNavigate } from 'react-router';
 import { FlaskConical, RotateCcw, ShieldCheck, Sparkles, Wallet } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
@@ -66,7 +67,7 @@ function FundsDialog() {
                     key={c}
                     className={cn(
                       'flex cursor-pointer items-center justify-center rounded-xl border py-3 text-sm font-semibold transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent',
-                      amount === c ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-ink-2 hover:bg-white/5',
+                      amount === c ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-ink-2 hover:bg-ink/5',
                     )}
                   >
                     <input type="radio" name="topup" className="sr-only" checked={amount === c} onChange={() => setAmount(c)} />
@@ -75,7 +76,7 @@ function FundsDialog() {
                 ))}
               </div>
             </fieldset>
-            <p className="mt-4 rounded-xl border border-line bg-white/[0.03] px-3.5 py-3 text-xs leading-relaxed text-muted">
+            <p className="mt-4 rounded-xl border border-line bg-ink/[0.03] px-3.5 py-3 text-xs leading-relaxed text-muted">
               Adds to your cash and portfolio value, and to “Funds added”. It does <strong className="text-ink-2">not</strong> change profit &amp; loss.
             </p>
             <div className="mt-6 flex gap-3">
@@ -125,7 +126,7 @@ function ResetDialog() {
     <Dialog open={open} onOpenChange={(o) => setDialog(o ? 'reset' : null)}>
       <DialogContent className="p-6 sm:p-7">
         <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/6 text-ink">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-ink/6 text-ink">
             <RotateCcw className="h-5 w-5" aria-hidden />
           </span>
           <div>
@@ -139,7 +140,7 @@ function ResetDialog() {
               key={o.id}
               className={cn(
                 'flex cursor-pointer gap-3 rounded-2xl border p-4 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent',
-                choice === o.id ? 'border-accent bg-accent-soft' : 'border-line-strong hover:bg-white/[0.03]',
+                choice === o.id ? 'border-accent bg-accent-soft' : 'border-line-strong hover:bg-ink/[0.03]',
               )}
             >
               <input type="radio" name="reset" className="mt-1 accent-[#3b82f6]" checked={choice === o.id} onChange={() => setChoice(o.id)} />
@@ -174,6 +175,8 @@ function SettingsDialog() {
   const toast = useUi((s) => s.toast);
   const motion = useStore((s) => s.preferences.motion);
   const setMotion = useStore((s) => s.setMotion);
+  const theme = useStore((s) => s.preferences.theme);
+  const setTheme = useStore((s) => s.setTheme);
   const active = useStore((s) => s.user.activeScenarios);
   const run = useStore((s) => s.runScenario);
   const setSettlement = useUi((s) => s.setSettlement);
@@ -186,6 +189,29 @@ function SettingsDialog() {
         <DialogDescription>Preferences for this tab’s demo session.</DialogDescription>
 
         <section className="mt-5 rounded-2xl border border-line p-4">
+          <h3 className="text-sm font-semibold" id="theme-label">
+            Appearance
+          </h3>
+          <div role="radiogroup" aria-labelledby="theme-label" className="mt-3 grid grid-cols-3 gap-1 rounded-full bg-ink/6 p-1">
+            {(['light', 'dark', 'system'] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                role="radio"
+                aria-checked={theme === t}
+                onClick={() => setTheme(t)}
+                className={cn(
+                  'h-9 rounded-full text-sm font-medium capitalize transition',
+                  theme === t ? 'bg-surface text-ink shadow-sm' : 'text-ink-2 hover:text-ink',
+                )}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-4 rounded-2xl border border-line p-4">
           <div className="flex items-center justify-between gap-4">
             <div>
               <h3 className="text-sm font-semibold" id="motion-label">
@@ -272,7 +298,7 @@ function AboutDialog() {
         </span>
         <DialogTitle className="mt-4 text-xl">About this demo</DialogTitle>
         <DialogDescription className="mt-2 leading-relaxed">
-          NOVA is a product-design concept exploring a simpler, prediction-first take on prediction markets. It is an interactive
+          {BRAND.name} is a product-design concept exploring a simpler, prediction-first take on prediction markets. It is an interactive
           prototype, not a financial product.
         </DialogDescription>
         <ul className="mt-5 grid gap-3 text-sm text-ink-2">

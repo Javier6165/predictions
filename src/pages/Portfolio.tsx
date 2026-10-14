@@ -88,7 +88,7 @@ function Summary() {
       </section>
       <section className="card grid gap-4 p-5 sm:grid-cols-[auto_1fr] md:col-span-2 xl:col-span-1" aria-label="Profit and loss">
         <div className="flex items-start gap-4">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/6 text-ink-2">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-ink/6 text-ink-2">
             <CircleDollarSign className="h-5 w-5" aria-hidden />
           </span>
           <div>
@@ -237,7 +237,7 @@ function PositionPanel({ v, onSell }: { v: PositionView; onSell: () => void }) {
               <Link to={`/markets/${m.id}?outcome=${p.outcomeId}&side=${p.side}`}>Buy more</Link>
             </Button>
           </div>
-          <div className="mt-4 flex items-center gap-3 rounded-2xl border border-line bg-white/[0.03] p-3.5">
+          <div className="mt-4 flex items-center gap-3 rounded-2xl border border-line bg-ink/[0.03] p-3.5">
             <Trophy className="h-6 w-6 shrink-0 text-warn" aria-hidden />
             <dl className="grid flex-1 grid-cols-2 gap-2 text-sm">
               <div>
@@ -319,8 +319,8 @@ function EmptyActive() {
 const KIND_META: Record<LedgerEntry['kind'], { label: string; icon: typeof Clock; cls: string }> = {
   BUY: { label: 'Bought', icon: ArrowUpRight, cls: 'bg-accent-soft text-accent' },
   SELL: { label: 'Sold', icon: ArrowDownLeft, cls: 'bg-yes-soft text-yes' },
-  LIMIT_PLACED: { label: 'Limit order placed', icon: Timer, cls: 'bg-white/6 text-ink-2' },
-  LIMIT_CANCELLED: { label: 'Limit order cancelled', icon: Ban, cls: 'bg-white/6 text-ink-2' },
+  LIMIT_PLACED: { label: 'Limit order placed', icon: Timer, cls: 'bg-ink/6 text-ink-2' },
+  LIMIT_CANCELLED: { label: 'Limit order cancelled', icon: Ban, cls: 'bg-ink/6 text-ink-2' },
   LIMIT_FILLED: { label: 'Limit order filled', icon: ArrowUpRight, cls: 'bg-accent-soft text-accent' },
   DEPOSIT: { label: 'Funds added', icon: Wallet, cls: 'bg-accent-soft text-accent' },
   SETTLEMENT: { label: 'Settled', icon: Gavel, cls: 'bg-warn-soft text-warn' },
@@ -355,7 +355,7 @@ function HistoryRow({ e }: { e: LedgerEntry }) {
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold">
           {e.kind === 'SETTLEMENT' ? (
-            <span className={cn('mr-1 rounded-full px-2 py-0.5 text-[11px] font-semibold', e.won ? 'bg-yes-soft text-yes' : 'bg-white/8 text-ink-2')}>
+            <span className={cn('mr-1 rounded-full px-2 py-0.5 text-[11px] font-semibold', e.won ? 'bg-yes-soft text-yes' : 'bg-ink/8 text-ink-2')}>
               {e.won ? 'Won' : 'Lost'}
             </span>
           ) : null}
@@ -511,7 +511,7 @@ export function PortfolioPage() {
           {TABS.map((t) => (
             <TabsTrigger key={t} value={t}>
               {labels[t]}
-              <span className={cn('rounded-full px-1.5 py-0.5 text-[11px] tabular', tab === t ? 'bg-cta text-white' : 'bg-white/8 text-ink-2')}>{counts[t]}</span>
+              <span className={cn('rounded-full px-1.5 py-0.5 text-[11px] tabular', tab === t ? 'bg-cta text-on-cta' : 'bg-ink/8 text-ink-2')}>{counts[t]}</span>
             </TabsTrigger>
           ))}
         </TabsList>

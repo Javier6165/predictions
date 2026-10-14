@@ -18,7 +18,7 @@ export function SheetContent({
 }: React.ComponentProps<typeof D.Content> & { side?: 'bottom' | 'right' | 'left' }) {
   return (
     <D.Portal>
-      <D.Overlay className="fixed inset-0 z-50 bg-[#02050c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+      <D.Overlay className="fixed inset-0 z-50 bg-[#0f0e0c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
       <D.Content
         className={cn(
           'fixed z-50 flex flex-col overflow-y-auto bg-bg-elev text-ink outline-none',
@@ -32,10 +32,10 @@ export function SheetContent({
         style={{ boxShadow: 'var(--shadow-pop)' }}
         {...props}
       >
-        {side === 'bottom' && <div aria-hidden className="mx-auto mt-2.5 h-1 w-10 shrink-0 rounded-full bg-white/15" />}
+        {side === 'bottom' && <div aria-hidden className="mx-auto mt-2.5 h-1 w-10 shrink-0 rounded-full bg-ink/15" />}
         {children}
         <D.Close
-          className="absolute right-4 top-4 rounded-full p-1.5 text-muted transition hover:bg-white/5 hover:text-ink"
+          className="absolute right-4 top-4 rounded-full p-1.5 text-muted transition hover:bg-ink/5 hover:text-ink"
           aria-label="Close"
         >
           <X className="h-5 w-5" />

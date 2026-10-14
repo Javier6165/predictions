@@ -4,18 +4,18 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/cn';
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl font-medium transition-[background,color,border,box-shadow,transform] duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-[background,color,border,box-shadow,transform] duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        primary: 'btn-shine bg-cta text-white shadow-[0_8px_24px_-10px_rgb(59_130_246/0.8)] hover:bg-cta-hover',
-        white: 'bg-white text-slate-900 hover:bg-slate-100',
+        primary: 'btn-shine bg-cta text-on-cta hover:bg-cta-hover',
+        white: 'bg-cta text-on-cta hover:bg-cta-hover',
         secondary: 'border border-line-strong bg-surface-2 text-ink hover:bg-surface-3',
-        ghost: 'text-ink-2 hover:bg-white/5 hover:text-ink',
-        outline: 'border border-line-strong text-ink hover:bg-white/5',
-        yes: 'bg-yes text-bg hover:bg-emerald-300',
-        no: 'bg-danger text-white hover:bg-danger-hover',
-        danger: 'bg-danger text-white hover:bg-danger-hover',
+        ghost: 'text-ink-2 hover:bg-ink/6 hover:text-ink',
+        outline: 'border border-line-strong text-ink hover:bg-ink/5',
+        yes: 'bg-yes text-on-side hover:bg-yes-strong',
+        no: 'bg-no text-on-side hover:bg-no-strong',
+        danger: 'bg-danger text-on-side hover:bg-danger-hover',
         link: 'h-auto px-0 text-accent hover:underline underline-offset-4',
       },
       size: {

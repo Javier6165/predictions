@@ -46,8 +46,8 @@ const title = /<title>(.*?)<\/title>/s.exec(html)?.[1] ?? 'NOVA';
 const out = `<title>${title}</title>
 <meta name="description" content="Interactive demo · Simulated markets. No real money.">
 <style>
-:root { color-scheme: dark; }
-html, body { background: #050912; }
+:root { color-scheme: light; }
+html, body { background: #f2efe7; }
 ${css}
 </style>
 <div id="root"></div>

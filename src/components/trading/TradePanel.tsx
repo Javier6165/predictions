@@ -56,7 +56,7 @@ function SideOption({
           ? yes
             ? 'border-yes/70 bg-yes-soft'
             : 'border-no/70 bg-no-soft'
-          : 'border-line-strong hover:border-white/25 hover:bg-white/[0.03]',
+          : 'border-line-strong hover:border-ink/25 hover:bg-ink/[0.03]',
       )}
     >
       <input type="radio" name={name} className="sr-only" checked={selected} onChange={onSelect} />
@@ -144,7 +144,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
         <label htmlFor={`${uid}-amount`} className="mb-1.5 block text-sm font-medium text-ink-2">
           Amount to invest
         </label>
-        <div className="flex items-center rounded-xl border border-line-strong bg-white/[0.03] px-3.5 focus-within:border-accent">
+        <div className="flex items-center rounded-xl border border-line-strong bg-ink/[0.03] px-3.5 focus-within:border-accent">
           <span className="text-lg text-muted" aria-hidden>
             $
           </span>
@@ -169,7 +169,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
               aria-pressed={budget === p}
               className={cn(
                 'rounded-lg border py-1.5 text-sm font-medium transition',
-                budget === p ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-ink-2 hover:bg-white/5',
+                budget === p ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-ink-2 hover:bg-ink/5',
               )}
             >
               ${p / 100}
@@ -193,7 +193,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             </span>
           </p>
         ) : preview && preview.quantity > 0 && quote ? (
-          <div className="rounded-xl border border-line bg-white/[0.03] px-3.5 py-3 text-sm">
+          <div className="rounded-xl border border-line bg-ink/[0.03] px-3.5 py-3 text-sm">
             <p className="flex gap-2 text-ink-2">
               <Info className="mt-0.5 h-4 w-4 shrink-0 text-muted" aria-hidden />
               <span>
@@ -283,7 +283,7 @@ function LimitSection({ market, ticket, update, onReview }: PanelProps) {
                 value={ticket.limitPriceText}
                 onChange={(e) => update({ limitPriceText: e.target.value.replace(/\D/g, '').slice(0, 2) })}
                 placeholder={quote ? String(Math.max(1, quote.askCents - 5)) : ''}
-                className="mt-1 h-10 w-full rounded-xl border border-line-strong bg-white/[0.03] px-3 text-sm text-ink outline-none tabular focus:border-accent"
+                className="mt-1 h-10 w-full rounded-xl border border-line-strong bg-ink/[0.03] px-3 text-sm text-ink outline-none tabular focus:border-accent"
               />
             </label>
             <label className="text-xs text-muted">
@@ -293,7 +293,7 @@ function LimitSection({ market, ticket, update, onReview }: PanelProps) {
                 value={ticket.limitQtyText}
                 onChange={(e) => update({ limitQtyText: e.target.value.replace(/\D/g, '').slice(0, 6) })}
                 placeholder="20"
-                className="mt-1 h-10 w-full rounded-xl border border-line-strong bg-white/[0.03] px-3 text-sm text-ink outline-none tabular focus:border-accent"
+                className="mt-1 h-10 w-full rounded-xl border border-line-strong bg-ink/[0.03] px-3 text-sm text-ink outline-none tabular focus:border-accent"
               />
             </label>
           </div>
@@ -370,7 +370,7 @@ export function SellForm({
           </select>
         </label>
       )}
-      <div className="rounded-2xl border border-line bg-white/[0.03] p-3.5">
+      <div className="rounded-2xl border border-line bg-ink/[0.03] p-3.5">
         <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">You’re backing</p>
         <p className="mt-0.5 font-medium leading-snug">{proposition(view.market, position.outcomeId, position.side)}</p>
         <dl className="mt-3 grid grid-cols-3 gap-2 text-xs">
@@ -404,7 +404,7 @@ export function SellForm({
               value={qtyText}
               onChange={(e) => setQtyText(e.target.value.replace(/\D/g, '').slice(0, 7))}
               placeholder={String(position.quantity)}
-              className="h-12 w-full rounded-xl border border-line-strong bg-white/[0.03] px-3.5 text-xl font-semibold text-ink outline-none tabular focus:border-accent"
+              className="h-12 w-full rounded-xl border border-line-strong bg-ink/[0.03] px-3.5 text-xl font-semibold text-ink outline-none tabular focus:border-accent"
             />
             <div className="mt-2 grid grid-cols-3 gap-2">
               {[
@@ -416,7 +416,7 @@ export function SellForm({
                   key={label}
                   type="button"
                   onClick={() => pick(f as number)}
-                  className="rounded-lg border border-line-strong py-1.5 text-sm font-medium text-ink-2 hover:bg-white/5"
+                  className="rounded-lg border border-line-strong py-1.5 text-sm font-medium text-ink-2 hover:bg-ink/5"
                 >
                   {label}
                 </button>
@@ -429,7 +429,7 @@ export function SellForm({
                 <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden /> {error}
               </p>
             ) : preview ? (
-              <dl className="grid gap-1.5 rounded-xl border border-line bg-white/[0.03] px-3.5 py-3 text-sm">
+              <dl className="grid gap-1.5 rounded-xl border border-line bg-ink/[0.03] px-3.5 py-3 text-sm">
                 <div className="flex justify-between">
                   <dt className="text-muted">Estimated amount you’ll receive</dt>
                   <dd className="font-semibold tabular">{formatMoney(preview.proceedsCents)}</dd>
@@ -502,7 +502,7 @@ export function TradePanel({ market, ticket, update, onReview }: PanelProps) {
               title={disabled ? 'You don’t hold a position in this market yet' : undefined}
               className={cn(
                 'relative rounded-lg py-2 text-sm font-semibold transition-colors',
-                mode === m ? 'text-white' : 'text-ink-2 hover:text-ink',
+                mode === m ? 'text-on-cta' : 'text-ink-2 hover:text-ink',
                 disabled && 'cursor-not-allowed opacity-45 hover:text-ink-2',
               )}
             >

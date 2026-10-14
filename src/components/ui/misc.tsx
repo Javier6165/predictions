@@ -5,7 +5,7 @@ export function Chip({ className, ...props }: React.HTMLAttributes<HTMLSpanEleme
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white/[0.04] px-2.5 py-1 text-xs font-medium text-ink-2',
+        'inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-ink/[0.04] px-2.5 py-1 text-xs font-medium text-ink-2',
         className,
       )}
       {...props}
@@ -16,7 +16,7 @@ export function Chip({ className, ...props }: React.HTMLAttributes<HTMLSpanEleme
 export function Kbd({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   return (
     <kbd
-      className={cn('rounded-md border border-line-strong bg-white/5 px-1.5 py-0.5 font-sans text-[11px] text-muted', className)}
+      className={cn('rounded-md border border-line-strong bg-ink/5 px-1.5 py-0.5 font-sans text-[11px] text-muted', className)}
       {...props}
     />
   );

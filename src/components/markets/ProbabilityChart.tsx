@@ -104,7 +104,7 @@ export function ProbabilityChart({
               style={{ cursor: 'default' }}
             >
               <line x1={cx} x2={cx} y1={cy - 30} y2={cy - 6} stroke="rgba(226,232,240,0.45)" strokeDasharray="2 3" />
-              <circle cx={cx} cy={cy} r={active ? 6 : 4.5} fill="#050912" stroke="#e2e8f0" strokeWidth={2} />
+              <circle cx={cx} cy={cy} r={active ? 6 : 4.5} fill="#0f0e0c" stroke="#e2e8f0" strokeWidth={2} />
               <circle cx={cx} cy={cy - 40} r={active ? 11 : 9.5} fill={active ? '#2563eb' : '#17233d'} stroke="#e2e8f0" strokeOpacity={0.7} />
               <text x={cx} y={cy - 36.5} textAnchor="middle" fontSize={10.5} fontWeight={700} fill="#fff">
                 {sameWeek.join('·')}

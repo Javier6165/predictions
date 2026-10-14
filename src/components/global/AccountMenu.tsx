@@ -41,7 +41,7 @@ export function AccountMenu() {
             <p className="text-xs text-muted">Guest account</p>
           </div>
         </div>
-        <div className="mx-1 mb-1.5 rounded-xl border border-line bg-white/[0.03] px-3 py-2.5">
+        <div className="mx-1 mb-1.5 rounded-xl border border-line bg-ink/[0.03] px-3 py-2.5">
           <p className="text-[11px] uppercase tracking-wide text-subtle">Available cash</p>
           <p className="text-lg font-semibold tabular">{formatMoney(availableCents(user))}</p>
         </div>

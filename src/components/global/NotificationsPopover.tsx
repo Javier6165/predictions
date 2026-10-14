@@ -18,7 +18,7 @@ const ICONS: Record<NotificationKind, { icon: typeof Bell; cls: string }> = {
   ORDER_FILLED: { icon: ReceiptText, cls: 'bg-accent-soft text-accent' },
   POSITION_SOLD: { icon: CircleDollarSign, cls: 'bg-yes-soft text-yes' },
   LIMIT_PLACED: { icon: Timer, cls: 'bg-accent-soft text-accent' },
-  LIMIT_CANCELLED: { icon: ListX, cls: 'bg-white/8 text-ink-2' },
+  LIMIT_CANCELLED: { icon: ListX, cls: 'bg-ink/8 text-ink-2' },
   FUNDS_ADDED: { icon: Wallet, cls: 'bg-accent-soft text-accent' },
   MARKET_RESOLVED: { icon: Gavel, cls: 'bg-warn-soft text-warn' },
   MARKET_STATUS: { icon: TriangleAlert, cls: 'bg-warn-soft text-warn' },
@@ -32,7 +32,7 @@ function Item({ n, onOpen }: { n: AppNotification; onOpen: (n: AppNotification) 
       <button
         type="button"
         onClick={() => onOpen(n)}
-        className="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-white/[0.04]"
+        className="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-ink/[0.04]"
       >
         <span className={cn('mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full', cls)}>
           <Icon className="h-4 w-4" aria-hidden />
@@ -85,7 +85,7 @@ export function NotificationsPopover() {
       <PopoverTrigger asChild>
         <button
           type="button"
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-white/8 hover:text-ink"
+          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-ink/8 hover:text-ink"
           aria-label={unread ? `Notifications, ${unread} unread` : 'Notifications'}
         >
           <motion.span animate={bellControls} className="inline-flex origin-top">
@@ -97,7 +97,7 @@ export function NotificationsPopover() {
               initial={motionOK ? { scale: 0.3 } : false}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 600, damping: 15 }}
-              className="absolute right-1 top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-danger px-1 text-[10px] font-bold text-white tabular"
+              className="absolute right-1 top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-no px-1 text-[10px] font-bold text-on-side tabular"
             >
               {unread > 9 ? '9+' : unread}
             </motion.span>
@@ -128,7 +128,7 @@ export function NotificationsPopover() {
                 filter === f ? 'text-ink' : 'text-muted hover:text-ink',
               )}
             >
-              {filter === f && <ActivePill layoutId={`${pillId}-bell-filter`} className="bg-white/10" />}
+              {filter === f && <ActivePill layoutId={`${pillId}-bell-filter`} className="bg-ink/10" />}
               <span className="relative">{f === 'all' ? 'All' : `Unread${unread ? ` (${unread})` : ''}`}</span>
             </button>
           ))}

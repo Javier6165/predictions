@@ -28,7 +28,7 @@ export function SettlementDialog() {
           {anyWon ? (
             <AnimatedCheck className="mx-auto h-16 w-16" tone="success" icon={<Trophy className="h-7 w-7" aria-hidden />} />
           ) : (
-            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/6 text-ink-2">
+            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-ink/6 text-ink-2">
               <Gavel className="h-7 w-7" aria-hidden />
             </span>
           )}
@@ -38,7 +38,7 @@ export function SettlementDialog() {
           </DialogTitle>
           <DialogDescription className="mt-1.5 text-ink-2">{market.question}</DialogDescription>
         </div>
-        <div className="mt-5 flex items-center gap-3 rounded-2xl border border-line bg-white/[0.03] p-3">
+        <div className="mt-5 flex items-center gap-3 rounded-2xl border border-line bg-ink/[0.03] p-3">
           <MarketThumb market={market} className="h-12 w-12" />
           <div className="min-w-0">
             <p className="text-sm font-semibold">{market.title}</p>
@@ -50,7 +50,7 @@ export function SettlementDialog() {
             {r.settled.map((p) => (
               <li
                 key={p.positionId}
-                className={cn('rounded-2xl border p-3.5', p.won ? 'border-yes/30 bg-yes-soft' : 'border-line bg-white/[0.02]')}
+                className={cn('rounded-2xl border p-3.5', p.won ? 'border-yes/30 bg-yes-soft' : 'border-line bg-ink/[0.02]')}
               >
                 <p className="text-sm font-medium">{proposition(market, p.outcomeId, p.side)}</p>
                 <dl className="mt-2 grid grid-cols-3 gap-2 text-xs">

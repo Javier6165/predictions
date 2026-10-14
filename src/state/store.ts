@@ -24,11 +24,12 @@ import { persistedSchema } from './persistSchema';
 export const STORAGE_KEY = 'nova-demo-session';
 
 export type MotionPreference = 'system' | 'reduce' | 'full';
+export type ThemePreference = 'light' | 'dark' | 'system';
 
 export interface AppStore {
   user: UserState;
   recentSearches: string[];
-  preferences: { motion: MotionPreference };
+  preferences: { motion: MotionPreference; theme: ThemePreference };
   /** Set when a stale or incompatible session was discarded on load. */
   sessionRecovered: boolean;
 
@@ -49,6 +50,7 @@ export interface AppStore {
   addRecentSearch: (q: string) => void;
   clearRecentSearches: () => void;
   setMotion: (m: MotionPreference) => void;
+  setTheme: (t: ThemePreference) => void;
   dismissRecovered: () => void;
 }
 
@@ -64,7 +66,7 @@ export const useStore = create<AppStore>()(
     (set, get) => ({
       user: showcaseState(catalog),
       recentSearches: [],
-      preferences: { motion: 'system' },
+      preferences: { motion: 'system', theme: 'light' },
       sessionRecovered: false,
 
       buy: (intent) => commit(set, executeBuy(get().user, catalog, intent)),
@@ -94,7 +96,8 @@ export const useStore = create<AppStore>()(
         set({ recentSearches: list });
       },
       clearRecentSearches: () => set({ recentSearches: [] }),
-      setMotion: (motion) => set({ preferences: { motion } }),
+      setMotion: (motion) => set({ preferences: { ...get().preferences, motion } }),
+      setTheme: (theme) => set({ preferences: { ...get().preferences, theme } }),
       dismissRecovered: () => set({ sessionRecovered: false }),
     }),
     {

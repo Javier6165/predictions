@@ -14,7 +14,7 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
   const delta = changePp(market, lead.id);
   const resolved = market.status === 'RESOLVED';
   return (
-    <div className="group relative flex items-center gap-3 rounded-xl px-2 py-2.5 transition hover:bg-white/[0.035] sm:gap-4 sm:px-3">
+    <div className="group relative flex items-center gap-3 rounded-xl px-2 py-2.5 transition hover:bg-ink/[0.035] sm:gap-4 sm:px-3">
       {rank !== undefined && <span className="w-4 shrink-0 text-center text-sm font-medium text-subtle tabular">{rank}</span>}
       <MarketThumb market={market} className={cn('hidden sm:block', compact ? 'h-11 w-11' : 'h-14 w-24')} />
       <div className="min-w-0 flex-1">

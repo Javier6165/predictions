@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useState } from 'react';
+import { BRAND } from '@/brand';
 import { ActivePill } from '@/components/motion/ActivePill';
 import { ProbabilityBar } from '@/components/motion/ProbabilityBar';
 import { useMotionOK } from '@/components/motion/useMotionOK';
@@ -84,7 +85,7 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
         const selected = ticket.outcomeId === o.id;
         const winner = market.status === 'RESOLVED' && market.winningOutcomeId === o.id;
         return (
-          <li key={o.id} className={cn('flex flex-wrap items-center gap-3 rounded-xl px-3 py-3 sm:flex-nowrap', selected && tradable && 'bg-white/[0.04]')}>
+          <li key={o.id} className={cn('flex flex-wrap items-center gap-3 rounded-xl px-3 py-3 sm:flex-nowrap', selected && tradable && 'bg-ink/[0.04]')}>
             <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: SERIES_COLORS[i % SERIES_COLORS.length] }} aria-hidden />
             <div className="min-w-0 flex-1">
               <p className="flex items-center gap-2 font-medium">
@@ -215,13 +216,13 @@ function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: Tic
                   onBlur={() => setActive(null)}
                   className={cn(
                     'flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition',
-                    active === a.n ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]',
+                    active === a.n ? 'bg-ink/[0.06]' : 'hover:bg-ink/[0.04]',
                   )}
                 >
                   <span
                     className={cn(
                       'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px] font-bold tabular',
-                      active === a.n ? 'border-cta bg-cta text-white' : 'border-line-strong bg-surface-3 text-ink',
+                      active === a.n ? 'border-cta bg-cta text-on-cta' : 'border-line-strong bg-surface-3 text-ink',
                     )}
                     aria-hidden
                   >
@@ -229,7 +230,7 @@ function ChartCard({ market, ticket, onOpenNote }: { market: Market; ticket: Tic
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-medium">{a.title}</span>
-                    <span className="text-xs text-muted">NOVA Insights · {formatDate(a.noteAt)}</span>
+                    <span className="text-xs text-muted">{BRAND.newsroom} · {formatDate(a.noteAt)}</span>
                   </span>
                   <span className="shrink-0 text-right">
                     {a.deltaPp === null ? (
@@ -264,7 +265,7 @@ function YourPositions({ market, onSell }: { market: Market; onSell: (positionId
       <h2 className="text-sm font-semibold">Your predictions here</h2>
       <ul className="mt-3 grid gap-2">
         {views.map((v) => (
-          <li key={v.position.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-white/[0.02] p-3">
+          <li key={v.position.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-ink/[0.02] p-3">
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium">{proposition(market, v.position.outcomeId, v.position.side)}</p>
               <p className="mt-0.5 text-xs text-muted">
@@ -387,7 +388,7 @@ export function MarketDetailPage() {
           <div className="absolute inset-y-0 right-0 w-full [mask-image:linear-gradient(90deg,transparent,black_40%)] sm:w-[min(62%,820px)]">
             <SceneArt art={marketArt(market)} seed={market.id} animated={motionOK} />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,#050912_25%,rgb(5_9_18/0.75)_55%,rgb(5_9_18/0.2))] max-sm:bg-[linear-gradient(180deg,rgb(5_9_18/0.6),#050912)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,#0f0e0c_25%,rgb(15_14_12/0.75)_55%,rgb(15_14_12/0.2))] max-sm:bg-[linear-gradient(180deg,rgb(15_14_12/0.6),#0f0e0c)]" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-bg to-transparent" />
         </div>
         <div className="mx-auto max-w-[1320px] px-4 pb-8 pt-6 sm:px-6 sm:pt-8 lg:px-8">
@@ -401,7 +402,7 @@ export function MarketDetailPage() {
             </Link>
           </nav>
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <Chip className="border-white/15 bg-black/30">
+            <Chip className="border-ink/15 bg-black/30">
               <span className="h-4 w-4 overflow-hidden rounded" aria-hidden>
                 <SceneArt art={category.art} seed={category.slug} />
               </span>
@@ -409,7 +410,7 @@ export function MarketDetailPage() {
             </Chip>
             <StatusBadge status={market.status} />
             {market.tags.filter((t) => t !== 'Featured').map((t) => (
-              <Chip key={t} className="border-white/10 bg-black/20 text-[11px]">
+              <Chip key={t} className="border-ink/10 bg-black/20 text-[11px]">
                 {t}
               </Chip>
             ))}
@@ -422,13 +423,13 @@ export function MarketDetailPage() {
           </div>
           <p className="mt-3 max-w-2xl text-ink-2">{market.resolutionSummary}</p>
           <div className="mt-5 flex flex-wrap items-center gap-2">
-            <Chip className="border-white/15 bg-black/30 px-3 py-1.5 text-[13px]">
+            <Chip className="border-ink/15 bg-black/30 px-3 py-1.5 text-[13px]">
               <CalendarClock className="h-4 w-4" aria-hidden />
               {market.status === 'RESOLVED' ? `Resolved ${formatDate(market.resolvedAt ?? market.closeAt)}` : `Closes ${formatDate(market.closeAt)} · ${timeLeft(market.closeAt, DEMO_NOW)}`}
             </Chip>
-            <Chip className="border-white/15 bg-black/30 px-3 py-1.5 text-[13px]">{formatCompactMoney(market.activity.volume24hCents)} volume (24h)</Chip>
+            <Chip className="border-ink/15 bg-black/30 px-3 py-1.5 text-[13px]">{formatCompactMoney(market.activity.volume24hCents)} volume (24h)</Chip>
             {market.activity.trendingScore >= 80 && (
-              <Chip className="border-white/15 bg-black/30 px-3 py-1.5 text-[13px]">
+              <Chip className="border-ink/15 bg-black/30 px-3 py-1.5 text-[13px]">
                 <Flame className="h-4 w-4 text-no" aria-hidden /> Trending
               </Chip>
             )}
@@ -494,7 +495,7 @@ export function MarketDetailPage() {
                       {updates.slice(0, 2).map((u) => (
                         <li key={u.id}>
                           <p className="text-sm font-medium">{u.title}</p>
-                          <p className="text-xs text-muted">NOVA Insights · {ago(u.at, DEMO_NOW)}</p>
+                          <p className="text-xs text-muted">{BRAND.newsroom} · {ago(u.at, DEMO_NOW)}</p>
                         </li>
                       ))}
                     </ul>
@@ -514,7 +515,7 @@ export function MarketDetailPage() {
                   {updates.map((u) => (
                     <li key={u.id} id={`note-${u.id}`} tabIndex={-1} className="card scroll-mt-24 p-5 outline-none focus-visible:ring-2 focus-visible:ring-accent">
                       <p className="flex items-center gap-2 text-xs text-muted">
-                        <span className="rounded bg-white/8 px-1.5 py-0.5 font-semibold text-ink-2">NOVA INSIGHTS</span>
+                        <span className="rounded bg-ink/8 px-1.5 py-0.5 font-semibold text-ink-2">{BRAND.newsroom}</span>
                         <span>{formatDate(u.at)}</span>
                         <span aria-hidden>·</span>
                         <span>{ago(u.at, DEMO_NOW)}</span>
@@ -605,7 +606,7 @@ export function MarketDetailPage() {
                   ))}
                 </dl>
                 {market.type === 'MULTI_OUTCOME' && (
-                  <p className="mt-5 rounded-xl border border-line bg-white/[0.03] p-3.5 text-sm text-ink-2">
+                  <p className="mt-5 rounded-xl border border-line bg-ink/[0.03] p-3.5 text-sm text-ink-2">
                     Each outcome is its own Yes/No contract. Buying <strong>No</strong> on one outcome only means that outcome won’t win — it never says which
                     other outcome will.
                   </p>

@@ -81,7 +81,7 @@ export function SaveButton({
         aria-label={aria}
         className={cn(
           'inline-flex h-12 w-12 items-center justify-center rounded-full border transition',
-          saved ? 'border-accent/60 bg-accent-soft text-accent' : 'border-white/25 bg-white/5 text-ink hover:bg-white/10',
+          saved ? 'border-accent/60 bg-accent-soft text-accent' : 'border-ink/25 bg-ink/5 text-ink hover:bg-ink/10',
           className,
         )}
       >
@@ -95,7 +95,7 @@ export function SaveButton({
       aria-pressed={saved}
       aria-label={aria}
       className={cn(
-        'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition hover:bg-white/8',
+        'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition hover:bg-ink/8',
         saved ? 'text-accent' : 'text-muted hover:text-ink',
         className,
       )}
@@ -107,12 +107,12 @@ export function SaveButton({
 
 const STATUS_COPY: Record<MarketStatus, { label: string; cls: string }> = {
   OPEN: { label: 'Open', cls: 'border-yes/30 bg-yes-soft text-yes' },
-  UPCOMING: { label: 'Upcoming', cls: 'border-line-strong bg-white/5 text-ink-2' },
+  UPCOMING: { label: 'Upcoming', cls: 'border-line-strong bg-ink/5 text-ink-2' },
   SUSPENDED: { label: 'Paused', cls: 'border-warn/40 bg-warn-soft text-warn' },
-  CLOSED: { label: 'Closed', cls: 'border-line-strong bg-white/5 text-ink-2' },
+  CLOSED: { label: 'Closed', cls: 'border-line-strong bg-ink/5 text-ink-2' },
   PENDING_RESOLUTION: { label: 'Awaiting result', cls: 'border-warn/40 bg-warn-soft text-warn' },
   RESOLVED: { label: 'Resolved', cls: 'border-accent/40 bg-accent-soft text-[#9cc0ff]' },
-  VOIDED: { label: 'Voided', cls: 'border-line-strong bg-white/5 text-ink-2' },
+  VOIDED: { label: 'Voided', cls: 'border-line-strong bg-ink/5 text-ink-2' },
 };
 
 export function StatusBadge({ status, className }: { status: MarketStatus; className?: string }) {

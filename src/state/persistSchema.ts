@@ -104,5 +104,9 @@ export const userStateSchema = z.object({
 export const persistedSchema = z.object({
   user: userStateSchema,
   recentSearches: z.array(z.string()).max(8),
-  preferences: z.object({ motion: z.enum(['system', 'reduce', 'full']) }),
+  preferences: z.object({
+    motion: z.enum(['system', 'reduce', 'full']),
+    // Added in identity v2; older sessions default to the light theme.
+    theme: z.enum(['light', 'dark', 'system']).default('light'),
+  }),
 });
