@@ -21,11 +21,8 @@ export function allocate(values: number[], total = 100): number[] {
   const out = raw.map(Math.floor);
   let left = total - out.reduce((a, b) => a + b, 0);
   const order = raw.map((r, i) => [r - Math.floor(r), i] as const).sort((a, b) => b[0] - a[0]);
-  for (const [, i] of order) {
-    if (left <= 0) break;
-    out[i]++;
-    left--;
-  }
+  // Hand out what rounding left over, biggest remainder first (round-robin if all are equal).
+  for (let k = 0; left > 0 && order.length > 0; k++, left--) out[order[k % order.length][1]]++;
   return out;
 }
 

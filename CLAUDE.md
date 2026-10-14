@@ -33,6 +33,8 @@ Construye una web app funcional, cuidada y coherente que demuestre un rediseño 
 
 ## Dirección visual aprobada
 
+> **Actualización (identity v2, aprobada por el usuario):** la identidad pasa a **Likely**: modo papel claro por defecto con tema oscuro e híbrido, serif editorial y probabilidad en 100 puntos. Ver `docs/IDENTITY.md`. Las capturas de referencia siguen valiendo como guía de **estructura**, no de estética.
+
 - Ref. Home: `references/a_sleek_dark_futuristic_web_app_dashboard_ui_des.png` — hero se funde con navbar; alto impacto editorial.
 - Ref. Explore B: `references/a_clean_modern_dark_themed_ui_ux_screenshot_of_a.png`.
 - Ref. Explore B mejorada, filtros colapsados (**default**): `references/a_sleek_dark_futuristic_ui_dashboard_website_moc.png`.

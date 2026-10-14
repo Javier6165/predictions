@@ -15,9 +15,9 @@ export function Avatar({ className = 'h-9 w-9' }: { className?: string }) {
   return (
     <span
       aria-hidden
-      className={`relative inline-flex ${className} items-center justify-center overflow-hidden rounded-full bg-[conic-gradient(from_200deg,#7aa2ff,#b388ff,#5ee0c1,#7aa2ff)] p-[2px]`}
+      className={`relative inline-flex ${className} items-center justify-center overflow-hidden rounded-full bg-highlight p-[2px]`}
     >
-      <span className="flex h-full w-full items-center justify-center rounded-full bg-surface-2 text-[12px] font-bold text-ink">DE</span>
+      <span className="flex h-full w-full items-center justify-center rounded-full bg-ink text-[12px] font-bold text-bg">DE</span>
     </span>
   );
 }

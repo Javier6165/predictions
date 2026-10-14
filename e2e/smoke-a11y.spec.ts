@@ -65,6 +65,26 @@ test('axe: key pages at desktop and phone widths', async ({ page }) => {
   expect(found).toEqual([]);
 });
 
+test('axe: dark theme keeps AA contrast on key pages', async ({ page }) => {
+  test.setTimeout(120_000);
+  const found: string[] = [];
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Switch to dark theme' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const r of ['/', '/explore', '/markets/ucl-2027', '/markets/mars-2035', '/portfolio', '/portfolio?tab=history']) {
+      await page.goto(r);
+      await page.waitForLoadState('networkidle');
+      await axe(page, `dark ${width} ${r}`, found);
+    }
+  }
+  // The choice survives navigation and reloads within the tab.
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  expect(found).toEqual([]);
+});
+
 test('axe: overlays, dialogs and sheets', async ({ page }) => {
   test.setTimeout(120_000);
   const found: string[] = [];
