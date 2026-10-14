@@ -1,6 +1,7 @@
 /**
- * Placeholder photography (Pexels License: free to use, no attribution required —
- * credited anyway in docs/PHOTO_CREDITS.md). Temporary until the bespoke art pass.
+ * Photography: the key images are generated for the project with Higgsfield Soul 2.0
+ * (fictional people and events); the rest are Pexels placeholders (Pexels License).
+ * Sources per key in docs/PHOTO_CREDITS.md.
  * Every image was checked by eye (no real politicians or celebrities).
  */
 import { CATEGORIES, type CategoryArt } from './categories';
@@ -29,13 +30,19 @@ for (const [path, url] of Object.entries(files)) {
 
 /** Per-photo focal points where the subject is off-centre. */
 const POSITION: Record<string, string> = {
-  'hero-space': '58% 55%',
+  'hero-space': '80% 62%',
+  'mars-2035': '58% 60%',
+  'marlowe-election-2028': '28% 30%',
+  'music-tour-2027': '50% 40%',
+  'cat-entertainment': '55% 40%',
+  'film-award-2027': '45% 25%',
+  'peace-talks-2027': '68% 55%',
+  'cat-global': '50% 72%',
+  'cat-politics': '50% 45%',
   'nba-2027': '40% 30%',
-  'marlowe-election-2028': '55% 30%',
   'midterm-turnout-2026': '55% 40%',
   'apple-foldable-2027': '35% 40%',
   'world-cup-2027': '50% 40%',
-  'peace-talks-2027': '55% 50%',
   'exoplanet-2027': '35% 60%',
 };
 
