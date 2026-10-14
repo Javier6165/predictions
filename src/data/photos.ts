@@ -34,22 +34,27 @@ const POSITION: Record<string, string> = {
   'mars-2035': '58% 60%',
   'marlowe-election-2028': '28% 30%',
   'music-tour-2027': '50% 40%',
-  'cat-entertainment': '55% 40%',
   'film-award-2027': '45% 25%',
   'peace-talks-2027': '68% 55%',
-  'cat-global': '50% 72%',
-  'cat-politics': '50% 45%',
+  'cat-global': '82% 50%',
+  'cat-sports': '50% 60%',
+  'cat-tech': '50% 40%',
+  'cat-economy': '60% 45%',
+  'cat-entertainment': '55% 55%',
+  'cat-science': '45% 60%',
+  'ucl-2027': '55% 45%',
+  'fed-2027': '50% 40%',
+  'cat-politics': '50% 60%',
   'nba-2027': '40% 30%',
   'midterm-turnout-2026': '55% 40%',
   'apple-foldable-2027': '35% 40%',
   'world-cup-2027': '50% 40%',
-  'exoplanet-2027': '35% 60%',
+  'exoplanet-2027': '45% 62%',
 };
 
 /** Scene seeds that should borrow another photo. */
 const ALIASES: Record<string, string> = {
   hero: 'hero-space',
-  'insights-dunes': 'exoplanet-2027',
 };
 
 const CATEGORY_SLUGS = new Set(CATEGORIES.map((c) => c.slug));
