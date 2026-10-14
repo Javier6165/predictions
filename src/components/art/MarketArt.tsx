@@ -15,10 +15,10 @@ export function marketArt(market: Pick<Market, 'id' | 'category'>): CategoryArt 
   return OVERRIDES[market.id] ?? categoryByName(market.category).art;
 }
 
-export function MarketThumb({ market, className }: { market: Pick<Market, 'id' | 'category'>; className?: string }) {
+export function MarketThumb({ market, className, sizes = '160px' }: { market: Pick<Market, 'id' | 'category'>; className?: string; sizes?: string }) {
   return (
-    <div className={cn('thumb relative shrink-0 overflow-hidden rounded-xl bg-surface-2 ring-1 ring-ink/10', className)}>
-      <SceneArt art={marketArt(market)} seed={market.id} sizes="160px" />
+    <div className={cn('thumb relative shrink-0 overflow-hidden rounded-xl bg-surface-2', className)}>
+      <SceneArt art={marketArt(market)} seed={market.id} sizes={sizes} />
     </div>
   );
 }

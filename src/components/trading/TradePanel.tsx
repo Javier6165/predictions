@@ -54,9 +54,10 @@ function SideOption({
     >
       <input type="radio" name={name} className="sr-only" checked={selected} onChange={onSelect} />
       <span className={cn('font-display text-[28px] leading-none', selected ? (yes ? 'text-yes' : 'text-no') : 'text-ink')}>
-        <span className="sr-only">Buy </span>
-        {yes ? 'Yes' : 'No'}
-        <span className="sr-only">: {proposition(market, outcomeId, side)}</span>
+        <span className="sr-only">
+          Buy {yes ? 'Yes' : 'No'}: {proposition(market, outcomeId, side)}
+        </span>
+        <span aria-hidden>{yes ? 'Yes' : 'No'}</span>
       </span>
       <span className="text-right">
         <span className="block text-sm font-semibold tabular text-ink">{q ? formatPrice(q.askCents) : '—'}</span>
