@@ -39,7 +39,7 @@ function FundsDialog() {
         {done ? (
           <div className="py-2 text-center">
             <AnimatedCheck className="mx-auto h-14 w-14" />
-            <DialogTitle className="mt-3 text-xl">{formatMoney(done)} added to your cash</DialogTitle>
+            <DialogTitle className="mt-3">{formatMoney(done)} added to your cash</DialogTitle>
             <DialogDescription className="mt-1.5">
               Available cash is now <span className="font-semibold text-ink">{formatMoney(summary.availableCents)}</span>. Your
               profit &amp; loss is unchanged at {formatSignedMoney(summary.totalPnLCents)} — top-ups are never counted as gains.
@@ -296,7 +296,7 @@ function AboutDialog() {
         <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-soft text-accent">
           <Sparkles className="h-5 w-5" aria-hidden />
         </span>
-        <DialogTitle className="mt-4 text-xl">About this demo</DialogTitle>
+        <DialogTitle className="mt-4">About this demo</DialogTitle>
         <DialogDescription className="mt-2 leading-relaxed">
           {BRAND.name} is a product-design concept exploring a simpler, prediction-first take on prediction markets. It is an interactive
           prototype, not a financial product.

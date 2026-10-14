@@ -6,6 +6,7 @@ import { formatCompactMoney, formatDate } from '@/lib/format';
 import { cn } from '@/lib/cn';
 import { MarketThumb } from '@/components/art/MarketArt';
 import { PpDelta, SaveButton, StatusBadge } from './bits';
+import { OddsBar } from './Odds';
 
 /** List row used in Explore groups/results: question first, indicative probability second. */
 export function MarketRow({ market, rank, compact = false }: { market: Market; rank?: number; compact?: boolean }) {
@@ -14,18 +15,18 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
   const delta = changePp(market, lead.id);
   const resolved = market.status === 'RESOLVED';
   return (
-    <div className="group relative flex items-center gap-3 rounded-xl px-2 py-2.5 transition hover:bg-ink/[0.035] sm:gap-4 sm:px-3">
+    <div className="group relative flex items-center gap-4 py-4 sm:gap-5">
       {rank !== undefined && <span className="w-4 shrink-0 text-center text-sm font-medium text-subtle tabular">{rank}</span>}
-      <MarketThumb market={market} className={cn('hidden sm:block', compact ? 'h-11 w-11' : 'h-14 w-24')} />
+      <MarketThumb market={market} className={cn('hidden rounded-2xl sm:block', compact ? 'h-12 w-12' : 'h-[72px] w-[72px]')} />
       <div className="min-w-0 flex-1">
         <Link
           to={`/markets/${market.id}`}
-          className="line-clamp-3 text-[14px] font-medium leading-snug sm:line-clamp-2 text-ink outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:outline-2 focus-visible:after:outline-accent sm:text-[15px]"
+          className="font-display line-clamp-3 text-[19px] leading-[1.15] text-ink outline-none decoration-1 underline-offset-4 after:absolute after:inset-0 after:rounded-xl group-hover:underline focus-visible:after:outline-2 focus-visible:after:outline-accent sm:line-clamp-2 sm:text-[22px]"
         >
           {market.question}
         </Link>
         {!compact && (
-          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
+          <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
             <span>{categoryByName(market.category).shortName}</span>
             <span aria-hidden>·</span>
             <span>{resolved ? `Resolved ${formatDate(market.resolvedAt ?? market.closeAt)}` : `Closes ${formatDate(market.closeAt)}`}</span>
@@ -35,9 +36,13 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
           </p>
         )}
       </div>
-      <div className="shrink-0 text-right">
-        <p className="max-w-24 truncate text-[11px] font-medium text-accent">{multi ? lead.label : 'Yes'}</p>
-        <p className="text-lg font-semibold tracking-tight text-ink tabular sm:text-xl">{lead.probabilityCents}%</p>
+      <div className="w-[92px] shrink-0 text-right sm:w-[132px]">
+        <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">{multi ? lead.label : 'Yes'}</p>
+        <p className="mt-0.5 flex items-baseline justify-end gap-1">
+          <span className="font-display text-[30px] leading-none text-ink tabular">{lead.probabilityCents}</span>
+          <span className="text-[11px] text-muted">in 100</span>
+        </p>
+        <OddsBar yes={lead.probabilityCents} tone={multi ? 'text-series-1' : 'text-yes-fill'} className="mt-2 hidden h-1 sm:flex" />
       </div>
       <div className="hidden w-20 shrink-0 sm:block">
         <PpDelta value={delta} suffix="7d" />

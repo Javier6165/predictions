@@ -1,23 +1,21 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import { ActivePill } from '@/components/motion/ActivePill';
 import { useMotionOK } from '@/components/motion/useMotionOK';
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { ArrowRight, ChevronRight, LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react';
-import { CATEGORIES, categoryByName, categoryBySlug } from '@/data/categories';
+import { CATEGORIES, categoryBySlug } from '@/data/categories';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
 import { searchMarkets } from '@/lib/search';
-import { biggestMove, changePp, leadOutcome } from '@/domain/selectors';
+import { biggestMove } from '@/domain/selectors';
 import type { Market } from '@/domain/types';
 import { SceneArt } from '@/components/art/SceneArt';
-import { MarketThumb } from '@/components/art/MarketArt';
 import { MarketRow } from '@/components/markets/MarketRow';
-import { PpDelta, SaveButton, StatusBadge } from '@/components/markets/bits';
+import { StoryCard } from '@/components/markets/StoryCard';
 import { Button } from '@/components/ui/button';
 import { BlurReveal } from '@/components/motion/BlurReveal';
-import { Spotlight } from '@/components/motion/Spotlight';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/cn';
-import { formatCompactMoney, formatDate } from '@/lib/format';
+import { formatDate } from '@/lib/format';
 
 const SORTS = [
   { id: 'trending', label: 'Trending' },
@@ -188,34 +186,7 @@ function FiltersForm({
 }
 
 function MarketCard({ market }: { market: Market }) {
-  const lead = leadOutcome(market);
-  return (
-    <Spotlight as="article" className="card lift group relative flex flex-col overflow-hidden">
-      <div className="relative h-32 overflow-hidden">
-        <MarketThumb market={market} className="h-full w-full rounded-none ring-0" />
-        <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
-        <div className="absolute right-2 top-2 z-10 rounded-lg bg-black/40 backdrop-blur">
-          <SaveButton marketId={market.id} label={market.title} />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs text-muted">{categoryByName(market.category).shortName}</p>
-        <Link to={`/markets/${market.id}`} className="mt-1 line-clamp-2 font-medium leading-snug after:absolute after:inset-0">
-          {market.question}
-        </Link>
-        <div className="mt-auto flex items-end justify-between pt-4">
-          <div>
-            <p className="text-[11px] font-medium text-accent">{market.type === 'MULTI_OUTCOME' ? lead.label : 'Yes'}</p>
-            <p className="text-2xl font-semibold tabular">{lead.probabilityCents}%</p>
-          </div>
-          <div className="text-right">
-            {market.status !== 'OPEN' ? <StatusBadge status={market.status} /> : <PpDelta value={changePp(market, lead.id)} suffix="7d" />}
-            <p className="mt-1 text-[11px] text-subtle">{formatCompactMoney(market.activity.volume24hCents)} vol.</p>
-          </div>
-        </div>
-      </div>
-    </Spotlight>
-  );
+  return <StoryCard market={market} />;
 }
 
 export function ExplorePage() {
@@ -295,65 +266,61 @@ export function ExplorePage() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="relative isolate overflow-hidden" aria-labelledby="explore-title">
-        <div className="absolute inset-0 -z-10">
-          <SceneArt art="global" seed="explore-hero" animated={motionOK} />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,#0f0e0c_15%,rgb(15_14_12/0.7)_55%,rgb(15_14_12/0.3))]" />
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-bg to-transparent" />
+      {/* Header */}
+      <section className="mx-auto max-w-[1320px] px-4 pb-8 pt-8 sm:px-6 sm:pt-12 lg:px-8" aria-labelledby="explore-title">
+        <div className="flex items-center justify-between gap-4 border-b border-ink/80 pb-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">Explore markets</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">{markets.length} questions</p>
         </div>
-        <div className="mx-auto max-w-[1320px] px-4 pb-8 pt-10 sm:px-6 sm:pt-14 lg:px-8">
-          <p className="inline-flex rounded-md bg-ink/10 px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-2">Explore markets</p>
-          <h1 id="explore-title" className="mt-4 max-w-2xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
-            <BlurReveal text="Discover what the world" /> <BlurReveal text="is predicting." wordClassName="text-gradient" delay={0.25} />
+        <div className="grid gap-6 pt-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-end">
+          <h1 id="explore-title" className="font-display max-w-3xl text-[48px] leading-[0.98] tracking-[-0.015em] text-ink sm:text-[76px]">
+            <BlurReveal text="Discover what the world" /> <BlurReveal text="is predicting." wordClassName="italic" delay={0.25} />
           </h1>
-          <p className="mt-4 max-w-xl text-ink-2">
-            From politics to science, browse every market. Compare the odds, save what interests you and dig into the rules.
-          </p>
-
-          <ul className="stagger scrollbar-none -mx-4 mt-8 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0" aria-label="Categories">
-            <li className="shrink-0">
-              <button
-                type="button"
-                onClick={() => set('category', '')}
-                aria-pressed={!category}
-                className={cn(
-                  'flex h-[104px] w-32 flex-col justify-between rounded-2xl border p-3 text-left transition',
-                  !category ? 'border-accent bg-accent-soft ring-1 ring-accent' : 'border-line-strong bg-surface/70 hover:border-ink/30',
-                )}
-              >
-                <LayoutGrid className="h-6 w-6 text-accent" aria-hidden />
-                <span>
-                  <span className="block text-sm font-semibold">All markets</span>
-                  <span className="text-xs text-muted">{markets.length}</span>
-                </span>
-              </button>
-            </li>
-            {CATEGORIES.map((c) => {
-              const active = category?.slug === c.slug;
-              return (
-                <li key={c.slug} className="shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => set('category', active ? '' : c.slug)}
-                    aria-pressed={active}
-                    className={cn(
-                      'group relative h-[104px] w-[104px] overflow-hidden rounded-2xl text-left ring-1 transition sm:w-28',
-                      active ? 'ring-2 ring-accent' : 'ring-ink/10 hover:ring-ink/30',
-                    )}
-                  >
-                    <SceneArt art={c.art} seed={c.slug} sizes="120px" />
-                    <span className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/5" />
-                    <span className="absolute inset-x-0 bottom-0 p-2.5">
-                      <span className="block text-[13px] font-semibold text-white">{c.shortName}</span>
-                      <span className="text-[11px] text-white/70">{markets.filter((m) => m.category === c.name).length}</span>
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="relative hidden aspect-[16/9] overflow-hidden rounded-3xl lg:block" data-theme="dark">
+            <SceneArt art="global" seed="explore-hero" animated={motionOK} sizes="420px" />
+          </div>
         </div>
+        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-ink-2">
+          From politics to science, browse every market. Compare the odds, save what interests you and dig into the rules.
+        </p>
+
+        <ul className="scrollbar-none -mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" aria-label="Categories">
+          <li className="shrink-0">
+            <button
+              type="button"
+              onClick={() => set('category', '')}
+              aria-pressed={!category}
+              className={cn(
+                'inline-flex h-11 items-center gap-2 rounded-full border px-4 text-sm font-medium transition',
+                !category ? 'border-ink bg-ink text-bg' : 'border-line-strong bg-surface text-ink hover:border-ink',
+              )}
+            >
+              All markets <span className={cn('tabular', !category ? 'text-bg/70' : 'text-muted')}>{markets.length}</span>
+            </button>
+          </li>
+          {CATEGORIES.map((c) => {
+            const active = category?.slug === c.slug;
+            return (
+              <li key={c.slug} className="shrink-0">
+                <button
+                  type="button"
+                  onClick={() => set('category', active ? '' : c.slug)}
+                  aria-pressed={active}
+                  className={cn(
+                    'inline-flex h-11 items-center gap-2.5 rounded-full border pl-1 pr-4 text-sm font-medium transition',
+                    active ? 'border-ink bg-ink text-bg' : 'border-line-strong bg-surface text-ink hover:border-ink',
+                  )}
+                >
+                  <span className="h-8 w-8 overflow-hidden rounded-full" data-theme="dark" aria-hidden>
+                    <SceneArt art={c.art} seed={c.slug} sizes="40px" />
+                  </span>
+                  {c.shortName}
+                  <span className={cn('tabular', active ? 'text-bg/70' : 'text-muted')}>{markets.filter((m) => m.category === c.name).length}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <div className="mx-auto flex max-w-[1320px] gap-6 px-4 sm:px-6 lg:px-8">
@@ -391,14 +358,14 @@ export function ExplorePage() {
                 </>
               )}
             </p>
-            <div className="ml-auto flex rounded-xl border border-line-strong p-0.5" role="group" aria-label="Result layout">
+            <div className="ml-auto flex rounded-full border border-line-strong p-0.5" role="group" aria-label="Result layout">
               {(['list', 'grid'] as const).map((v) => (
                 <button
                   key={v}
                   type="button"
                   onClick={() => changeView(v)}
                   aria-pressed={view === v}
-                  className={cn('relative flex items-center gap-1.5 rounded-[10px] px-3 py-1.5 text-sm transition-colors', view === v ? 'text-ink' : 'text-muted hover:text-ink')}
+                  className={cn('relative flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-colors', view === v ? 'text-ink' : 'text-muted hover:text-ink')}
                 >
                   {view === v && <ActivePill layoutId={`${pillId}-view`} className="bg-ink/10" />}
                   <span className="relative flex items-center gap-1.5">
@@ -441,36 +408,33 @@ export function ExplorePage() {
                   </Button>
                 </div>
               ) : view === 'grid' ? (
-                <div className="stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="stagger grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
                   {results.map((m) => (
                     <MarketCard key={m.id} market={m} />
                   ))}
                 </div>
               ) : (
-                <div className="stagger card divide-y divide-line p-2">
+                <div className="stagger divide-y divide-line border-y border-line">
                   {results.map((m) => (
                     <MarketRow key={m.id} market={m} />
                   ))}
                 </div>
               )
             ) : (
-              <div className="stagger grid gap-5">
+              <div className="stagger grid grid-cols-[minmax(0,1fr)] gap-14">
                 {CATEGORIES.map((c) => {
                   const group = markets
                     .filter((m) => m.category === c.name)
                     .sort((a, b) => b.activity.trendingScore - a.activity.trendingScore);
                   if (group.length === 0) return null;
                   return (
-                    <section key={c.slug} className="card overflow-hidden p-2 sm:p-3" aria-labelledby={`group-${c.slug}`}>
-                      <header className="flex items-center gap-3 px-2 pb-2 pt-1 sm:px-3">
-                        <span className="h-10 w-10 shrink-0 overflow-hidden rounded-xl ring-1 ring-ink/10">
-                          <SceneArt art={c.art} seed={c.slug} />
-                        </span>
+                    <section key={c.slug} aria-labelledby={`group-${c.slug}`}>
+                      <header className="flex items-end gap-3 border-t border-ink/80 pt-3">
                         <div className="min-w-0 flex-1">
-                          <h2 id={`group-${c.slug}`} className="font-semibold">
+                          <h2 id={`group-${c.slug}`} className="font-display text-[32px] leading-none text-ink sm:text-[38px]">
                             {c.name}
                           </h2>
-                          <p className="truncate text-xs text-muted">{c.description}</p>
+                          <p className="mt-1.5 truncate text-sm text-muted">{c.description}</p>
                         </div>
                         <button
                           type="button"
@@ -482,13 +446,13 @@ export function ExplorePage() {
                         </button>
                       </header>
                       {view === 'grid' ? (
-                        <div className="grid gap-3 p-2 sm:grid-cols-2 xl:grid-cols-3">
+                        <div className="mt-6 grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
                           {group.map((m) => (
                             <MarketCard key={m.id} market={m} />
                           ))}
                         </div>
                       ) : (
-                        <div className="divide-y divide-line">
+                        <div className="mt-1 divide-y divide-line">
                           {group.map((m) => (
                             <MarketRow key={m.id} market={m} />
                           ))}

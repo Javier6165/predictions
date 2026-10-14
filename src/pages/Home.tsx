@@ -81,13 +81,13 @@ function Cover({ market }: { market: Market }) {
                     to={`/markets/${market.id}?side=YES`}
                     className="inline-flex h-11 items-center gap-2 rounded-full bg-yes px-5 text-sm font-semibold text-on-side transition hover:bg-yes-strong"
                   >
-                    I think yes <span className="tabular opacity-80">{formatPrice(yes.askCents)}</span>
+                    I think yes <span className="tabular">{formatPrice(yes.askCents)}</span>
                   </Link>
                   <Link
                     to={`/markets/${market.id}?side=NO`}
                     className="inline-flex h-11 items-center gap-2 rounded-full border-2 border-no px-5 text-sm font-semibold text-no transition hover:bg-no hover:text-on-side"
                   >
-                    I think no <span className="tabular opacity-80">{formatPrice(no.askCents)}</span>
+                    I think no <span className="tabular">{formatPrice(no.askCents)}</span>
                   </Link>
                   <SaveButton marketId={market.id} label={market.title} />
                 </div>
@@ -215,7 +215,7 @@ function Notes({ markets }: { markets: Market[] }) {
       <ul className="mt-8 grid gap-8 md:grid-cols-3">
         {notes.map(({ m, u }, i) => (
           <li key={u.id} className="group relative">
-            <p className="font-display text-[56px] leading-none text-ink/15">{String(i + 1).padStart(2, '0')}</p>
+            <span className="numeral font-display block text-[56px] leading-none text-ink/15" data-n={String(i + 1).padStart(2, '0')} aria-hidden />
             <Kicker className="mt-3">
               {categoryByName(m.category).shortName} · {ago(u.at, DEMO_NOW)}
             </Kicker>

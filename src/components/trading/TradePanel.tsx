@@ -34,6 +34,7 @@ function SideOption({
   selected,
   onSelect,
   name,
+  describedBy,
 }: {
   market: Market;
   outcomeId: string;
@@ -41,6 +42,8 @@ function SideOption({
   selected: boolean;
   onSelect: () => void;
   name: string;
+  /** Id of the sentence that spells out the selected proposition. */
+  describedBy?: string;
 }) {
   const outcome = market.outcomes.find((o) => o.id === outcomeId)!;
   const q = quoteFor(outcome, side);
@@ -52,11 +55,9 @@ function SideOption({
         selected ? (yes ? 'border-yes bg-yes-soft' : 'border-no bg-no-soft') : 'border-line-strong hover:border-ink/30',
       )}
     >
-      <input type="radio" name={name} className="sr-only" checked={selected} onChange={onSelect} />
+      <input type="radio" name={name} className="sr-only" checked={selected} onChange={onSelect} aria-describedby={describedBy} />
       <span className={cn('font-display text-[28px] leading-none', selected ? (yes ? 'text-yes' : 'text-no') : 'text-ink')}>
-        <span className="sr-only">
-          Buy {yes ? 'Yes' : 'No'}: {proposition(market, outcomeId, side)}
-        </span>
+        <span className="sr-only">Buy {yes ? 'Yes' : 'No'}</span>
         <span aria-hidden>{yes ? 'Yes' : 'No'}</span>
       </span>
       <span className="text-right">
@@ -151,10 +152,19 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
         <legend className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">I believe</legend>
         <div className="grid grid-cols-2 gap-2">
           {(['YES', 'NO'] as const).map((s) => (
-            <SideOption key={s} market={market} outcomeId={outcome.id} side={s} selected={ticket.side === s} onSelect={() => update({ side: s })} name={`${uid}-side`} />
+            <SideOption
+              key={s}
+              market={market}
+              outcomeId={outcome.id}
+              side={s}
+              selected={ticket.side === s}
+              onSelect={() => update({ side: s })}
+              name={`${uid}-side`}
+              describedBy={ticket.side === s ? `${uid}-sentence` : undefined}
+            />
           ))}
         </div>
-        <p className={cn('font-display mt-3 text-[22px] leading-[1.15]', yes ? 'text-ink' : 'text-ink')}>
+        <p id={`${uid}-sentence`} className="font-display mt-3 text-[22px] leading-[1.15] text-ink">
           {proposition(market, outcome.id, ticket.side)}
         </p>
         {quote && <PriceExplainer quote={quote} sideLabel={yes ? 'Yes' : 'No'} className="mt-2" />}

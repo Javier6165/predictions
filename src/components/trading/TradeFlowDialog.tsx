@@ -41,7 +41,7 @@ function PropositionCard({ market, outcomeId, side, lead }: { market: Market; ou
       <MarketThumb market={market} className="h-14 w-14" />
       <div className="min-w-0">
         <p className="text-xs text-muted">{lead}</p>
-        <p className="mt-0.5 text-[15px] font-semibold leading-snug text-ink">{proposition(market, outcomeId, side)}</p>
+        <p className="font-display mt-1 text-[22px] leading-[1.12] text-ink">{proposition(market, outcomeId, side)}</p>
         <p className={cn('mt-1 text-[11px] font-semibold uppercase tracking-wide', side === 'YES' ? 'text-yes' : 'text-no')}>
           {side === 'YES' ? 'Yes' : 'No'} contracts{market.type === 'MULTI_OUTCOME' ? ` · ${findOutcome(market, outcomeId)?.label}` : ''}
         </p>
@@ -375,7 +375,7 @@ export function TradeFlowDialog({
       body = (
         <div className="text-center">
           <AnimatedCheck className="mx-auto h-16 w-16" tone="accent" />
-          <DialogTitle className="mt-3 text-xl">Limit order placed</DialogTitle>
+          <DialogTitle className="mt-3">Limit order placed</DialogTitle>
           <DialogDescription className="mt-1.5">
             Waiting to buy {formatContracts(receipt.requestedQuantity)} at {formatPrice(receipt.limitPriceCents)} backing “
             {bare(proposition(m, receipt.outcomeId, receipt.side))}”.
@@ -402,7 +402,7 @@ export function TradeFlowDialog({
       body = (
         <div className="text-center">
           <AnimatedCheck className="mx-auto h-16 w-16" />
-          <DialogTitle className="mt-3 text-xl">{isSell ? 'Sale confirmed' : 'Your prediction is active!'}</DialogTitle>
+          <DialogTitle className="mt-3 text-[32px]">{isSell ? 'Sale confirmed' : 'Your prediction is active!'}</DialogTitle>
           <DialogDescription className="mt-1.5 text-[15px] text-ink-2">
             {isSell
               ? `You sold ${formatContracts(receipt.quantity)} backing “${bare(proposition(m, receipt.outcomeId, receipt.side))}”.`

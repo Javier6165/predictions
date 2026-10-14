@@ -111,7 +111,7 @@ const STATUS_COPY: Record<MarketStatus, { label: string; cls: string }> = {
   SUSPENDED: { label: 'Paused', cls: 'border-warn/40 bg-warn-soft text-warn' },
   CLOSED: { label: 'Closed', cls: 'border-line-strong bg-ink/5 text-ink-2' },
   PENDING_RESOLUTION: { label: 'Awaiting result', cls: 'border-warn/40 bg-warn-soft text-warn' },
-  RESOLVED: { label: 'Resolved', cls: 'border-accent/40 bg-accent-soft text-[#9cc0ff]' },
+  RESOLVED: { label: 'Resolved', cls: 'border-accent/40 bg-accent-soft text-accent' },
   VOIDED: { label: 'Voided', cls: 'border-line-strong bg-ink/5 text-ink-2' },
 };
 

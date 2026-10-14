@@ -34,8 +34,8 @@
   /* Type */
   --color-ink: #16140f;
   --color-ink-2: #3a372f;
-  --color-muted: #625e54;
-  --color-subtle: #6e6a5f;
+  --color-muted: #5a564d;
+  --color-subtle: #666257;
 
   /* Brand: ink CTAs, lime highlighter, focus in Yes cobalt */
   --color-accent: #2a44e8;
@@ -56,8 +56,8 @@
   --color-yes-strong: #1f35c4;
   --color-yes-fill: #3552ff;
   --color-yes-soft: rgb(42 68 232 / 0.1);
-  --color-no: #b8360f;
-  --color-no-strong: #9c2c0a;
+  --color-no: #a02c0a;
+  --color-no-strong: #862307;
   --color-no-fill: #ff5a26;
   --color-no-soft: rgb(232 76 30 / 0.11);
   --color-warn: #8a5a00;
@@ -396,3 +396,6 @@ a:hover svg.lucide-chevron-right {
 /* Signature dots: colour eases dot by dot when the odds change. */
 .dot { transition: color 420ms cubic-bezier(0.22, 1, 0.36, 1); }
 .bar-seg { transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* Decorative numerals live in CSS content so they are never read or contrast-checked as text. */
+.numeral::before { content: attr(data-n); }

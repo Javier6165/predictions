@@ -6,11 +6,9 @@ import {
   ArrowUpRight,
   Ban,
   Bookmark,
-  CircleDollarSign,
   Clock,
   Gavel,
   Info,
-  LineChart,
   Timer,
   Trophy,
   Wallet,
@@ -23,7 +21,6 @@ import type { LedgerEntry, LimitOrder } from '@/domain/types';
 import { marketFor, quoteFor, findOutcome } from '@/domain/quotes';
 import { useStore } from '@/state/store';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
-import { Spotlight } from '@/components/motion/Spotlight';
 import { ActivePill } from '@/components/motion/ActivePill';
 import { useUi } from '@/state/ui';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
@@ -52,51 +49,37 @@ function Summary() {
   const user = useStore((s) => s.user);
   const setDialog = useUi((s) => s.setDialog);
   const s = portfolioSummary(user, catalog);
+  const big = 'font-display mt-1 block text-[48px] leading-none tracking-[-0.01em] tabular sm:text-[56px]';
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.35fr]">
-      <section className="card flex items-start gap-4 p-5" aria-label="Portfolio value">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-yes-soft text-yes">
-          <LineChart className="h-5 w-5" aria-hidden />
-        </span>
-        <div>
-          <p className="text-sm text-muted">Portfolio value</p>
-          <AnimatedNumber flash value={s.portfolioValueCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="portfolio-value" />
-          <p className={cn('mt-1 text-sm font-medium tabular', pnlClass(s.totalPnLCents))}>
-            {formatSignedMoney(s.totalPnLCents)} ({formatReturn(s.totalPnLCents, s.depositsCents)}) all-time P&amp;L
+    <div className="grid border-y border-ink/80 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.3fr]">
+      <section className="py-6 md:pr-8" aria-label="Portfolio value">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">Portfolio value</p>
+        <AnimatedNumber flash value={s.portfolioValueCents} format={formatMoney} className={cn(big, 'text-ink')} data-testid="portfolio-value" />
+        <p className={cn('mt-2 text-sm font-medium tabular', pnlClass(s.totalPnLCents))}>
+          {formatSignedMoney(s.totalPnLCents)} ({formatReturn(s.totalPnLCents, s.depositsCents)}) all-time P&amp;L
+        </p>
+        <p className="mt-1 text-xs text-subtle">Cash + predictions at current probability</p>
+      </section>
+      <section className="border-t border-line py-6 md:border-l md:border-t-0 md:px-8" aria-label="Cash available">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">Cash available</p>
+        <AnimatedNumber flash value={s.availableCents} format={formatMoney} className={cn(big, 'text-ink')} data-testid="cash-available" />
+        {s.reservedCents > 0 ? (
+          <p className="mt-2 text-xs text-muted">
+            + {formatMoney(s.reservedCents)} held for pending orders · {formatMoney(s.cashTotalCents)} total cash
           </p>
-          <p className="mt-1 text-xs text-subtle">Cash + predictions at current probability</p>
-        </div>
+        ) : (
+          <p className="mt-2 text-xs text-muted">Nothing held for pending orders</p>
+        )}
+        <Button size="sm" variant="outline" className="mt-3" onClick={() => setDialog('funds')}>
+          Add funds
+        </Button>
       </section>
-      <section className="card flex items-start gap-4 p-5" aria-label="Cash available">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent">
-          <Wallet className="h-5 w-5" aria-hidden />
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm text-muted">Cash available</p>
-          <AnimatedNumber flash value={s.availableCents} format={formatMoney} className="mt-0.5 block text-3xl font-semibold tracking-tight tabular" data-testid="cash-available" />
-          {s.reservedCents > 0 ? (
-            <p className="mt-1 text-xs text-muted">
-              + {formatMoney(s.reservedCents)} held for pending orders · {formatMoney(s.cashTotalCents)} total cash
-            </p>
-          ) : (
-            <p className="mt-1 text-xs text-muted">Nothing held for pending orders</p>
-          )}
-          <Button size="sm" className="mt-3 w-full sm:w-auto" onClick={() => setDialog('funds')}>
-            Add funds
-          </Button>
+      <section className="grid gap-4 border-t border-line py-6 sm:grid-cols-[auto_1fr] md:col-span-2 xl:col-span-1 xl:border-l xl:border-t-0 xl:pl-8" aria-label="Profit and loss">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">Total profit / loss</p>
+          <AnimatedNumber flash value={s.totalPnLCents} format={formatSignedMoney} className={cn(big, pnlClass(s.totalPnLCents))} data-testid="total-pnl" />
         </div>
-      </section>
-      <section className="card grid gap-4 p-5 sm:grid-cols-[auto_1fr] md:col-span-2 xl:col-span-1" aria-label="Profit and loss">
-        <div className="flex items-start gap-4">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-ink/6 text-ink-2">
-            <CircleDollarSign className="h-5 w-5" aria-hidden />
-          </span>
-          <div>
-            <p className="text-sm text-muted">Total profit / loss</p>
-            <AnimatedNumber flash value={s.totalPnLCents} format={formatSignedMoney} className={cn('mt-0.5 block text-3xl font-semibold tracking-tight tabular', pnlClass(s.totalPnLCents))} data-testid="total-pnl" />
-          </div>
-        </div>
-        <dl className="grid gap-1 text-sm sm:border-l sm:border-line sm:pl-5">
+        <dl className="grid content-start gap-1 text-sm sm:border-l sm:border-line sm:pl-6">
           {[
             ['Invested in open predictions', formatMoney(s.positionsCostCents), ''],
             ['Their current value', formatMoney(s.positionsMarkedCents), ''],
@@ -117,6 +100,26 @@ function Summary() {
   );
 }
 
+/** Where you came in vs. where the odds are now, on one 0–100 track. */
+function EntryTrack({ entry, now, side }: { entry: number; now: number; side: 'YES' | 'NO' }) {
+  const lo = Math.min(entry, now);
+  const hi = Math.max(entry, now);
+  const up = now >= entry;
+  return (
+    <div className="mt-3">
+      <div className="relative h-1.5 rounded-full bg-ink/10" aria-hidden>
+        <span className={cn('absolute inset-y-0 rounded-full', up ? 'bg-yes-fill' : 'bg-no-fill')} style={{ left: `${lo}%`, width: `${Math.max(hi - lo, 0.8)}%` }} />
+        <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-ink bg-surface" style={{ left: `${entry}%` }} />
+        <span className={cn('absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full', up ? 'bg-yes' : 'bg-no')} style={{ left: `${now}%` }} />
+      </div>
+      <p className="mt-2 text-xs text-muted">
+        You came in at <span className="font-semibold text-ink-2 tabular">{entry}</span> in 100 · now{' '}
+        <span className={cn('font-semibold tabular', up ? 'text-yes' : 'text-no')}>{now}</span> in 100 for {side === 'YES' ? 'Yes' : 'No'}
+      </p>
+    </div>
+  );
+}
+
 function SideChip({ side, label }: { side: 'YES' | 'NO'; label: string }) {
   return (
     <span className={cn('rounded-full px-2 py-0.5 text-[11px] font-semibold', side === 'YES' ? 'bg-yes-soft text-yes' : 'bg-no-soft text-no')}>
@@ -128,26 +131,26 @@ function SideChip({ side, label }: { side: 'YES' | 'NO'; label: string }) {
 function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: boolean; onManage: () => void }) {
   const m = v.market;
   return (
-    <Spotlight
-      as="article"
-      className={cn('card lift group flex flex-col gap-4 p-4 sm:flex-row sm:items-center', selected ? 'border-accent/60 ring-1 ring-accent/40' : '')}
+    <article
+      className={cn('card group flex flex-col gap-5 p-4 transition sm:flex-row sm:items-center sm:p-5', selected ? 'border-ink ring-1 ring-ink' : 'hover:border-line-strong')}
       aria-label={proposition(m, v.position.outcomeId, v.position.side)}
     >
       <div className="flex min-w-0 flex-1 gap-4">
-        <MarketThumb market={m} className="h-20 w-24 sm:h-24 sm:w-32" />
-        <div className="min-w-0">
-          <div className="flex flex-wrap gap-1.5">
-            <Chip className="py-0.5 text-[11px]">{categoryByName(m.category).shortName}</Chip>
+        <MarketThumb market={m} className="h-20 w-20 rounded-2xl sm:h-24 sm:w-24" />
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">{categoryByName(m.category).shortName}</span>
             <SideChip side={v.position.side} label={contractLabel(m, v.position.outcomeId, v.position.side)} />
             {m.status !== 'OPEN' && <StatusBadge status={m.status} />}
           </div>
-          <h3 className="mt-1.5 text-[15px] font-semibold leading-snug sm:text-base">{proposition(m, v.position.outcomeId, v.position.side)}</h3>
-          <p className="mt-1 flex items-center gap-1.5 text-xs text-muted">
+          <h3 className="font-display mt-1.5 text-[22px] leading-[1.12] text-ink">{proposition(m, v.position.outcomeId, v.position.side)}</h3>
+          <EntryTrack entry={v.averagePriceCents} now={v.markCents} side={v.position.side} />
+          <p className="mt-1 flex items-center gap-1.5 text-xs text-subtle">
             <Clock className="h-3.5 w-3.5" aria-hidden /> Closes {formatDate(m.closeAt)} · {timeLeft(m.closeAt, DEMO_NOW)}
           </p>
         </div>
       </div>
-      <div className="flex items-end justify-between gap-4 sm:w-[340px] sm:shrink-0 sm:flex-col sm:items-stretch">
+      <div className="flex items-end justify-between gap-4 sm:w-[300px] sm:shrink-0 sm:flex-col sm:items-stretch">
         <dl className="grid grid-cols-3 gap-3 text-sm">
           <div>
             <dt className="text-xs text-muted">Invested</dt>
@@ -159,12 +162,12 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
           </div>
           <div className="text-right">
             <dt className="sr-only">Profit or loss</dt>
-            <dd className={cn('font-semibold tabular', pnlClass(v.unrealizedPnLCents))}>{formatSignedMoney(v.unrealizedPnLCents)}</dd>
-            <dd className={cn('text-xs tabular', pnlClass(v.unrealizedPnLCents))}>{formatReturn(v.unrealizedPnLCents, v.position.costBasisCents)}</dd>
+            <dd className={cn('font-display text-[24px] leading-none tabular', pnlClass(v.unrealizedPnLCents))}>{formatSignedMoney(v.unrealizedPnLCents)}</dd>
+            <dd className={cn('mt-0.5 text-xs tabular', pnlClass(v.unrealizedPnLCents))}>{formatReturn(v.unrealizedPnLCents, v.position.costBasisCents)}</dd>
           </div>
         </dl>
         <div className="flex shrink-0 gap-2 sm:grid sm:grid-cols-2">
-          <Button asChild variant="secondary" size="sm" className="hidden sm:inline-flex">
+          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
             <Link to={`/markets/${m.id}`}>View prediction</Link>
           </Button>
           <Button size="sm" onClick={onManage} aria-pressed={selected}>
@@ -172,7 +175,7 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
           </Button>
         </div>
       </div>
-    </Spotlight>
+    </article>
   );
 }
 
@@ -183,7 +186,7 @@ function PositionPanel({ v, onSell }: { v: PositionView; onSell: () => void }) {
   const outcome = findOutcome(m, p.outcomeId);
   return (
     <div>
-      <div className="relative h-36 overflow-hidden rounded-2xl">
+      <div className="relative h-36 overflow-hidden rounded-2xl" data-theme="dark">
         <SceneArt art={marketArt(m)} seed={m.id} />
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
       </div>
@@ -192,7 +195,7 @@ function PositionPanel({ v, onSell }: { v: PositionView; onSell: () => void }) {
         <SideChip side={p.side} label={contractLabel(m, p.outcomeId, p.side)} />
       </div>
       <p className="mt-2 text-xs font-medium uppercase tracking-wide text-muted">You’re backing</p>
-      <h2 className="mt-0.5 text-lg font-semibold leading-snug">{proposition(m, p.outcomeId, p.side)}</h2>
+      <h2 className="font-display mt-1 text-[26px] leading-[1.1] text-ink">{proposition(m, p.outcomeId, p.side)}</h2>
       <p className="mt-1 text-xs text-muted">
         Closes {formatDate(m.closeAt)} · {timeLeft(m.closeAt, DEMO_NOW)}
       </p>
@@ -495,14 +498,18 @@ export function PortfolioPage() {
 
   return (
     <div className="mx-auto max-w-[1320px] px-4 pt-8 sm:px-6 sm:pt-10 lg:px-8">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <h1 className="text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">Your predictions</h1>
-          <p className="mt-2 text-ink-2">Track what you’ve predicted, manage positions and see how they’re doing.</p>
-        </div>
+      <div className="flex items-center justify-between gap-4 border-b border-ink/80 pb-3">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">Portfolio</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">{formatDate(DEMO_NOW)}</p>
+      </div>
+      <div className="pt-8">
+        <h1 className="font-display text-[52px] leading-[0.98] tracking-[-0.015em] text-ink sm:text-[76px]">
+          Your <span className="italic">predictions</span>
+        </h1>
+        <p className="mt-3 max-w-xl text-ink-2">Track what you’ve predicted, manage positions and see how they’re doing.</p>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-10">
         <Summary />
       </div>
 

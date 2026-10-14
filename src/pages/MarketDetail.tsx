@@ -638,7 +638,7 @@ export function MarketDetailPage() {
       </div>
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetContent side="bottom" className="px-4 pb-6 pt-3">
-          <SheetTitle className="mb-3 pr-10 text-base font-semibold">{market.title}</SheetTitle>
+          <SheetTitle className="font-display mb-3 pr-10 text-[24px] font-normal leading-tight">{market.title}</SheetTitle>
           <SheetDescription className="sr-only">Choose your prediction and amount, then review.</SheetDescription>
           {panel}
         </SheetContent>

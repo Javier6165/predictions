@@ -58,7 +58,7 @@ export function DialogContent({
 }
 
 export function DialogTitle({ className, ...props }: React.ComponentProps<typeof D.Title>) {
-  return <D.Title className={cn('text-lg font-semibold tracking-tight', className)} {...props} />;
+  return <D.Title className={cn('font-display text-[28px] font-normal leading-[1.1] text-ink', className)} {...props} />;
 }
 
 export function DialogDescription({ className, ...props }: React.ComponentProps<typeof D.Description>) {
