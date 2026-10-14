@@ -49,10 +49,10 @@ function Summary() {
   const user = useStore((s) => s.user);
   const setDialog = useUi((s) => s.setDialog);
   const s = portfolioSummary(user, catalog);
-  const big = 'font-display mt-1 block text-[48px] leading-none tracking-[-0.01em] tabular sm:text-[56px]';
+  const big = 'font-display mt-2 block text-[40px] leading-none tracking-[-0.035em] tabular sm:text-[48px]';
   return (
-    <div className="grid border-y border-ink/80 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.3fr]">
-      <section className="py-6 md:pr-8" aria-label="Portfolio value">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.3fr]">
+      <section className="card p-6 sm:p-7" aria-label="Portfolio value">
         <p className="eyebrow text-muted">Portfolio value</p>
         <AnimatedNumber flash value={s.portfolioValueCents} format={formatMoney} className={cn(big, 'text-ink')} data-testid="portfolio-value" />
         <p className={cn('mt-2 text-sm font-medium tabular', pnlClass(s.totalPnLCents))}>
@@ -60,7 +60,7 @@ function Summary() {
         </p>
         <p className="mt-1 text-xs text-subtle">Cash + predictions at current probability</p>
       </section>
-      <section className="border-t border-line py-6 md:border-l md:border-t-0 md:px-8" aria-label="Cash available">
+      <section className="card p-6 sm:p-7" aria-label="Cash available">
         <p className="eyebrow text-muted">Cash available</p>
         <AnimatedNumber flash value={s.availableCents} format={formatMoney} className={cn(big, 'text-ink')} data-testid="cash-available" />
         {s.reservedCents > 0 ? (
@@ -74,7 +74,7 @@ function Summary() {
           Add funds
         </Button>
       </section>
-      <section className="grid gap-4 border-t border-line py-6 sm:grid-cols-[auto_1fr] md:col-span-2 xl:col-span-1 xl:border-l xl:border-t-0 xl:pl-8" aria-label="Profit and loss">
+      <section className="card grid gap-5 p-6 sm:grid-cols-[auto_1fr] sm:p-7 md:col-span-2 xl:col-span-1" aria-label="Profit and loss">
         <div>
           <p className="eyebrow text-muted">Total profit / loss</p>
           <AnimatedNumber flash value={s.totalPnLCents} format={formatSignedMoney} className={cn(big, pnlClass(s.totalPnLCents))} data-testid="total-pnl" />
@@ -132,7 +132,7 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
   const m = v.market;
   return (
     <article
-      className={cn('card group flex flex-col gap-5 p-4 transition sm:flex-row sm:items-center sm:p-5', selected ? 'border-ink ring-1 ring-ink' : 'hover:border-line-strong')}
+      className={cn('card group flex flex-col gap-5 p-4 transition sm:flex-row sm:items-center sm:p-5', selected ? 'ring-2 ring-cta' : '')}
       aria-label={proposition(m, v.position.outcomeId, v.position.side)}
     >
       <div className="flex min-w-0 flex-1 gap-4">
@@ -143,7 +143,7 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
             <SideChip side={v.position.side} label={contractLabel(m, v.position.outcomeId, v.position.side)} />
             {m.status !== 'OPEN' && <StatusBadge status={m.status} />}
           </div>
-          <h3 className="font-display mt-1.5 text-[22px] leading-[1.12] text-ink">{proposition(m, v.position.outcomeId, v.position.side)}</h3>
+          <h3 className="font-display mt-1.5 text-[19px] leading-snug text-ink">{proposition(m, v.position.outcomeId, v.position.side)}</h3>
           <EntryTrack entry={v.averagePriceCents} now={v.markCents} side={v.position.side} />
           <p className="mt-1 flex items-center gap-1.5 text-xs text-subtle">
             <Clock className="h-3.5 w-3.5" aria-hidden /> Closes {formatDate(m.closeAt)} · {timeLeft(m.closeAt, DEMO_NOW)}
@@ -162,7 +162,7 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
           </div>
           <div className="text-right">
             <dt className="sr-only">Profit or loss</dt>
-            <dd className={cn('font-display text-[24px] leading-none tabular', pnlClass(v.unrealizedPnLCents))}>{formatSignedMoney(v.unrealizedPnLCents)}</dd>
+            <dd className={cn('font-display text-[22px] leading-none tracking-[-0.02em] tabular', pnlClass(v.unrealizedPnLCents))}>{formatSignedMoney(v.unrealizedPnLCents)}</dd>
             <dd className={cn('mt-0.5 text-xs tabular', pnlClass(v.unrealizedPnLCents))}>{formatReturn(v.unrealizedPnLCents, v.position.costBasisCents)}</dd>
           </div>
         </dl>
@@ -497,17 +497,10 @@ export function PortfolioPage() {
   const labels: Record<Tab, string> = { active: 'Active predictions', pending: 'Pending orders', history: 'History', saved: 'Saved markets' };
 
   return (
-    <div className="mx-auto max-w-[1320px] px-4 pt-8 sm:px-6 sm:pt-10 lg:px-8">
-      <div className="flex items-center justify-between gap-4 border-b border-ink/80 pb-3">
-        <p className="eyebrow text-ink">Portfolio</p>
-        <p className="eyebrow text-muted">{formatDate(DEMO_NOW)}</p>
-      </div>
-      <div className="pt-8">
-        <h1 className="font-display text-[52px] leading-[0.98] tracking-[-0.015em] text-ink sm:text-[76px]">
-          Your <span className="italic">predictions</span>
-        </h1>
-        <p className="mt-3 max-w-xl text-ink-2">Track what you’ve predicted, manage positions and see how they’re doing.</p>
-      </div>
+    <div className="mx-auto max-w-[1240px] px-4 pt-12 sm:px-6 sm:pt-16 lg:px-8">
+      <h1 className="font-display max-w-4xl text-[44px] leading-[1.05] tracking-[-0.035em] text-ink sm:text-[64px]">
+        Your predictions. <span className="text-muted">See how they’re doing.</span>
+      </h1>
 
       <div className="mt-10">
         <Summary />

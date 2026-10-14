@@ -276,13 +276,13 @@ function YourPositions({ market, onSell }: { market: Market; onSell: (positionId
   const orders = user.orders.filter((o) => o.marketId === market.id && o.status === 'OPEN');
   if (views.length === 0 && orders.length === 0) return null;
   return (
-    <section className="card border-accent/30 p-4 sm:p-5" aria-label="Your positions in this market">
-      <h2 className="text-sm font-semibold">Your predictions here</h2>
+    <section className="card p-5 sm:p-6" aria-label="Your positions in this market">
+      <h2 className="eyebrow">Your predictions here</h2>
       <ul className="mt-3 grid gap-2">
         {views.map((v) => (
-          <li key={v.position.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-ink/[0.02] p-3">
+          <li key={v.position.id} className="flex flex-wrap items-center gap-3 rounded-2xl bg-ink/[0.04] p-3.5">
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium">{proposition(market, v.position.outcomeId, v.position.side)}</p>
+              <p className="text-[15px] font-semibold tracking-[-0.01em]">{proposition(market, v.position.outcomeId, v.position.side)}</p>
               <p className="mt-0.5 text-xs text-muted">
                 {v.position.quantity} contracts · invested {formatMoney(v.position.costBasisCents)} · value {formatMoney(v.markedValueCents)}{' '}
                 <span className={v.unrealizedPnLCents >= 0 ? 'text-yes' : 'text-no'}>
@@ -296,7 +296,7 @@ function YourPositions({ market, onSell }: { market: Market; onSell: (positionId
           </li>
         ))}
         {orders.map((o) => (
-          <li key={o.id} className="flex items-center gap-3 rounded-xl border border-dashed border-line-strong p-3 text-sm">
+          <li key={o.id} className="flex items-center gap-3 rounded-2xl bg-ink/[0.04] p-3.5 text-sm">
             <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[11px] font-semibold text-accent">Pending</span>
             <span className="min-w-0 flex-1 text-ink-2">
               Limit buy · {o.requestedQuantity} {o.side === 'YES' ? 'Yes' : 'No'} at {formatPrice(o.limitPriceCents)}
@@ -424,7 +424,7 @@ export function MarketDetailPage() {
               )}
             </div>
             <div className="mt-4 flex items-start gap-4">
-              <h1 id="market-title" className="font-display max-w-3xl text-[40px] leading-[1.02] text-ink sm:text-[60px]">
+              <h1 id="market-title" className="font-display max-w-3xl text-[36px] leading-[1.06] tracking-[-0.03em] text-ink sm:text-[52px]">
                 {market.question}
               </h1>
               <SaveButton marketId={market.id} label={market.title} variant="pill" className="hidden shrink-0 sm:inline-flex" />

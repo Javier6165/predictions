@@ -1,6 +1,6 @@
 # NOVA — Prediction Market 2.0 (interactive demo)
 
-> **Identity v2 — Likely.** This branch has an editorial paper/night redesign: 100-dot odds, a sentence-style ticket and a theme toggle. See [docs/IDENTITY.md](docs/IDENTITY.md).
+> **Identity v3 — Likely.** *If Apple made a prediction market*: calm neutrals, one accent, 100-dot odds that light up the side you pick, a sentence-style ticket, and light/dark themes. See [docs/IDENTITY.md](docs/IDENTITY.md).
 
 A product-design concept for a simpler, **prediction-first** prediction market, built as a working single-page app. Every market, price, chart, note and outcome is **fictional demo data**; money is **virtual**. There is no backend, sign-in, payment, wallet, broker or live data.
 

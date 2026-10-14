@@ -15,7 +15,7 @@ export function PopoverContent({ className, align = 'end', sideOffset = 10, ...p
         sideOffset={sideOffset}
         collisionPadding={12}
         className={cn(
-          'z-50 rounded-2xl border border-line-strong bg-bg-elev/95 text-ink outline-none backdrop-blur-xl data-[state=open]:animate-pop-in',
+          'z-50 rounded-2xl border border-line bg-surface/90 shadow-[var(--shadow-pop)] text-ink outline-none backdrop-blur-xl data-[state=open]:animate-pop-in',
           className,
         )}
         style={{ boxShadow: 'var(--shadow-pop)' }}

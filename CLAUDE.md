@@ -33,7 +33,7 @@ Construye una web app funcional, cuidada y coherente que demuestre un rediseño 
 
 ## Dirección visual aprobada
 
-> **Actualización (identity v2, aprobada por el usuario):** la identidad pasa a **Likely**: modo papel claro por defecto con tema oscuro e híbrido, serif editorial y probabilidad en 100 puntos. Ver `docs/IDENTITY.md`. Las capturas de referencia siguen valiendo como guía de **estructura**, no de estética.
+> **Actualización (identity v3, aprobada por el usuario):** la identidad es **Likely**, con la premisa "si Apple hiciera un prediction market": neutros calmados, SF/Inter, un único acento azul (Sí/acción) y naranja para el No, probabilidad en 100 puntos que se ilumina según el lado elegido, y modo claro por defecto con tema oscuro e híbrido. Ver `docs/IDENTITY.md`. Las capturas de referencia valen como guía de **estructura**, no de estética.
 
 - Ref. Home: `references/a_sleek_dark_futuristic_web_app_dashboard_ui_des.png` — hero se funde con navbar; alto impacto editorial.
 - Ref. Explore B: `references/a_clean_modern_dark_themed_ui_ux_screenshot_of_a.png`.

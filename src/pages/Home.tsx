@@ -1,120 +1,101 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { BRAND } from '@/brand';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
 import { CATEGORIES, categoryByName } from '@/data/categories';
 import { HERO, INSIGHT_UPDATE_IDS } from '@/data/editorial';
 import { biggestMove, changePp } from '@/domain/selectors';
-import { proposition } from '@/domain/copy';
 import { quoteFor } from '@/domain/quotes';
 import type { Market } from '@/domain/types';
 import { SceneArt } from '@/components/art/SceneArt';
+import { MarketThumb } from '@/components/art/MarketArt';
 import { useMotionOK } from '@/components/motion/useMotionOK';
 import { BlurReveal } from '@/components/motion/BlurReveal';
-import { SaveButton } from '@/components/markets/bits';
+import { PpDelta, SaveButton } from '@/components/markets/bits';
 import { InHundred, YesNoDots } from '@/components/markets/Odds';
 import { StoryCard } from '@/components/markets/StoryCard';
-import { ago, formatDate, formatPp, formatPrice, timeLeft } from '@/lib/format';
-import { cn } from '@/lib/cn';
+import { ago, formatDate, formatPrice, timeLeft } from '@/lib/format';
 
-function Kicker({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <p className={cn('eyebrow text-muted', className)}>{children}</p>;
-}
-
-function SectionTitle({ id, kicker, title, action }: { id: string; kicker: string; title: React.ReactNode; action?: React.ReactNode }) {
+/** Apple-style two-tone section title: the statement, then a quieter line. */
+function SectionTitle({ id, title, line, action }: { id: string; title: string; line: string; action?: React.ReactNode }) {
   return (
-    <div className="flex items-end justify-between gap-6 border-t border-ink/80 pt-4">
-      <div>
-        <Kicker>{kicker}</Kicker>
-        <h2 id={id} className="font-display mt-1 text-[34px] leading-[1.05] text-ink sm:text-[44px]">
-          {title}
-        </h2>
-      </div>
+    <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+      <h2 id={id} className="font-display max-w-3xl text-[30px] leading-[1.1] text-ink sm:text-[40px]">
+        {title} <span className="text-muted">{line}</span>
+      </h2>
       {action}
     </div>
   );
 }
 
-function SeeAll({ to, children }: { to: string; children: React.ReactNode }) {
+function More({ to, children }: { to: string; children: React.ReactNode }) {
   return (
-    <Link to={to} className="mb-1.5 inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink-2 hover:text-ink">
-      {children} <ArrowRight className="h-4 w-4" aria-hidden />
+    <Link to={to} className="inline-flex shrink-0 items-center gap-0.5 text-[15px] text-accent hover:underline">
+      {children} <ChevronRight className="h-4 w-4" aria-hidden />
     </Link>
   );
 }
 
-/** The cover: one question, asked big, with the odds you can count. */
-function Cover({ market }: { market: Market }) {
+/** Product-page hero: one question, asked big, then the picture with the odds on it. */
+function Hero({ market }: { market: Market }) {
   const ok = useMotionOK();
   const o = market.outcomes[0];
   const yes = quoteFor(o, 'YES');
   const no = quoteFor(o, 'NO');
-  const delta = changePp(market, o.id);
   return (
-    <section aria-labelledby="hero-title" className="mx-auto max-w-[1320px] px-4 pt-8 sm:px-6 sm:pt-12 lg:px-8">
-      <div className="flex items-center justify-between gap-4 border-b border-ink/80 pb-3">
-        <Kicker className="text-ink">The question of the week</Kicker>
-        <Kicker className="hidden sm:block">{formatDate(DEMO_NOW)}</Kicker>
-      </div>
-      <div className="grid gap-8 pt-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-14 lg:pt-12">
-        <div className="flex flex-col">
-          <h1 id="hero-title" className="font-display text-[52px] leading-[0.95] tracking-[-0.02em] text-ink sm:text-[84px] lg:text-[104px]">
-            <BlurReveal text={HERO.headlineLead} /> <BlurReveal text={HERO.headlineAccent} wordClassName="italic" delay={0.3} />
-          </h1>
-          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-ink-2">{HERO.dek}</p>
-
-          <div className="mt-8 grid gap-6 rounded-3xl border border-line bg-surface p-5 sm:grid-cols-[auto_1fr] sm:items-center sm:p-6">
-            <YesNoDots yes={o.probabilityCents} size="md" className="w-[132px]" />
-            <div>
-              <Kicker>The crowd says</Kicker>
-              <p className="mt-1 flex flex-wrap items-baseline gap-x-3">
-                <InHundred value={o.probabilityCents} className="text-[64px] leading-none text-yes" />
-                <span className="text-sm text-muted">
-                  {delta === 0 ? 'unchanged this week' : `${formatPp(delta)} this week`}
-                </span>
-              </p>
-              <p className="mt-1 text-sm text-ink-2">{proposition(market, o.id, 'YES')}</p>
-              {yes && no ? (
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <Link
-                    to={`/markets/${market.id}?side=YES`}
-                    className="inline-flex h-11 items-center gap-2 rounded-full bg-yes px-5 text-sm font-semibold text-on-side transition hover:bg-yes-strong"
-                  >
-                    I think yes <span className="tabular">{formatPrice(yes.askCents)}</span>
-                  </Link>
-                  <Link
-                    to={`/markets/${market.id}?side=NO`}
-                    className="inline-flex h-11 items-center gap-2 rounded-full border-2 border-no px-5 text-sm font-semibold text-no transition hover:bg-no hover:text-on-side"
-                  >
-                    I think no <span className="tabular">{formatPrice(no.askCents)}</span>
-                  </Link>
-                  <SaveButton marketId={market.id} label={market.title} />
-                </div>
-              ) : (
-                <p className="mt-4 text-sm text-warn">Trading is paused on this market.</p>
-              )}
-            </div>
-          </div>
-          <p className="mt-4 flex items-center gap-4 text-xs text-muted">
-            <span>
-              Closes {formatDate(market.closeAt)} · {timeLeft(market.closeAt, DEMO_NOW)}
-            </span>
-            <Link to={`/markets/${market.id}`} className="inline-flex items-center gap-1 font-medium text-ink-2 hover:text-ink">
-              Explore market <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+    <section aria-labelledby="hero-title" className="mx-auto max-w-[1240px] px-4 pt-12 sm:px-6 sm:pt-20 lg:px-8">
+      <div className="mx-auto max-w-4xl text-center">
+        <p className="text-[15px] font-semibold text-no sm:text-[17px]">Question of the week</p>
+        <h1 id="hero-title" className="font-display mt-3 text-[44px] leading-[1.04] tracking-[-0.035em] text-ink sm:text-[72px] lg:text-[84px]">
+          <BlurReveal text={HERO.headlineLead} /> <BlurReveal text={HERO.headlineAccent} wordClassName="text-muted" delay={0.3} />
+        </h1>
+        <p className="mx-auto mt-5 max-w-2xl text-[19px] leading-relaxed text-ink-2 sm:text-[21px]">{HERO.dek}</p>
+        {yes && no ? (
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to={`/markets/${market.id}?side=YES`}
+              className="inline-flex h-12 items-center gap-2 rounded-full bg-cta px-6 text-[17px] font-medium text-on-cta transition hover:bg-cta-hover"
+            >
+              I think yes <span className="tabular">{formatPrice(yes.askCents)}</span>
             </Link>
-          </p>
-        </div>
-
-        <figure className="relative m-0 min-h-[360px] overflow-hidden rounded-[28px] lg:min-h-0" data-theme="dark">
-          <SceneArt art="science" seed="hero" hero animated={ok} sizes="(min-width: 1024px) 45vw, 100vw" className="absolute inset-0" />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
-          <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 text-white">
-            <span className="font-display max-w-[16ch] text-2xl leading-tight">“Test flights slip, timelines firm up.”</span>
-            <span className="text-[12px] font-medium text-white/80">{BRAND.newsroom}</span>
-          </figcaption>
-        </figure>
+            <Link
+              to={`/markets/${market.id}?side=NO`}
+              className="inline-flex h-12 items-center gap-2 rounded-full bg-ink/[0.07] px-6 text-[17px] font-medium text-ink transition hover:bg-ink/10"
+            >
+              I think no <span className="tabular text-muted">{formatPrice(no.askCents)}</span>
+            </Link>
+          </div>
+        ) : (
+          <p className="mt-8 text-sm text-warn">Trading is paused on this market.</p>
+        )}
+        <p className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[14px] text-muted">
+          <span>
+            Closes {formatDate(market.closeAt)} · {timeLeft(market.closeAt, DEMO_NOW)}
+          </span>
+          <More to={`/markets/${market.id}`}>Explore market</More>
+          <SaveButton marketId={market.id} label={market.title} />
+        </p>
       </div>
+
+      <figure className="relative m-0 mt-12 overflow-hidden rounded-[32px] sm:mt-16" data-theme="dark">
+        <div className="relative aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]">
+          <SceneArt art="science" seed="hero" hero animated={ok} sizes="(min-width: 1280px) 1200px, 100vw" className="absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent sm:bg-gradient-to-r sm:from-black/70 sm:via-black/20" />
+        </div>
+        <figcaption className="absolute inset-x-0 bottom-0 flex flex-col gap-5 p-6 sm:inset-y-0 sm:left-0 sm:right-auto sm:w-[420px] sm:justify-end sm:p-10">
+          <YesNoDots yes={o.probabilityCents} size="md" className="w-[120px] sm:w-[148px]" />
+          <div>
+            <p className="eyebrow">The crowd says</p>
+            <p className="mt-1 flex items-baseline gap-3">
+              <InHundred value={o.probabilityCents} className="text-[64px] leading-none text-ink sm:text-[80px]" />
+            </p>
+            <p className="mt-2 flex flex-wrap items-center gap-2 text-[14px] text-ink-2">
+              chance a crewed landing happens in time <PpDelta value={changePp(market, o.id)} suffix="this week" />
+            </p>
+          </div>
+        </figcaption>
+      </figure>
     </section>
   );
 }
@@ -122,83 +103,79 @@ function Cover({ market }: { market: Market }) {
 function Trending({ markets }: { markets: Market[] }) {
   const [lead, ...rest] = markets;
   return (
-    <section aria-labelledby="trending-title" className="mx-auto mt-20 max-w-[1320px] px-4 sm:px-6 lg:px-8">
-      <SectionTitle id="trending-title" kicker="Trending" title="What people are weighing" action={<SeeAll to="/explore?sort=trending">All markets</SeeAll>} />
-      <div className="stagger mt-8 grid gap-x-8 gap-y-8 sm:gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+    <section aria-labelledby="trending-title" className="mx-auto mt-24 max-w-[1240px] px-4 sm:mt-32 sm:px-6 lg:px-8">
+      <SectionTitle id="trending-title" title="Trending." line="What people are weighing right now." action={<More to="/explore?sort=trending">All markets</More>} />
+      <div className="stagger mt-8 grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
         {lead && <StoryCard market={lead} size="lg" className="md:col-span-2 lg:row-span-2" />}
-        {rest.map((m) => (
-          <StoryCard key={m.id} market={m} />
+        {rest.map((m, i) => (
+          // Lead + 5 fills the 3-column bento exactly; on 2 columns the last tile would sit alone.
+          <StoryCard key={m.id} market={m} className={i === rest.length - 1 ? 'md:max-lg:hidden' : undefined} />
         ))}
       </div>
     </section>
   );
 }
 
-/** Biggest movers as a typographic list: the shift itself is the headline. */
-function Shifts({ markets }: { markets: Market[] }) {
-  return (
-    <section aria-labelledby="movers-title" className="mx-auto mt-20 max-w-[1320px] px-4 sm:px-6 lg:px-8">
-      <SectionTitle
-        id="movers-title"
-        kicker="Biggest movers · last 7 days"
-        title="This week’s shifts"
-        action={<SeeAll to="/explore?sort=movers">See all</SeeAll>}
-      />
-      <ol className="mt-2">
-        {markets.map((m) => {
-          const o = [...m.outcomes].sort((a, b) => Math.abs(changePp(m, b.id)) - Math.abs(changePp(m, a.id)))[0];
-          const d = changePp(m, o.id);
-          const before = o.probabilityCents - d;
-          return (
-            <li key={m.id} className="group relative grid grid-cols-[88px_1fr] items-center gap-4 border-b border-line py-5 sm:grid-cols-[150px_1fr_auto] sm:gap-8">
-              <p className={cn('font-display text-[40px] leading-none tabular sm:text-[56px]', d > 0 ? 'text-yes' : 'text-no')}>
-                {d > 0 ? '+' : '−'}
-                {Math.abs(d)}
-                <span className="ml-1 text-[0.4em] tracking-wide">pp</span>
-              </p>
-              <div className="min-w-0">
-                <Kicker>
-                  {categoryByName(m.category).shortName}
-                  {m.type === 'MULTI_OUTCOME' && <> · {o.label}</>}
-                </Kicker>
-                <Link to={`/markets/${m.id}`} className="font-display mt-1 block text-[22px] leading-snug text-ink after:absolute after:inset-0 group-hover:underline sm:text-[26px]">
-                  {m.question}
-                </Link>
-              </div>
-              <p className="col-start-2 text-sm text-muted sm:col-start-auto sm:text-right">
-                <span className="tabular">{before}</span> → <span className="font-semibold text-ink tabular">{o.probabilityCents}</span> in 100
-              </p>
-            </li>
-          );
-        })}
-      </ol>
-    </section>
-  );
-}
-
+/** Store-style category strip: picture, label, nothing else. */
 function Topics({ markets }: { markets: Market[] }) {
   return (
-    <section aria-labelledby="cat-title" className="mx-auto mt-20 max-w-[1320px] px-4 sm:px-6 lg:px-8">
-      <SectionTitle id="cat-title" kicker="Explore by category" title="Pick a topic" />
-      <ul className="mt-6 flex flex-wrap gap-2.5">
+    <section aria-labelledby="cat-title" className="mx-auto mt-24 max-w-[1240px] px-4 sm:mt-32 sm:px-6 lg:px-8">
+      <SectionTitle id="cat-title" title="Explore by category." line="Pick a topic you know." />
+      <ul className="scrollbar-none -mx-4 mt-8 flex gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-6 sm:px-0 lg:grid-cols-8">
         {CATEGORIES.map((c) => {
           const count = markets.filter((m) => m.category === c.name).length;
           return (
-            <li key={c.slug}>
-              <Link
-                to={`/explore?category=${c.slug}`}
-                className="group inline-flex h-12 items-center gap-3 rounded-full border border-line-strong bg-surface pl-1.5 pr-5 text-[15px] font-medium text-ink transition hover:border-ink hover:bg-ink hover:text-bg"
-              >
-                <span className="h-9 w-9 overflow-hidden rounded-full" data-theme="dark" aria-hidden>
-                  <SceneArt art={c.art} seed={c.slug} sizes="40px" />
+            <li key={c.slug} className="w-[92px] shrink-0 sm:w-auto">
+              <Link to={`/explore?category=${c.slug}`} className="group block text-center">
+                <span className="relative block aspect-square overflow-hidden rounded-[22px]" data-theme="dark">
+                  <SceneArt art={c.art} seed={c.slug} sizes="120px" className="transition-transform duration-500 group-hover:scale-[1.06]" />
                 </span>
-                {c.name}
-                <span className="text-sm text-muted tabular group-hover:text-bg/70">{count}</span>
+                <span className="mt-2.5 block text-[14px] font-medium leading-tight text-ink">{c.shortName}</span>
+                <span className="text-[12px] text-muted">
+                  {count} market{count === 1 ? '' : 's'}
+                </span>
               </Link>
             </li>
           );
         })}
       </ul>
+    </section>
+  );
+}
+
+/** Biggest movers as a grouped list: calm rows, the shift stated plainly. */
+function Shifts({ markets }: { markets: Market[] }) {
+  return (
+    <section aria-labelledby="movers-title" className="mx-auto mt-24 max-w-[1240px] px-4 sm:mt-32 sm:px-6 lg:px-8">
+      <SectionTitle id="movers-title" title="This week." line="The biggest moves in the last 7 days." action={<More to="/explore?sort=movers">See all movers</More>} />
+      <ol className="card mt-8 divide-y divide-line px-5 sm:px-7">
+        {markets.map((m) => {
+          const o = [...m.outcomes].sort((a, b) => Math.abs(changePp(m, b.id)) - Math.abs(changePp(m, a.id)))[0];
+          const d = changePp(m, o.id);
+          const before = o.probabilityCents - d;
+          return (
+            <li key={m.id} className="group relative flex items-center gap-4 py-4 sm:py-5">
+              <MarketThumb market={m} className="h-12 w-12 rounded-xl" />
+              <div className="min-w-0 flex-1">
+                <Link to={`/markets/${m.id}`} className="line-clamp-2 text-[16px] font-medium leading-snug text-ink after:absolute after:inset-0 sm:text-[17px]">
+                  {m.question}
+                </Link>
+                <p className="mt-0.5 text-[13px] text-muted">
+                  {categoryByName(m.category).shortName}
+                  {m.type === 'MULTI_OUTCOME' && <> · {o.label}</>}
+                </p>
+              </div>
+              <div className="shrink-0 text-right">
+                <p className="text-[15px] text-muted tabular">
+                  {before} → <span className="font-semibold text-ink">{o.probabilityCents}</span>
+                  <span className="hidden sm:inline"> in 100</span>
+                </p>
+                <PpDelta value={d} />
+              </div>
+            </li>
+          );
+        })}
+      </ol>
     </section>
   );
 }
@@ -210,21 +187,20 @@ function Notes({ markets }: { markets: Market[] }) {
     return m && u ? { m, u } : null;
   }).filter((x): x is NonNullable<typeof x> => x !== null);
   return (
-    <section aria-labelledby="insights-title" className="mx-auto mt-20 max-w-[1320px] px-4 sm:px-6 lg:px-8">
-      <SectionTitle id="insights-title" kicker={BRAND.newsroom} title="Understand what moves the odds." />
-      <ul className="mt-8 grid gap-8 md:grid-cols-3">
-        {notes.map(({ m, u }, i) => (
-          <li key={u.id} className="group relative">
-            <span className="numeral font-display block text-[56px] leading-none text-ink/15" data-n={String(i + 1).padStart(2, '0')} aria-hidden />
-            <Kicker className="mt-3">
+    <section aria-labelledby="insights-title" className="mx-auto mt-24 max-w-[1240px] px-4 sm:mt-32 sm:px-6 lg:px-8">
+      <SectionTitle id="insights-title" title={`${BRAND.newsroom}.`} line="Understand what moves the odds." />
+      <ul className="mt-8 grid gap-4 sm:gap-5 md:grid-cols-3">
+        {notes.map(({ m, u }) => (
+          <li key={u.id} className="card group relative flex flex-col p-6 sm:p-7">
+            <p className="eyebrow">
               {categoryByName(m.category).shortName} · {ago(u.at, DEMO_NOW)}
-            </Kicker>
-            <Link to={`/markets/${m.id}?tab=news`} className="font-display mt-2 block text-[24px] leading-snug text-ink after:absolute after:inset-0 group-hover:underline">
+            </p>
+            <Link to={`/markets/${m.id}?tab=news`} className="font-display mt-2 text-[21px] leading-snug text-ink after:absolute after:inset-0 after:rounded-[inherit]">
               {u.title}
             </Link>
-            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-2">{u.body}</p>
-            <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-ink">
-              Read the note <ArrowUpRight className="h-4 w-4" aria-hidden />
+            <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-ink-2">{u.body}</p>
+            <span className="mt-auto inline-flex items-center gap-0.5 pt-5 text-[15px] text-accent">
+              Read the note <ChevronRight className="h-4 w-4" aria-hidden />
             </span>
           </li>
         ))}
@@ -244,11 +220,11 @@ export function HomePage() {
   const movers = useMemo(() => [...open].sort((a, b) => biggestMove(b) - biggestMove(a)).slice(0, 5), [open]);
 
   return (
-    <div className="pb-8">
-      <Cover market={featured} />
+    <div className="pb-16">
+      <Hero market={featured} />
       <Trending markets={trending} />
-      <Shifts markets={movers} />
       <Topics markets={markets} />
+      <Shifts markets={movers} />
       <Notes markets={markets} />
     </div>
   );

@@ -1,8 +1,7 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import { ActivePill } from '@/components/motion/ActivePill';
-import { useMotionOK } from '@/components/motion/useMotionOK';
 import { useSearchParams } from 'react-router';
-import { ArrowRight, ChevronRight, LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react';
+import { ChevronRight, LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react';
 import { CATEGORIES, categoryBySlug } from '@/data/categories';
 import { useMarkets, DEMO_NOW } from '@/lib/hooks';
 import { searchMarkets } from '@/lib/search';
@@ -100,7 +99,7 @@ function RadioGroup<T extends string>({ legend, name, options, value, onChange }
               value === o.id ? 'bg-accent-soft text-ink' : 'text-ink-2 hover:bg-ink/[0.04]',
             )}
           >
-            <input type="radio" name={name} checked={value === o.id} onChange={() => onChange(o.id)} className="accent-[#3b82f6]" />
+            <input type="radio" name={name} checked={value === o.id} onChange={() => onChange(o.id)} className="accent-[var(--color-cta)]" />
             {o.label}
           </label>
         ))}
@@ -202,7 +201,6 @@ export function ExplorePage() {
   const [filtersOpen, setFiltersOpen] = useState(() => readPref(FILTERS_OPEN_KEY, 'closed') === 'open');
   const [mobileFilters, setMobileFilters] = useState(false);
   const pillId = useId();
-  const motionOK = useMotionOK();
   const [view, setView] = useState<'list' | 'grid'>(() => (readPref(VIEW_KEY, 'list') === 'grid' ? 'grid' : 'list'));
   const [qDraft, setQDraft] = useState(q);
   useEffect(() => setQDraft(q), [q]);
@@ -267,21 +265,12 @@ export function ExplorePage() {
   return (
     <div>
       {/* Header */}
-      <section className="mx-auto max-w-[1320px] px-4 pb-8 pt-8 sm:px-6 sm:pt-12 lg:px-8" aria-labelledby="explore-title">
-        <div className="flex items-center justify-between gap-4 border-b border-ink/80 pb-3">
-          <p className="eyebrow text-ink">Explore markets</p>
-          <p className="eyebrow text-muted">{markets.length} questions</p>
-        </div>
-        <div className="grid gap-6 pt-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-end">
-          <h1 id="explore-title" className="font-display max-w-3xl text-[48px] leading-[0.98] tracking-[-0.015em] text-ink sm:text-[76px]">
-            <BlurReveal text="Discover what the world" /> <BlurReveal text="is predicting." wordClassName="italic" delay={0.25} />
-          </h1>
-          <div className="relative hidden aspect-[16/9] overflow-hidden rounded-3xl lg:block" data-theme="dark">
-            <SceneArt art="global" seed="explore-hero" animated={motionOK} sizes="420px" />
-          </div>
-        </div>
-        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-ink-2">
-          From politics to science, browse every market. Compare the odds, save what interests you and dig into the rules.
+      <section className="mx-auto max-w-[1240px] px-4 pb-8 pt-12 sm:px-6 sm:pt-16 lg:px-8" aria-labelledby="explore-title">
+        <h1 id="explore-title" className="font-display max-w-4xl text-[44px] leading-[1.05] tracking-[-0.035em] text-ink sm:text-[64px]">
+          <BlurReveal text="Explore." /> <BlurReveal text="Discover what the world is predicting." wordClassName="text-muted" delay={0.2} />
+        </h1>
+        <p className="mt-5 max-w-2xl text-[19px] leading-relaxed text-ink-2">
+          {markets.length} questions, from politics to science. Compare the odds, save what interests you and dig into the rules.
         </p>
 
         <ul className="scrollbar-none -mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" aria-label="Categories">
@@ -323,7 +312,7 @@ export function ExplorePage() {
         </ul>
       </section>
 
-      <div className="mx-auto flex max-w-[1320px] gap-6 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-[1240px] gap-6 px-4 sm:px-6 lg:px-8">
         {filtersOpen && (
           <aside className="card sticky top-[72px] hidden h-fit max-h-[calc(100dvh-100px)] w-64 shrink-0 overflow-y-auto p-5 lg:block" aria-label="Filters">
             {form}
@@ -408,20 +397,20 @@ export function ExplorePage() {
                   </Button>
                 </div>
               ) : view === 'grid' ? (
-                <div className="stagger grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {results.map((m) => (
                     <MarketCard key={m.id} market={m} />
                   ))}
                 </div>
               ) : (
-                <div className="stagger divide-y divide-line border-y border-line">
+                <div className="stagger card divide-y divide-line px-4 sm:px-6">
                   {results.map((m) => (
                     <MarketRow key={m.id} market={m} />
                   ))}
                 </div>
               )
             ) : (
-              <div className="stagger grid grid-cols-[minmax(0,1fr)] gap-14">
+              <div className="stagger grid grid-cols-[minmax(0,1fr)] gap-12">
                 {CATEGORIES.map((c) => {
                   const group = markets
                     .filter((m) => m.category === c.name)
@@ -429,30 +418,30 @@ export function ExplorePage() {
                   if (group.length === 0) return null;
                   return (
                     <section key={c.slug} aria-labelledby={`group-${c.slug}`}>
-                      <header className="flex items-end gap-3 border-t border-ink/80 pt-3">
+                      <header className="flex items-end gap-3 px-1">
                         <div className="min-w-0 flex-1">
-                          <h2 id={`group-${c.slug}`} className="font-display text-[32px] leading-none text-ink sm:text-[38px]">
+                          <h2 id={`group-${c.slug}`} className="font-display text-[24px] leading-tight text-ink sm:text-[28px]">
                             {c.name}
                           </h2>
-                          <p className="mt-1.5 truncate text-sm text-muted">{c.description}</p>
+                          <p className="mt-0.5 truncate text-[15px] text-muted">{c.description}</p>
                         </div>
                         <button
                           type="button"
                           onClick={() => set('category', c.slug)}
-                          className="inline-flex shrink-0 items-center gap-1 text-sm text-ink-2 hover:text-ink"
+                          className="inline-flex shrink-0 items-center gap-0.5 text-[15px] text-accent hover:underline"
                         >
-                          View all <ArrowRight className="h-4 w-4" aria-hidden />
+                          View all <ChevronRight className="h-4 w-4" aria-hidden />
                           <span className="sr-only">{c.name} markets</span>
                         </button>
                       </header>
                       {view === 'grid' ? (
-                        <div className="mt-6 grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
+                        <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                           {group.map((m) => (
                             <MarketCard key={m.id} market={m} />
                           ))}
                         </div>
                       ) : (
-                        <div className="mt-1 divide-y divide-line">
+                        <div className="card mt-4 divide-y divide-line px-4 sm:px-6">
                           {group.map((m) => (
                             <MarketRow key={m.id} market={m} />
                           ))}

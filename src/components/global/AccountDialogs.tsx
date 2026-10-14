@@ -143,7 +143,7 @@ function ResetDialog() {
                 choice === o.id ? 'border-accent bg-accent-soft' : 'border-line-strong hover:bg-ink/[0.03]',
               )}
             >
-              <input type="radio" name="reset" className="mt-1 accent-[#3b82f6]" checked={choice === o.id} onChange={() => setChoice(o.id)} />
+              <input type="radio" name="reset" className="mt-1 accent-[var(--color-cta)]" checked={choice === o.id} onChange={() => setChoice(o.id)} />
               <span>
                 <span className="block text-sm font-semibold">{o.title}</span>
                 <span className="mt-0.5 block text-[13px] text-muted">{o.body}</span>

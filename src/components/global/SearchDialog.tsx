@@ -30,7 +30,7 @@ function ResultItem({ market, onSelect }: { market: Market; onSelect: () => void
         </p>
       </div>
       <div className="text-right">
-        <p className="text-sm font-semibold tabular">{lead.probabilityCents}%</p>
+        <p className="text-sm text-muted tabular"><span className="text-[17px] font-semibold tracking-[-0.02em] text-ink">{lead.probabilityCents}</span> in 100</p>
         <PpDelta value={changePp(market, lead.id)} />
       </div>
     </Command.Item>
@@ -82,9 +82,9 @@ export function SearchDialog() {
       }}
     >
       <D.Portal>
-        <D.Overlay className="fixed inset-0 z-50 bg-[#0f0e0c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+        <D.Overlay className="fixed inset-0 z-50 bg-black/35 backdrop-blur-[3px] data-[state=open]:animate-fade-in" />
         <D.Content
-          className="fixed inset-x-0 top-0 z-50 mx-auto flex max-h-[100dvh] w-full flex-col overflow-hidden border-line-strong bg-bg-elev outline-none data-[state=open]:animate-pop-in sm:top-[10vh] sm:max-h-[75vh] sm:max-w-2xl sm:rounded-3xl sm:border"
+          className="fixed inset-x-0 top-0 z-50 mx-auto flex max-h-[100dvh] w-full flex-col overflow-hidden border-line bg-surface outline-none data-[state=open]:animate-pop-in sm:top-[10vh] sm:max-h-[75vh] sm:max-w-2xl sm:rounded-3xl sm:border"
           style={{ boxShadow: 'var(--shadow-pop)' }}
           aria-describedby={undefined}
         >

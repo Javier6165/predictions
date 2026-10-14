@@ -18,10 +18,10 @@ export function SheetContent({
 }: React.ComponentProps<typeof D.Content> & { side?: 'bottom' | 'right' | 'left' }) {
   return (
     <D.Portal>
-      <D.Overlay className="fixed inset-0 z-50 bg-[#0f0e0c]/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+      <D.Overlay className="fixed inset-0 z-50 bg-black/35 backdrop-blur-[3px] data-[state=open]:animate-fade-in" />
       <D.Content
         className={cn(
-          'fixed z-50 flex flex-col overflow-y-auto bg-bg-elev text-ink outline-none',
+          'fixed z-50 flex flex-col overflow-y-auto bg-surface text-ink outline-none',
           side === 'bottom' &&
             'inset-x-0 bottom-0 max-h-[92dvh] rounded-t-3xl border-t border-line-strong data-[state=open]:animate-slide-up',
           side === 'right' &&

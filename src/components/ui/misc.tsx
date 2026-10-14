@@ -16,7 +16,7 @@ export function Chip({ className, ...props }: React.HTMLAttributes<HTMLSpanEleme
 export function Kbd({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   return (
     <kbd
-      className={cn('rounded-md border border-line-strong bg-ink/5 px-1.5 py-0.5 font-sans text-[11px] text-muted', className)}
+      className={cn('rounded-md bg-surface px-1.5 py-0.5 font-sans text-[11px] text-ink-2 shadow-[0_0_0_1px_var(--color-line)]', className)}
       {...props}
     />
   );

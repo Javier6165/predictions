@@ -17,11 +17,11 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
   return (
     <div className="group relative flex items-center gap-4 py-4 sm:gap-5">
       {rank !== undefined && <span className="w-4 shrink-0 text-center text-sm font-medium text-subtle tabular">{rank}</span>}
-      <MarketThumb market={market} className={cn('hidden rounded-2xl sm:block', compact ? 'h-12 w-12' : 'h-[72px] w-[72px]')} />
+      <MarketThumb market={market} className={cn('hidden rounded-xl sm:block', compact ? 'h-11 w-11' : 'h-14 w-14')} />
       <div className="min-w-0 flex-1">
         <Link
           to={`/markets/${market.id}`}
-          className="font-display line-clamp-3 text-[19px] leading-[1.15] text-ink outline-none decoration-1 underline-offset-4 after:absolute after:inset-0 after:rounded-xl group-hover:underline focus-visible:after:outline-2 focus-visible:after:outline-accent sm:line-clamp-2 sm:text-[22px]"
+          className="line-clamp-3 text-[16px] font-medium leading-snug tracking-[-0.01em] text-ink outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:outline-2 focus-visible:after:outline-accent sm:line-clamp-2 sm:text-[17px]"
         >
           {market.question}
         </Link>
@@ -37,9 +37,9 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
         )}
       </div>
       <div className="w-[92px] shrink-0 text-right sm:w-[132px]">
-        <p className="truncate eyebrow text-muted">{multi ? lead.label : 'Yes'}</p>
+        <p className="truncate text-[12px] font-medium text-muted">{multi ? lead.label : 'Yes'}</p>
         <p className="mt-0.5 flex items-baseline justify-end gap-1">
-          <span className="font-display text-[30px] leading-none text-ink tabular">{lead.probabilityCents}</span>
+          <span className="font-display text-[26px] leading-none tracking-[-0.03em] text-ink tabular">{lead.probabilityCents}</span>
           <span className="text-[11px] text-muted">in 100</span>
         </p>
         <OddsBar yes={lead.probabilityCents} tone={multi ? 'text-series-1' : 'text-yes-fill'} className="mt-2 hidden h-1 sm:flex" />
