@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import { BRAND } from '@/brand';
 import { ActivePill } from '@/components/motion/ActivePill';
-import { ProbabilityBar } from '@/components/motion/ProbabilityBar';
+import { DotField, InHundred, YesNoDots } from '@/components/markets/Odds';
 import { useMotionOK } from '@/components/motion/useMotionOK';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { ArrowRight, CalendarClock, ChevronRight, Flame, Gavel, Newspaper, ShieldCheck, Trophy } from 'lucide-react';
@@ -23,11 +23,12 @@ import type { TicketState, TradeDraft } from '@/components/trading/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { Chip } from '@/components/ui/misc';
 import { cn } from '@/lib/cn';
 import { ago, formatCompactMoney, formatDate, formatMoney, formatPrice, formatReturn, formatSignedMoney, timeLeft } from '@/lib/format';
 import { NotFound } from './NotFound';
+
+const SERIES_TONES = ['text-series-1', 'text-series-2', 'text-series-3', 'text-series-4', 'text-series-5'];
 
 const TABS = ['overview', 'news', 'data', 'rules'] as const;
 type Tab = (typeof TABS)[number];
@@ -42,93 +43,109 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
   const tradable = !tradeBlock(market);
   if (market.type !== 'MULTI_OUTCOME') {
     const o = market.outcomes[0];
+    const yes = o.probabilityCents;
     return (
-      <div className="grid grid-cols-2 gap-3">
-        {(['YES', 'NO'] as const).map((side) => {
-          const prob = side === 'YES' ? o.probabilityCents : 100 - o.probabilityCents;
-          const delta = changePp(market, o.id, side);
-          const selected = ticket.side === side;
-          const q = quoteFor(o, side);
-          return (
-            <button
-              key={side}
-              type="button"
-              onClick={() => select(o.id, side)}
-              aria-pressed={tradable ? selected : undefined}
-              disabled={!tradable}
-              className={cn(
-                'card group p-4 text-left sm:p-5',
-                tradable && 'lift',
-                tradable && 'hover:border-line-strong',
-                tradable && selected && (side === 'YES' ? 'border-yes/60 ring-1 ring-yes/40' : 'border-no/60 ring-1 ring-no/40'),
-              )}
-            >
-              <div className="flex items-center justify-between">
-                <span className={cn('text-sm font-semibold', side === 'YES' ? 'text-yes' : 'text-no')}>{side === 'YES' ? 'Yes' : 'No'}</span>
-                <PpDelta value={delta} />
-              </div>
-              <AnimatedNumber value={prob} format={(v) => `${v}%`} className="mt-1 block text-4xl font-semibold tracking-tight tabular" />
-              <ProbabilityBar value={prob} className="mt-3" barClassName={side === 'YES' ? 'bg-yes' : 'bg-no'} />
-              <p className="mt-3 line-clamp-2 text-xs text-muted">{proposition(market, o.id, side)}</p>
-              {q && <p className="mt-2 text-xs text-ink-2">Buy at {formatPrice(q.askCents)}</p>}
-            </button>
-          );
-        })}
-      </div>
+      <section className="card grid gap-6 p-5 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-10 sm:p-8" aria-label="Current odds">
+        <YesNoDots yes={yes} size="lg" className="mx-auto w-[min(100%,220px)] sm:mx-0" />
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">The crowd says</p>
+          <p className="mt-2 flex flex-wrap items-baseline gap-x-3">
+            <InHundred value={yes} className="text-[88px] leading-[0.85] text-yes sm:text-[112px]" />
+          </p>
+          <p className="font-display mt-2 text-xl leading-snug text-ink-2">
+            {proposition(market, o.id, 'YES')}
+          </p>
+          <p className="mt-3 flex items-center gap-3 text-xs text-muted">
+            <PpDelta value={changePp(market, o.id, 'YES')} suffix="this week" />
+          </p>
+          <div className="mt-5 grid grid-cols-2 gap-2.5">
+            {(['YES', 'NO'] as const).map((side) => {
+              const q = quoteFor(o, side);
+              const selected = ticket.side === side;
+              const isYes = side === 'YES';
+              return (
+                <button
+                  key={side}
+                  type="button"
+                  onClick={() => select(o.id, side)}
+                  aria-pressed={tradable ? selected : undefined}
+                  disabled={!tradable}
+                  className={cn(
+                    'group flex items-center justify-between rounded-2xl border-2 px-4 py-3 text-left transition disabled:opacity-50',
+                    selected && tradable
+                      ? isYes
+                        ? 'border-yes bg-yes text-on-side'
+                        : 'border-no bg-no text-on-side'
+                      : isYes
+                        ? 'border-yes/40 text-yes hover:border-yes'
+                        : 'border-no/40 text-no hover:border-no',
+                  )}
+                >
+                  <span className="font-display text-2xl leading-none">{isYes ? 'Yes' : 'No'}</span>
+                  <span className="text-sm font-semibold tabular">{q ? formatPrice(q.askCents) : '—'}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
     );
   }
+  const segments = market.outcomes.map((o, i) => ({ value: o.probabilityCents, tone: SERIES_TONES[i % SERIES_TONES.length], label: o.label }));
   return (
-    <ul className="card divide-y divide-line p-1.5">
-      {market.outcomes.map((o, i) => {
-        const yes = quoteFor(o, 'YES');
-        const no = quoteFor(o, 'NO');
-        const selected = ticket.outcomeId === o.id;
-        const winner = market.status === 'RESOLVED' && market.winningOutcomeId === o.id;
-        return (
-          <li key={o.id} className={cn('flex flex-wrap items-center gap-3 rounded-xl px-3 py-3 sm:flex-nowrap', selected && tradable && 'bg-ink/[0.04]')}>
-            <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: SERIES_COLORS[i % SERIES_COLORS.length] }} aria-hidden />
-            <div className="min-w-0 flex-1">
-              <p className="flex items-center gap-2 font-medium">
-                {o.label} {winner && <Trophy className="h-4 w-4 text-warn" aria-label="Winner" />}
-              </p>
-              <ProbabilityBar value={o.probabilityCents} className="mt-1.5 max-w-xs" color={SERIES_COLORS[i % SERIES_COLORS.length]} />
-            </div>
-            <div className="w-20 text-right">
-              <p className="text-xl font-semibold tabular">{o.probabilityCents}%</p>
-              <PpDelta value={changePp(market, o.id)} />
-            </div>
-            {tradable && yes && no && (
-              <div className="flex w-full gap-2 sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => select(o.id, 'YES')}
-                  aria-pressed={selected && ticket.side === 'YES'}
-                  aria-label={`Buy Yes on ${o.label} at ${yes.askCents} cents`}
-                  className={cn(
-                    'flex-1 rounded-lg border px-3 py-2 text-sm font-semibold tabular transition sm:w-24 sm:flex-none',
-                    selected && ticket.side === 'YES' ? 'border-yes bg-yes text-bg' : 'border-yes/40 bg-yes-soft text-yes hover:border-yes',
-                  )}
-                >
-                  Yes {formatPrice(yes.askCents)}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => select(o.id, 'NO')}
-                  aria-pressed={selected && ticket.side === 'NO'}
-                  aria-label={`Buy No on ${o.label} at ${no.askCents} cents`}
-                  className={cn(
-                    'flex-1 rounded-lg border px-3 py-2 text-sm font-semibold tabular transition sm:w-24 sm:flex-none',
-                    selected && ticket.side === 'NO' ? 'border-no bg-no text-bg' : 'border-no/40 bg-no-soft text-no hover:border-no',
-                  )}
-                >
-                  No {formatPrice(no.askCents)}
-                </button>
-              </div>
-            )}
-          </li>
-        );
-      })}
-    </ul>
+    <section className="card p-5 sm:p-8" aria-label="Current odds">
+      <div className="grid gap-6 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-10">
+        <DotField segments={segments} size="lg" className="mx-auto w-[min(100%,220px)] sm:mx-0" />
+        <ul className="grid gap-1">
+          {market.outcomes.map((o, i) => {
+            const yes = quoteFor(o, 'YES');
+            const no = quoteFor(o, 'NO');
+            const selected = ticket.outcomeId === o.id;
+            const winner = market.status === 'RESOLVED' && market.winningOutcomeId === o.id;
+            return (
+              <li key={o.id} className={cn('flex flex-wrap items-center gap-3 rounded-2xl px-3 py-2.5 sm:flex-nowrap', selected && tradable && 'bg-ink/[0.05]')}>
+                <span className={cn('h-3 w-3 shrink-0 rounded-full bg-current', SERIES_TONES[i % SERIES_TONES.length])} aria-hidden />
+                <div className="min-w-0 flex-1">
+                  <p className="flex items-center gap-2 font-medium">
+                    {o.label} {winner && <Trophy className="h-4 w-4 text-warn" aria-label="Winner" />}
+                  </p>
+                  <PpDelta value={changePp(market, o.id)} />
+                </div>
+                <InHundred value={o.probabilityCents} className="w-[92px] justify-end text-[34px] text-ink" />
+                {tradable && yes && no && (
+                  <div className="flex w-full gap-2 sm:w-auto">
+                    <button
+                      type="button"
+                      onClick={() => select(o.id, 'YES')}
+                      aria-pressed={selected && ticket.side === 'YES'}
+                      aria-label={`Buy Yes on ${o.label} at ${yes.askCents} cents`}
+                      className={cn(
+                        'flex-1 rounded-full border px-3 py-1.5 text-sm font-semibold tabular transition sm:w-[88px] sm:flex-none',
+                        selected && ticket.side === 'YES' ? 'border-yes bg-yes text-on-side' : 'border-yes/40 text-yes hover:border-yes',
+                      )}
+                    >
+                      Yes {formatPrice(yes.askCents)}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => select(o.id, 'NO')}
+                      aria-pressed={selected && ticket.side === 'NO'}
+                      aria-label={`Buy No on ${o.label} at ${no.askCents} cents`}
+                      className={cn(
+                        'flex-1 rounded-full border px-3 py-1.5 text-sm font-semibold tabular transition sm:w-[88px] sm:flex-none',
+                        selected && ticket.side === 'NO' ? 'border-no bg-no text-on-side' : 'border-no/40 text-no hover:border-no',
+                      )}
+                    >
+                      No {formatPrice(no.askCents)}
+                    </button>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
   );
 }
 
@@ -382,58 +399,50 @@ export function MarketDetailPage() {
 
   return (
     <div className="pb-24 lg:pb-0">
-      {/* Hero */}
-      <section className="relative isolate overflow-hidden" aria-labelledby="market-title">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-y-0 right-0 w-full [mask-image:linear-gradient(90deg,transparent,black_40%)] sm:w-[min(62%,820px)]">
-            <SceneArt art={marketArt(market)} seed={market.id} animated={motionOK} />
-          </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,#0f0e0c_25%,rgb(15_14_12/0.75)_55%,rgb(15_14_12/0.2))] max-sm:bg-[linear-gradient(180deg,rgb(15_14_12/0.6),#0f0e0c)]" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-bg to-transparent" />
-        </div>
-        <div className="mx-auto max-w-[1320px] px-4 pb-8 pt-6 sm:px-6 sm:pt-8 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-xs text-muted">
-            <Link to="/explore" className="hover:text-ink">
-              Explore
-            </Link>
-            <ChevronRight className="h-3 w-3" aria-hidden />
-            <Link to={`/explore?category=${category.slug}`} className="hover:text-ink">
-              {category.name}
-            </Link>
-          </nav>
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <Chip className="border-ink/15 bg-black/30">
-              <span className="h-4 w-4 overflow-hidden rounded" aria-hidden>
-                <SceneArt art={category.art} seed={category.slug} />
+      {/* Header: editorial question with a framed photo */}
+      <section className="mx-auto max-w-[1320px] px-4 pb-8 pt-6 sm:px-6 sm:pt-10 lg:px-8" aria-labelledby="market-title">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-6">
+          <div className="min-w-0">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-xs text-muted">
+              <Link to="/explore" className="hover:text-ink">
+                Explore
+              </Link>
+              <ChevronRight className="h-3 w-3" aria-hidden />
+              <Link to={`/explore?category=${category.slug}`} className="hover:text-ink">
+                {category.name}
+              </Link>
+            </nav>
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <StatusBadge status={market.status} />
+              {market.tags.filter((t) => t !== 'Featured').map((t) => (
+                <Chip key={t} className="text-[11px]">
+                  {t}
+                </Chip>
+              ))}
+              {market.activity.trendingScore >= 80 && (
+                <Chip className="text-[11px]">
+                  <Flame className="h-3.5 w-3.5 text-no" aria-hidden /> Trending
+                </Chip>
+              )}
+            </div>
+            <div className="mt-4 flex items-start gap-4">
+              <h1 id="market-title" className="font-display max-w-3xl text-[40px] leading-[1.02] text-ink sm:text-[60px]">
+                {market.question}
+              </h1>
+              <SaveButton marketId={market.id} label={market.title} variant="pill" className="hidden shrink-0 sm:inline-flex" />
+            </div>
+            <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-2">{market.resolutionSummary}</p>
+            <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-muted">
+              <span className="inline-flex items-center gap-1.5">
+                <CalendarClock className="h-4 w-4" aria-hidden />
+                {market.status === 'RESOLVED' ? `Resolved ${formatDate(market.resolvedAt ?? market.closeAt)}` : `Closes ${formatDate(market.closeAt)} · ${timeLeft(market.closeAt, DEMO_NOW)}`}
               </span>
-              {category.name}
-            </Chip>
-            <StatusBadge status={market.status} />
-            {market.tags.filter((t) => t !== 'Featured').map((t) => (
-              <Chip key={t} className="border-ink/10 bg-black/20 text-[11px]">
-                {t}
-              </Chip>
-            ))}
+              <span>{formatCompactMoney(market.activity.volume24hCents)} volume (24h)</span>
+              <SaveButton marketId={market.id} label={market.title} className="sm:hidden" />
+            </p>
           </div>
-          <div className="mt-4 flex items-start gap-4">
-            <h1 id="market-title" className="max-w-3xl text-3xl font-semibold leading-[1.1] tracking-[-0.025em] sm:text-[44px]">
-              {market.question}
-            </h1>
-            <SaveButton marketId={market.id} label={market.title} variant="pill" className="hidden shrink-0 sm:inline-flex" />
-          </div>
-          <p className="mt-3 max-w-2xl text-ink-2">{market.resolutionSummary}</p>
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            <Chip className="border-ink/15 bg-black/30 px-3 py-1.5 text-[13px]">
-              <CalendarClock className="h-4 w-4" aria-hidden />
-              {market.status === 'RESOLVED' ? `Resolved ${formatDate(market.resolvedAt ?? market.closeAt)}` : `Closes ${formatDate(market.closeAt)} · ${timeLeft(market.closeAt, DEMO_NOW)}`}
-            </Chip>
-            <Chip className="border-ink/15 bg-black/30 px-3 py-1.5 text-[13px]">{formatCompactMoney(market.activity.volume24hCents)} volume (24h)</Chip>
-            {market.activity.trendingScore >= 80 && (
-              <Chip className="border-ink/15 bg-black/30 px-3 py-1.5 text-[13px]">
-                <Flame className="h-4 w-4 text-no" aria-hidden /> Trending
-              </Chip>
-            )}
-            <SaveButton marketId={market.id} label={market.title} className="sm:hidden" />
+          <div className="relative aspect-[2/1] overflow-hidden rounded-3xl bg-surface-2 sm:aspect-[16/9] lg:aspect-auto lg:min-h-[260px]" data-theme="dark">
+            <SceneArt art={marketArt(market)} seed={market.id} animated={motionOK} sizes="(min-width: 1024px) 380px, 100vw" />
           </div>
         </div>
       </section>

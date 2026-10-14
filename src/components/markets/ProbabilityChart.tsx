@@ -5,7 +5,17 @@ import { useMotionOK } from '@/components/motion/useMotionOK';
 import type { Market, Side } from '@/domain/types';
 import { formatDate, formatShortDate } from '@/lib/format';
 
-export const SERIES_COLORS = ['#3b82f6', '#fb7185', '#34d399', '#fbbf24', '#b388ff'];
+/** Theme-aware series colours (CSS variables, so they follow light/dark). */
+export const SERIES_COLORS = [
+  'var(--color-series-1)',
+  'var(--color-series-2)',
+  'var(--color-series-3)',
+  'var(--color-series-4)',
+  'var(--color-series-5)',
+];
+const INK = 'var(--color-ink)';
+const MUTED = 'var(--color-muted)';
+const LINE = 'var(--color-line)';
 
 export type ChartRange = '1M' | '3M' | 'ALL';
 
@@ -103,10 +113,10 @@ export function ProbabilityChart({
               onMouseLeave={() => onAnnotationHover?.(null)}
               style={{ cursor: 'default' }}
             >
-              <line x1={cx} x2={cx} y1={cy - 30} y2={cy - 6} stroke="rgba(226,232,240,0.45)" strokeDasharray="2 3" />
-              <circle cx={cx} cy={cy} r={active ? 6 : 4.5} fill="#0f0e0c" stroke="#e2e8f0" strokeWidth={2} />
-              <circle cx={cx} cy={cy - 40} r={active ? 11 : 9.5} fill={active ? '#2563eb' : '#17233d'} stroke="#e2e8f0" strokeOpacity={0.7} />
-              <text x={cx} y={cy - 36.5} textAnchor="middle" fontSize={10.5} fontWeight={700} fill="#fff">
+              <line x1={cx} x2={cx} y1={cy - 30} y2={cy - 6} stroke={MUTED} strokeOpacity={0.6} strokeDasharray="2 3" />
+              <circle cx={cx} cy={cy} r={active ? 6 : 4.5} fill="var(--color-surface)" stroke={INK} strokeWidth={2} />
+              <circle cx={cx} cy={cy - 40} r={active ? 11 : 9.5} fill={active ? 'var(--color-highlight)' : 'var(--color-cta)'} />
+              <text x={cx} y={cy - 36.5} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={active ? 'var(--color-on-highlight)' : 'var(--color-on-cta)'}>
                 {sameWeek.join('·')}
               </text>
             </g>
@@ -122,12 +132,12 @@ export function ProbabilityChart({
 
   const axes = !compact && (
     <>
-      <CartesianGrid stroke="rgba(148,163,184,0.10)" vertical={false} />
+      <CartesianGrid stroke={LINE} vertical={false} />
       <XAxis
         dataKey="at"
         tickFormatter={(v: string) => formatShortDate(v)}
-        stroke="rgba(148,163,184,0.5)"
-        tick={{ fontSize: 11, fill: '#8e9ab3' }}
+        stroke={MUTED}
+        tick={{ fontSize: 11, fill: MUTED }}
         tickLine={false}
         axisLine={false}
         minTickGap={28}
@@ -136,15 +146,15 @@ export function ProbabilityChart({
         domain={[0, 100]}
         ticks={[0, 25, 50, 75, 100]}
         tickFormatter={(v: number) => `${v}%`}
-        tick={{ fontSize: 11, fill: '#8e9ab3' }}
+        tick={{ fontSize: 11, fill: MUTED }}
         tickLine={false}
         axisLine={false}
         width={44}
       />
       <Tooltip
-        cursor={{ stroke: 'rgba(148,163,184,0.35)' }}
-        contentStyle={{ background: '#0c1424', border: '1px solid rgba(148,163,184,0.22)', borderRadius: 12, fontSize: 12 }}
-        labelStyle={{ color: '#c5cee0', marginBottom: 4 }}
+        cursor={{ stroke: MUTED, strokeOpacity: 0.5 }}
+        contentStyle={{ background: 'var(--color-surface)', border: '1px solid var(--color-line-strong)', borderRadius: 12, fontSize: 12, color: INK }}
+        labelStyle={{ color: MUTED, marginBottom: 4 }}
         labelFormatter={(v) => `${formatDate(String(v))}`}
         formatter={(v, name) => [`${v}%`, labels[String(name)] ?? String(name)]}
       />
@@ -160,7 +170,7 @@ export function ProbabilityChart({
             <AreaChart {...common} accessibilityLayer={false}>
               <defs>
                 <linearGradient id={`${gid}-fill`} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor={color} stopOpacity={0.35} />
+                  <stop offset="0" stopColor={color} stopOpacity={0.18} />
                   <stop offset="1" stopColor={color} stopOpacity={0} />
                 </linearGradient>
               </defs>

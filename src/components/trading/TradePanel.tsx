@@ -12,10 +12,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/cn';
 import { formatContracts, formatMoney, formatPrice, formatReturn, formatSignedMoney, parseDollarsToCents } from '@/lib/format';
 import { errorCopy } from './errors';
-import { motion } from 'motion/react';
 import { ActivePill } from '@/components/motion/ActivePill';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
-import { useMotionOK } from '@/components/motion/useMotionOK';
 import { PriceExplainer } from './PriceExplainer';
 import type { TicketState, TradeDraft } from './types';
 
@@ -46,40 +44,56 @@ function SideOption({
 }) {
   const outcome = market.outcomes.find((o) => o.id === outcomeId)!;
   const q = quoteFor(outcome, side);
-  const ok = useMotionOK();
   const yes = side === 'YES';
   return (
     <label
       className={cn(
-        'relative flex cursor-pointer items-start gap-3 rounded-2xl border p-3.5 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent',
-        selected
-          ? yes
-            ? 'border-yes/70 bg-yes-soft'
-            : 'border-no/70 bg-no-soft'
-          : 'border-line-strong hover:border-ink/25 hover:bg-ink/[0.03]',
+        'relative flex cursor-pointer items-center justify-between gap-2 rounded-2xl border-2 px-4 py-3 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface',
+        selected ? (yes ? 'border-yes bg-yes-soft' : 'border-no bg-no-soft') : 'border-line-strong hover:border-ink/30',
       )}
     >
       <input type="radio" name={name} className="sr-only" checked={selected} onChange={onSelect} />
-      <span
-        aria-hidden
-        className={cn(
-          'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2',
-          selected ? (yes ? 'border-yes bg-yes' : 'border-no bg-no') : 'border-line-strong',
-        )}
-      >
-        {selected && <motion.span className="h-2 w-2 rounded-full bg-bg" initial={ok ? { scale: 0 } : false} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 600, damping: 18 }} />}
+      <span className={cn('font-display text-[28px] leading-none', selected ? (yes ? 'text-yes' : 'text-no') : 'text-ink')}>
+        <span className="sr-only">Buy </span>
+        {yes ? 'Yes' : 'No'}
+        <span className="sr-only">: {proposition(market, outcomeId, side)}</span>
       </span>
-      <span className="min-w-0 flex-1">
-        <span className={cn('text-[11px] font-semibold uppercase tracking-wide', yes ? 'text-yes' : 'text-no')}>
-          Buy {yes ? 'Yes' : 'No'}
-        </span>
-        <span className="mt-0.5 block text-[14px] font-medium leading-snug text-ink">{proposition(market, outcomeId, side)}</span>
-      </span>
-      <span className="shrink-0 text-right">
-        <span className="block text-base font-semibold tabular">{q ? formatPrice(q.askCents) : '—'}</span>
+      <span className="text-right">
+        <span className="block text-sm font-semibold tabular text-ink">{q ? formatPrice(q.askCents) : '—'}</span>
         <span className="text-[10px] text-muted">per contract</span>
       </span>
     </label>
+  );
+}
+
+/** Small-caps connective that turns the ticket into one readable sentence. */
+function Lead({ children, htmlFor, id }: { children: React.ReactNode; htmlFor?: string; id?: string }) {
+  const cls = 'mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-muted';
+  return htmlFor ? (
+    <label htmlFor={htmlFor} id={id} className={cls}>
+      {children}
+    </label>
+  ) : (
+    <p id={id} className={cls}>
+      {children}
+    </p>
+  );
+}
+
+/** Stake vs. profit as one bar: what you put in, and what comes back on top. */
+function PayoutBar({ stakeCents, payoutCents, side }: { stakeCents: number; payoutCents: number; side: Side }) {
+  const stakePct = payoutCents > 0 ? Math.max(4, Math.min(100, (stakeCents / payoutCents) * 100)) : 100;
+  return (
+    <div className="mt-3" aria-hidden>
+      <div className="flex h-2.5 w-full gap-[3px]">
+        <span className="bar-seg h-full rounded-full bg-ink/25" style={{ width: `${stakePct}%` }} />
+        <span className={cn('bar-seg h-full flex-1 rounded-full', side === 'YES' ? 'bg-yes-fill' : 'bg-no-fill')} />
+      </div>
+      <div className="mt-1.5 flex justify-between text-[11px] text-muted">
+        <span>Your money back</span>
+        <span>Profit</span>
+      </div>
+    </div>
   );
 }
 
@@ -104,52 +118,58 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
     fundsError = check.error.code === 'INSUFFICIENT_FUNDS';
   }
   const canReview = !!(preview && preview.quantity > 0 && check?.ok);
+  const yes = ticket.side === 'YES';
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-5">
       {market.type === 'MULTI_OUTCOME' && (
         <div>
-          <label htmlFor={`${uid}-outcome`} className="mb-1.5 block text-sm font-medium text-ink-2">
-            Outcome
-          </label>
+          <Lead htmlFor={`${uid}-outcome`}>
+            <span className="sr-only">Outcome — </span>On this outcome
+          </Lead>
           <div className="relative">
             <select
               id={`${uid}-outcome`}
+              aria-label="Outcome"
               value={ticket.outcomeId}
               onChange={(e) => update({ outcomeId: e.target.value })}
-              className="h-11 w-full appearance-none rounded-xl border border-line-strong bg-surface px-3.5 pr-9 text-sm font-medium text-ink outline-none focus:border-accent"
+              className="h-12 w-full appearance-none rounded-2xl border border-line-strong bg-surface px-4 pr-10 text-[15px] font-medium text-ink outline-none focus:border-ink"
             >
               {market.outcomes.map((o) => (
                 <option key={o.id} value={o.id}>
-                  {o.label} · {o.probabilityCents}%
+                  {o.label} · {o.probabilityCents} in 100
                 </option>
               ))}
             </select>
-            <ChevronDown className="pointer-events-none absolute right-3 top-3.5 h-4 w-4 text-muted" aria-hidden />
+            <ChevronDown className="pointer-events-none absolute right-3.5 top-4 h-4 w-4 text-muted" aria-hidden />
           </div>
         </div>
       )}
 
       <fieldset>
-        <legend className="mb-1.5 text-sm font-medium text-ink-2">Your prediction</legend>
-        <div className="grid gap-2">
+        <legend className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">I believe</legend>
+        <div className="grid grid-cols-2 gap-2">
           {(['YES', 'NO'] as const).map((s) => (
             <SideOption key={s} market={market} outcomeId={outcome.id} side={s} selected={ticket.side === s} onSelect={() => update({ side: s })} name={`${uid}-side`} />
           ))}
         </div>
-        {quote && <PriceExplainer quote={quote} sideLabel={ticket.side === 'YES' ? 'Yes' : 'No'} className="mt-2" />}
+        <p className={cn('font-display mt-3 text-[22px] leading-[1.15]', yes ? 'text-ink' : 'text-ink')}>
+          {proposition(market, outcome.id, ticket.side)}
+        </p>
+        {quote && <PriceExplainer quote={quote} sideLabel={yes ? 'Yes' : 'No'} className="mt-2" />}
       </fieldset>
 
       <div>
-        <label htmlFor={`${uid}-amount`} className="mb-1.5 block text-sm font-medium text-ink-2">
-          Amount to invest
-        </label>
-        <div className="flex items-center rounded-xl border border-line-strong bg-ink/[0.03] px-3.5 focus-within:border-accent">
-          <span className="text-lg text-muted" aria-hidden>
+        <Lead htmlFor={`${uid}-amount`}>
+          <span className="sr-only">Amount to invest — </span>And I’m putting in
+        </Lead>
+        <div className="flex items-baseline border-b-2 border-ink/80 pb-1 focus-within:border-yes">
+          <span className="font-display text-[40px] leading-none text-muted" aria-hidden>
             $
           </span>
           <input
             id={`${uid}-amount`}
+            aria-label="Amount to invest"
             inputMode="decimal"
             autoComplete="off"
             value={ticket.amountText}
@@ -157,10 +177,10 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             placeholder="0"
             aria-describedby={`${uid}-estimate`}
             aria-invalid={!!error}
-            className="h-12 w-full bg-transparent px-2 text-xl font-semibold text-ink outline-none tabular placeholder:text-subtle"
+            className="font-display h-14 w-full bg-transparent px-1 text-[48px] leading-none text-ink outline-none tabular placeholder:text-ink/25"
           />
         </div>
-        <div className="mt-2 grid grid-cols-4 gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           {PRESETS.map((p) => (
             <button
               key={p}
@@ -168,8 +188,8 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
               onClick={() => update({ amountText: String(p / 100) })}
               aria-pressed={budget === p}
               className={cn(
-                'rounded-lg border py-1.5 text-sm font-medium transition',
-                budget === p ? 'border-accent bg-accent-soft text-ink' : 'border-line-strong text-ink-2 hover:bg-ink/5',
+                'rounded-full border px-3.5 py-1.5 text-sm font-medium transition',
+                budget === p ? 'border-ink bg-ink text-bg' : 'border-line-strong text-ink-2 hover:border-ink/40 hover:text-ink',
               )}
             >
               ${p / 100}
@@ -181,7 +201,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
 
       <div id={`${uid}-estimate`} aria-live="polite">
         {error ? (
-          <p className="flex gap-2 rounded-xl border border-no/30 bg-no-soft px-3.5 py-3 text-sm text-no" role="alert">
+          <p className="flex gap-2 rounded-2xl border border-no/30 bg-no-soft px-4 py-3 text-sm text-no" role="alert">
             <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
             <span>
               {error}{' '}
@@ -193,35 +213,29 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             </span>
           </p>
         ) : preview && preview.quantity > 0 && quote ? (
-          <div className="rounded-xl border border-line bg-ink/[0.03] px-3.5 py-3 text-sm">
-            <p className="flex gap-2 text-ink-2">
-              <Info className="mt-0.5 h-4 w-4 shrink-0 text-muted" aria-hidden />
+          <div className="rounded-2xl bg-ink/[0.04] p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">If I’m right, I get</p>
+            <p className="font-display mt-1 text-[44px] leading-none text-ink tabular">
+              <AnimatedNumber value={preview.payoutIfRightCents} format={formatMoney} duration={0.35} />
+            </p>
+            <p className="mt-1 text-sm text-ink-2">
+              <span className={cn('font-semibold', yes ? 'text-yes' : 'text-no')}>
+                <AnimatedNumber value={preview.profitIfRightCents} format={formatSignedMoney} duration={0.35} /> profit
+              </span>{' '}
+              · if not, I lose <AnimatedNumber value={preview.maxLossCents} format={formatMoney} duration={0.35} />
+            </p>
+            <PayoutBar stakeCents={preview.costCents} payoutCents={preview.payoutIfRightCents} side={ticket.side} />
+            <p className="mt-3 flex gap-1.5 border-t border-line pt-3 text-xs text-muted">
+              <Info className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden />
               <span>
-                At the current price this buys{' '}
-                <strong className="text-ink">
+                Buys{' '}
+                <strong className="font-semibold text-ink-2">
                   <AnimatedNumber value={preview.quantity} format={formatContracts} duration={0.35} /> at {formatPrice(quote.askCents)}
                 </strong>{' '}
                 for <AnimatedNumber value={preview.costCents} format={formatMoney} duration={0.35} />.
                 {preview.unusedCents > 0 && <> {formatMoney(preview.unusedCents)} stays in your cash.</>}
               </span>
             </p>
-            <dl className="mt-3 grid grid-cols-2 gap-2 border-t border-line pt-3">
-              <div>
-                <dt className="text-xs text-muted">If you’re right</dt>
-                <dd className="font-semibold text-yes tabular">
-                  <AnimatedNumber value={preview.payoutIfRightCents} format={formatMoney} duration={0.35} />{' '}
-                  <span className="text-xs font-medium">
-                    (<AnimatedNumber value={preview.profitIfRightCents} format={formatSignedMoney} duration={0.35} />)
-                  </span>
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-muted">If you’re wrong</dt>
-                <dd className="font-semibold text-no tabular">
-                  −<AnimatedNumber value={preview.maxLossCents} format={formatMoney} duration={0.35} />
-                </dd>
-              </div>
-            </dl>
           </div>
         ) : (
           <p className="text-xs text-muted">Each contract pays $1.00 if your prediction is right and $0 if it isn’t.</p>
@@ -229,7 +243,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
       </div>
 
       <Button
-        size="lg"
+        size="xl"
         className="w-full"
         disabled={!canReview}
         onClick={() => budget && onReview({ kind: 'buy', marketId: market.id, outcomeId: outcome.id, side: ticket.side, budgetCents: budget })}
@@ -488,7 +502,7 @@ export function TradePanel({ market, ticket, update, onReview }: PanelProps) {
 
   return (
     <div className="grid gap-4">
-      <div className="grid grid-cols-2 rounded-xl border border-line-strong p-1" role="tablist" aria-label="Trade type">
+      <div className="grid grid-cols-2 rounded-full bg-ink/[0.05] p-1" role="tablist" aria-label="Trade type">
         {(['buy', 'sell'] as const).map((m) => {
           const disabled = m === 'sell' && positions.length === 0;
           return (
@@ -501,12 +515,12 @@ export function TradePanel({ market, ticket, update, onReview }: PanelProps) {
               onClick={() => !disabled && update({ mode: m })}
               title={disabled ? 'You don’t hold a position in this market yet' : undefined}
               className={cn(
-                'relative rounded-lg py-2 text-sm font-semibold transition-colors',
+                'relative rounded-full py-2 text-sm font-semibold transition-colors',
                 mode === m ? 'text-on-cta' : 'text-ink-2 hover:text-ink',
                 disabled && 'cursor-not-allowed opacity-45 hover:text-ink-2',
               )}
             >
-              {mode === m && <ActivePill layoutId={`${pillId}-mode`} className="bg-cta shadow-[0_6px_18px_-8px_rgb(37_99_235/0.9)]" />}
+              {mode === m && <ActivePill layoutId={`${pillId}-mode`} className="bg-cta" />}
               <span className="relative">{m === 'buy' ? 'Buy' : `Sell${positions.length ? ` (${positions.length})` : ''}`}</span>
             </button>
           );

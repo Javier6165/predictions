@@ -61,6 +61,13 @@
   --color-no-fill: #ff5a26;
   --color-no-soft: rgb(232 76 30 / 0.11);
   --color-warn: #8a5a00;
+  /* Multi-outcome series (marks only) */
+  --color-series-1: #3552ff;
+  --color-series-2: #ff5a26;
+  --color-series-3: #16140f;
+  --color-series-4: #9a8cff;
+  --color-series-5: #c9a86a;
+  --color-series-rest: rgb(28 25 18 / 0.14);
   --color-warn-soft: rgb(214 150 0 / 0.14);
 
   --radius-card: 1.25rem;
@@ -109,6 +116,12 @@
   --color-no-fill: #ff6a36;
   --color-no-soft: rgb(255 106 54 / 0.14);
   --color-warn: #f5c451;
+  --color-series-1: #6f84ff;
+  --color-series-2: #ff6a36;
+  --color-series-3: #f4f1ea;
+  --color-series-4: #b7aeff;
+  --color-series-5: #d9bd85;
+  --color-series-rest: rgb(242 239 231 / 0.16);
   --color-warn-soft: rgb(245 196 81 / 0.14);
 
   --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.7);
@@ -379,3 +392,7 @@ a:hover svg.lucide-chevron-right {
 :root[data-motion='reduce'] .group:hover .thumb svg,
 :root[data-motion='reduce'] .group:hover .thumb img,
 :root[data-motion='reduce'] .photo-drift { transform: none; animation: none; }
+
+/* Signature dots: colour eases dot by dot when the odds change. */
+.dot { transition: color 420ms cubic-bezier(0.22, 1, 0.36, 1); }
+.bar-seg { transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1); }
