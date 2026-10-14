@@ -27,9 +27,9 @@ export function allocate(values: number[], total = 100): number[] {
 }
 
 const SIZES = {
-  sm: { gap: 4, r: 1.35 },
-  md: { gap: 7, r: 2.4 },
-  lg: { gap: 10, r: 3.4 },
+  sm: { gap: 4, r: 1.4 },
+  md: { gap: 7, r: 2.6 },
+  lg: { gap: 10, r: 3.7 },
 } as const;
 
 export function DotField({
@@ -74,15 +74,32 @@ export function DotField({
   );
 }
 
-/** Binary convenience: Yes vs No dots for a proposition. */
-export function YesNoDots({ yes, size, className, yesLabel = 'Yes', noLabel = 'No' }: { yes: number; size?: keyof typeof SIZES; className?: string; yesLabel?: string; noLabel?: string }) {
+/**
+ * Binary convenience. Only the side in focus is coloured; the rest of the hundred stays
+ * neutral, so the grid reads as one quiet number rather than two competing colours.
+ */
+export function YesNoDots({
+  yes,
+  size,
+  className,
+  emphasis = 'YES',
+  yesLabel = 'Yes',
+  noLabel = 'No',
+}: {
+  yes: number;
+  size?: keyof typeof SIZES;
+  className?: string;
+  emphasis?: 'YES' | 'NO';
+  yesLabel?: string;
+  noLabel?: string;
+}) {
   return (
     <DotField
       size={size}
       className={className}
       segments={[
-        { value: yes, tone: 'text-yes-fill', label: yesLabel },
-        { value: 100 - yes, tone: 'text-no-fill/80', label: noLabel },
+        { value: yes, tone: emphasis === 'YES' ? 'text-yes-fill' : 'text-rest', label: yesLabel },
+        { value: 100 - yes, tone: emphasis === 'NO' ? 'text-no-fill' : 'text-rest', label: noLabel },
       ]}
     />
   );
@@ -94,7 +111,7 @@ export function OddsBar({ yes, className, tone = 'text-yes-fill' }: { yes: numbe
   return (
     <div className={cn('flex h-1.5 w-full gap-[3px]', className)} aria-hidden>
       {y > 0 && <span className={cn('bar-seg h-full rounded-full bg-current', tone)} style={{ width: `${y}%` }} />}
-      {y < 100 && <span className="bar-seg h-full flex-1 rounded-full bg-no-fill/70" />}
+      {y < 100 && <span className="bar-seg h-full flex-1 rounded-full bg-rest" />}
     </div>
   );
 }
@@ -103,8 +120,8 @@ export function OddsBar({ yes, className, tone = 'text-yes-fill' }: { yes: numbe
 export function InHundred({ value, className, unitClassName }: { value: number; className?: string; unitClassName?: string }) {
   return (
     <span className={cn('inline-flex items-baseline gap-1.5 whitespace-nowrap', className)}>
-      <span className="font-display tabular leading-none">{Math.round(value)}</span>
-      <span className={cn('text-[max(0.2em,11px)] font-semibold uppercase tracking-[0.16em] text-muted', unitClassName)}>in 100</span>
+      <span className="font-display tabular leading-none tracking-[-0.04em]">{Math.round(value)}</span>
+      <span className={cn('text-[max(0.24em,12px)] font-medium text-muted', unitClassName)}>in 100</span>
     </span>
   );
 }

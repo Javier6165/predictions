@@ -19,7 +19,7 @@ import { ago, formatDate, formatPp, formatPrice, timeLeft } from '@/lib/format';
 import { cn } from '@/lib/cn';
 
 function Kicker({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <p className={cn('text-[11px] font-semibold uppercase tracking-[0.18em] text-muted', className)}>{children}</p>;
+  return <p className={cn('eyebrow text-muted', className)}>{children}</p>;
 }
 
 function SectionTitle({ id, kicker, title, action }: { id: string; kicker: string; title: React.ReactNode; action?: React.ReactNode }) {
@@ -111,7 +111,7 @@ function Cover({ market }: { market: Market }) {
           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
           <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 text-white">
             <span className="font-display max-w-[16ch] text-2xl leading-tight">“Test flights slip, timelines firm up.”</span>
-            <span className="text-[11px] uppercase tracking-[0.16em] text-white/80">{BRAND.newsroom}</span>
+            <span className="text-[12px] font-medium text-white/80">{BRAND.newsroom}</span>
           </figcaption>
         </figure>
       </div>

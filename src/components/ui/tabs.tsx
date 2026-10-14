@@ -16,7 +16,7 @@ export function TabsList({ className, activeValue, ...props }: React.ComponentPr
   const id = React.useId();
   return (
     <IndicatorCtx.Provider value={{ value: activeValue, id }}>
-      <T.List className={cn('scrollbar-none flex items-center gap-1 overflow-x-auto border-b border-line', className)} {...props} />
+      <T.List className={cn('scrollbar-none inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-full bg-ink/[0.06] p-1', className)} {...props} />
     </IndicatorCtx.Provider>
   );
 }
@@ -29,20 +29,20 @@ export function TabsTrigger({ className, value, children, ...props }: React.Comp
     <T.Trigger
       value={value}
       className={cn(
-        'relative -mb-px inline-flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 border-transparent px-3.5 py-3 text-sm font-medium text-muted transition-colors hover:text-ink data-[state=active]:text-ink',
-        !sliding && 'data-[state=active]:border-accent',
+        'relative inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-1.5 text-[14px] font-medium text-ink-2 transition-colors hover:text-ink data-[state=active]:text-ink',
+        !sliding && 'data-[state=active]:bg-surface data-[state=active]:shadow-sm',
         className,
       )}
       {...props}
     >
-      {children}
       {sliding && ctx.value === value && (
         <motion.span
           layoutId={`tab-indicator-${ctx.id}`}
-          className="absolute inset-x-0 -bottom-0.5 h-0.5 rounded-full bg-accent"
+          className="absolute inset-0 rounded-full bg-surface shadow-[0_1px_3px_rgb(0_0_0/0.12)]"
           transition={{ type: 'spring', stiffness: 500, damping: 40 }}
         />
       )}
+      <span className="relative inline-flex items-center gap-2">{children}</span>
     </T.Trigger>
   );
 }

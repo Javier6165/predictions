@@ -25,7 +25,7 @@ export function useApplyTheme() {
     const root = document.documentElement;
     if (theme === 'dark') root.dataset.theme = 'dark';
     else delete root.dataset.theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0f0e0c' : '#f2efe7');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#000000' : '#f5f5f7');
   }, [theme]);
   return theme;
 }

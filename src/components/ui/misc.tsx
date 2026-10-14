@@ -5,7 +5,7 @@ export function Chip({ className, ...props }: React.HTMLAttributes<HTMLSpanEleme
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-ink/[0.04] px-2.5 py-1 text-xs font-medium text-ink-2',
+        'inline-flex items-center gap-1.5 rounded-full bg-ink/[0.06] px-2.5 py-1 text-xs font-medium text-ink-2',
         className,
       )}
       {...props}
@@ -42,7 +42,7 @@ export function SectionHeader({
       <div className="flex items-start gap-3">
         {icon}
         <div>
-          <As className="text-xl font-semibold tracking-tight text-ink sm:text-[22px]">{title}</As>
+          <As className="font-display text-[24px] leading-tight text-ink sm:text-[28px]">{title}</As>
           {subtitle && <p className="mt-0.5 text-sm text-muted">{subtitle}</p>}
         </div>
       </div>

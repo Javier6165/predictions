@@ -7,8 +7,6 @@ import { resolveTheme } from '@/app/theme';
 import { useUi } from '@/state/ui';
 import { cn } from '@/lib/cn';
 import { Kbd } from '@/components/ui/misc';
-import { motion } from 'motion/react';
-import { useMotionOK } from '@/components/motion/useMotionOK';
 import { NotificationsPopover } from './NotificationsPopover';
 import { AccountMenu } from './AccountMenu';
 
@@ -21,7 +19,7 @@ export const NAV = [
 export function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2 rounded-lg text-ink" aria-label={`${BRAND.name} home`}>
-      <BrandMark className="h-[26px] w-[26px]" />
+      <BrandMark className="h-[22px] w-[22px]" />
       <Wordmark />
     </Link>
   );
@@ -35,7 +33,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(dark ? 'light' : 'dark')}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-ink/8 hover:text-ink"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink-2 transition hover:bg-ink/8 hover:text-ink"
       aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
       title={dark ? 'Light theme' : 'Dark theme'}
     >
@@ -58,19 +56,18 @@ export function Navbar() {
   }, []);
 
   const solid = !overHero || scrolled;
-  const motionOK = useMotionOK();
 
   return (
     <header
       className={cn(
         'sticky top-0 z-40 transition-[background,border-color,backdrop-filter] duration-200',
         overHero && '-mb-[68px]',
-        solid ? 'border-b border-line bg-bg/75 backdrop-blur-xl' : 'border-b border-transparent bg-transparent',
+        solid ? 'material border-b border-line' : 'border-b border-transparent bg-transparent',
       )}
     >
-      <div className="mx-auto flex h-[68px] max-w-[1320px] items-center gap-3 px-4 sm:px-6 lg:gap-6 lg:px-8">
+      <div className="mx-auto flex h-14 max-w-[1240px] items-center gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8">
         <Logo />
-        <span className="hidden rounded-full bg-highlight px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-on-highlight xl:inline">
+        <span className="hidden rounded-full bg-highlight px-2 py-0.5 text-[11px] font-semibold text-on-highlight xl:inline">
           Demo
         </span>
         <nav aria-label="Primary" className="ml-2 hidden items-center gap-1 md:flex">
@@ -80,21 +77,10 @@ export function Navbar() {
               to={n.to}
               end={n.end}
               className={({ isActive }) =>
-                cn('relative rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-ink' : 'text-ink-2 hover:text-ink')
+                cn('relative rounded-full px-3 py-1.5 text-[14px] transition-colors', isActive ? 'bg-ink/[0.06] font-medium text-ink' : 'text-ink-2 hover:text-ink')
               }
             >
-              {({ isActive }) => (
-                <>
-                  {n.label}
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute inset-x-3 -bottom-[15px] h-0.5 rounded-full bg-ink"
-                      transition={motionOK ? { type: 'spring', stiffness: 500, damping: 40 } : { duration: 0 }}
-                    />
-                  )}
-                </>
-              )}
+              {n.label}
             </NavLink>
           ))}
         </nav>
@@ -102,11 +88,11 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setOverlay('search')}
-          className="glass ml-auto hidden h-10 w-full max-w-sm items-center gap-2.5 rounded-full px-4 text-left text-sm text-muted transition hover:border-ink/25 lg:flex"
+          className="ml-auto hidden h-9 w-full max-w-[300px] items-center gap-2 rounded-full bg-ink/[0.06] px-3.5 text-left text-[13px] text-muted transition hover:bg-ink/[0.09] lg:flex"
           aria-label="Search markets (Ctrl or Command + K)"
         >
           <Search className="h-4 w-4" aria-hidden />
-          <span className="flex-1 truncate">Search markets, topics or events…</span>
+          <span className="flex-1 truncate">Search markets</span>
           <Kbd>⌘K</Kbd>
         </button>
 
@@ -125,9 +111,9 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setDialog('funds')}
-            className="ml-1 hidden h-10 items-center gap-1.5 rounded-full bg-cta px-4 text-sm font-semibold text-on-cta transition hover:bg-cta-hover sm:inline-flex"
+            className="ml-1 hidden h-8 items-center gap-1 rounded-full bg-cta px-3.5 text-[13px] font-medium text-on-cta transition hover:bg-cta-hover sm:inline-flex"
           >
-            <Plus className="h-4 w-4" aria-hidden /> Add funds
+            <Plus className="h-3.5 w-3.5" aria-hidden /> Add funds
           </button>
         </div>
       </div>
@@ -139,7 +125,7 @@ export function MobileNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
+      className="material fixed inset-x-0 bottom-0 z-40 border-t border-line pb-[env(safe-area-inset-bottom)] md:hidden"
     >
       <ul className="grid grid-cols-3">
         {NAV.map((n) => (
@@ -153,7 +139,7 @@ export function MobileNav() {
             >
               {({ isActive }) => (
                 <>
-                  <n.icon className={cn('h-5 w-5', isActive && 'text-ink')} aria-hidden />
+                  <n.icon className={cn('h-[22px] w-[22px]', isActive ? 'text-accent' : '')} aria-hidden />
                   {n.label}
                 </>
               )}

@@ -15,9 +15,9 @@ export function Avatar({ className = 'h-9 w-9' }: { className?: string }) {
   return (
     <span
       aria-hidden
-      className={`relative inline-flex ${className} items-center justify-center overflow-hidden rounded-full bg-highlight p-[2px]`}
+      className={`relative inline-flex ${className} items-center justify-center overflow-hidden rounded-full bg-surface-3 p-[1.5px]`}
     >
-      <span className="flex h-full w-full items-center justify-center rounded-full bg-ink text-[12px] font-bold text-bg">DE</span>
+      <span className="flex h-full w-full items-center justify-center rounded-full bg-ink text-[11px] font-semibold text-bg">DE</span>
     </span>
   );
 }
@@ -42,7 +42,7 @@ export function AccountMenu() {
           </div>
         </div>
         <div className="mx-1 mb-1.5 rounded-xl border border-line bg-ink/[0.03] px-3 py-2.5">
-          <p className="text-[11px] uppercase tracking-wide text-subtle">Available cash</p>
+          <p className="text-[12px] text-subtle">Available cash</p>
           <p className="text-lg font-semibold tabular">{formatMoney(availableCents(user))}</p>
         </div>
         <DropdownMenuItem onSelect={() => setDialog('funds')}>

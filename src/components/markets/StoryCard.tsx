@@ -60,7 +60,7 @@ export function StoryCard({ market, size = 'md', className }: { market: Market; 
           className={cn('absolute right-3 top-3 z-10 bg-bg/70 text-ink backdrop-blur hover:bg-bg/90', !lg && 'max-sm:hidden')}
         />
       </div>
-      <p className={cn('text-[11px] font-semibold uppercase tracking-[0.16em] text-muted', lg ? 'mt-4' : 'sm:mt-4')}>{category.shortName}</p>
+      <p className={cn('eyebrow text-muted', lg ? 'mt-4' : 'sm:mt-4')}>{category.shortName}</p>
       <h3 className={cn('font-display mt-1.5 text-ink', lg ? 'text-[30px] leading-[1.05] sm:text-[34px]' : 'text-[20px] leading-[1.1] sm:text-[26px]')}>
         <Link to={`/markets/${market.id}`} className="decoration-1 underline-offset-4 after:absolute after:inset-0 group-hover:underline">
           {market.question}

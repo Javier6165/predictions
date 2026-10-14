@@ -32,7 +32,7 @@ export function SettlementDialog() {
               <Gavel className="h-7 w-7" aria-hidden />
             </span>
           )}
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted">Market settled · {result}</p>
+          <p className="mt-4 eyebrow text-muted">Market settled · {result}</p>
           <DialogTitle className="mt-1 text-2xl">
             {r.settled.length === 0 ? 'This market has settled' : anyWon ? 'You called it.' : 'Not this time.'}
           </DialogTitle>

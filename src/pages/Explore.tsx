@@ -269,8 +269,8 @@ export function ExplorePage() {
       {/* Header */}
       <section className="mx-auto max-w-[1320px] px-4 pb-8 pt-8 sm:px-6 sm:pt-12 lg:px-8" aria-labelledby="explore-title">
         <div className="flex items-center justify-between gap-4 border-b border-ink/80 pb-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">Explore markets</p>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">{markets.length} questions</p>
+          <p className="eyebrow text-ink">Explore markets</p>
+          <p className="eyebrow text-muted">{markets.length} questions</p>
         </div>
         <div className="grid gap-6 pt-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-end">
           <h1 id="explore-title" className="font-display max-w-3xl text-[48px] leading-[0.98] tracking-[-0.015em] text-ink sm:text-[76px]">
@@ -325,7 +325,7 @@ export function ExplorePage() {
 
       <div className="mx-auto flex max-w-[1320px] gap-6 px-4 sm:px-6 lg:px-8">
         {filtersOpen && (
-          <aside className="card sticky top-[84px] hidden h-fit max-h-[calc(100dvh-100px)] w-64 shrink-0 overflow-y-auto p-5 lg:block" aria-label="Filters">
+          <aside className="card sticky top-[72px] hidden h-fit max-h-[calc(100dvh-100px)] w-64 shrink-0 overflow-y-auto p-5 lg:block" aria-label="Filters">
             {form}
           </aside>
         )}

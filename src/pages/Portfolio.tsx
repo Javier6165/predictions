@@ -53,7 +53,7 @@ function Summary() {
   return (
     <div className="grid border-y border-ink/80 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.3fr]">
       <section className="py-6 md:pr-8" aria-label="Portfolio value">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">Portfolio value</p>
+        <p className="eyebrow text-muted">Portfolio value</p>
         <AnimatedNumber flash value={s.portfolioValueCents} format={formatMoney} className={cn(big, 'text-ink')} data-testid="portfolio-value" />
         <p className={cn('mt-2 text-sm font-medium tabular', pnlClass(s.totalPnLCents))}>
           {formatSignedMoney(s.totalPnLCents)} ({formatReturn(s.totalPnLCents, s.depositsCents)}) all-time P&amp;L
@@ -61,7 +61,7 @@ function Summary() {
         <p className="mt-1 text-xs text-subtle">Cash + predictions at current probability</p>
       </section>
       <section className="border-t border-line py-6 md:border-l md:border-t-0 md:px-8" aria-label="Cash available">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">Cash available</p>
+        <p className="eyebrow text-muted">Cash available</p>
         <AnimatedNumber flash value={s.availableCents} format={formatMoney} className={cn(big, 'text-ink')} data-testid="cash-available" />
         {s.reservedCents > 0 ? (
           <p className="mt-2 text-xs text-muted">
@@ -76,7 +76,7 @@ function Summary() {
       </section>
       <section className="grid gap-4 border-t border-line py-6 sm:grid-cols-[auto_1fr] md:col-span-2 xl:col-span-1 xl:border-l xl:border-t-0 xl:pl-8" aria-label="Profit and loss">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">Total profit / loss</p>
+          <p className="eyebrow text-muted">Total profit / loss</p>
           <AnimatedNumber flash value={s.totalPnLCents} format={formatSignedMoney} className={cn(big, pnlClass(s.totalPnLCents))} data-testid="total-pnl" />
         </div>
         <dl className="grid content-start gap-1 text-sm sm:border-l sm:border-line sm:pl-6">
@@ -139,7 +139,7 @@ function PredictionCard({ v, selected, onManage }: { v: PositionView; selected: 
         <MarketThumb market={m} className="h-20 w-20 rounded-2xl sm:h-24 sm:w-24" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">{categoryByName(m.category).shortName}</span>
+            <span className="eyebrow text-muted">{categoryByName(m.category).shortName}</span>
             <SideChip side={v.position.side} label={contractLabel(m, v.position.outcomeId, v.position.side)} />
             {m.status !== 'OPEN' && <StatusBadge status={m.status} />}
           </div>
@@ -194,7 +194,7 @@ function PositionPanel({ v, onSell }: { v: PositionView; onSell: () => void }) {
         <Chip className="py-0.5 text-[11px]">{categoryByName(m.category).shortName}</Chip>
         <SideChip side={p.side} label={contractLabel(m, p.outcomeId, p.side)} />
       </div>
-      <p className="mt-2 text-xs font-medium uppercase tracking-wide text-muted">You’re backing</p>
+      <p className="mt-2 eyebrow text-muted">You’re backing</p>
       <h2 className="font-display mt-1 text-[26px] leading-[1.1] text-ink">{proposition(m, p.outcomeId, p.side)}</h2>
       <p className="mt-1 text-xs text-muted">
         Closes {formatDate(m.closeAt)} · {timeLeft(m.closeAt, DEMO_NOW)}
@@ -499,8 +499,8 @@ export function PortfolioPage() {
   return (
     <div className="mx-auto max-w-[1320px] px-4 pt-8 sm:px-6 sm:pt-10 lg:px-8">
       <div className="flex items-center justify-between gap-4 border-b border-ink/80 pb-3">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">Portfolio</p>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">{formatDate(DEMO_NOW)}</p>
+        <p className="eyebrow text-ink">Portfolio</p>
+        <p className="eyebrow text-muted">{formatDate(DEMO_NOW)}</p>
       </div>
       <div className="pt-8">
         <h1 className="font-display text-[52px] leading-[0.98] tracking-[-0.015em] text-ink sm:text-[76px]">
@@ -518,7 +518,7 @@ export function PortfolioPage() {
           {TABS.map((t) => (
             <TabsTrigger key={t} value={t}>
               {labels[t]}
-              <span className={cn('rounded-full px-1.5 py-0.5 text-[11px] tabular', tab === t ? 'bg-cta text-on-cta' : 'bg-ink/8 text-ink-2')}>{counts[t]}</span>
+              <span className="text-[13px] font-normal text-muted tabular">{counts[t]}</span>
             </TabsTrigger>
           ))}
         </TabsList>
@@ -566,7 +566,7 @@ export function PortfolioPage() {
                 </section>
               </div>
               {selected && (
-                <aside className="card sticky top-[84px] hidden h-fit p-5 lg:block" aria-label="Selected position">
+                <aside className="card sticky top-[72px] hidden h-fit p-5 lg:block" aria-label="Selected position">
                   <div key={selected.position.id} className="animate-fade-in">
                     <PositionPanel v={selected} onSell={() => openSell(selected.position.id)} />
                   </div>

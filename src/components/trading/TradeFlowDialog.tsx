@@ -42,7 +42,7 @@ function PropositionCard({ market, outcomeId, side, lead }: { market: Market; ou
       <div className="min-w-0">
         <p className="text-xs text-muted">{lead}</p>
         <p className="font-display mt-1 text-[22px] leading-[1.12] text-ink">{proposition(market, outcomeId, side)}</p>
-        <p className={cn('mt-1 text-[11px] font-semibold uppercase tracking-wide', side === 'YES' ? 'text-yes' : 'text-no')}>
+        <p className={cn('mt-1 eyebrow', side === 'YES' ? 'text-yes' : 'text-no')}>
           {side === 'YES' ? 'Yes' : 'No'} contracts{market.type === 'MULTI_OUTCOME' ? ` · ${findOutcome(market, outcomeId)?.label}` : ''}
         </p>
       </div>

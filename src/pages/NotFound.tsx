@@ -9,7 +9,7 @@ export function NotFound({ title = 'This page doesn’t exist', body = 'The link
       <div className="h-40 w-64 overflow-hidden rounded-3xl ring-1 ring-ink/10">
         <SceneArt art="science" seed="lost" />
       </div>
-      <p className="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-accent">404</p>
+      <p className="mt-8 text-sm font-semibold text-accent">404</p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
       <p className="mt-3 max-w-md text-muted">{body}</p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">

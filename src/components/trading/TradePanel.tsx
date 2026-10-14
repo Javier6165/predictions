@@ -52,11 +52,11 @@ function SideOption({
     <label
       className={cn(
         'relative flex cursor-pointer items-center justify-between gap-2 rounded-2xl border-2 px-4 py-3 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface',
-        selected ? (yes ? 'border-yes bg-yes-soft' : 'border-no bg-no-soft') : 'border-line-strong hover:border-ink/30',
+        selected ? (yes ? 'border-yes-fill bg-yes-soft' : 'border-no-fill bg-no-soft') : 'border-transparent bg-ink/[0.04] hover:bg-ink/[0.07]',
       )}
     >
       <input type="radio" name={name} className="sr-only" checked={selected} onChange={onSelect} aria-describedby={describedBy} />
-      <span className={cn('font-display text-[28px] leading-none', selected ? (yes ? 'text-yes' : 'text-no') : 'text-ink')}>
+      <span className={cn('text-[22px] font-semibold leading-none tracking-[-0.02em]', selected ? (yes ? 'text-yes' : 'text-no') : 'text-ink')}>
         <span className="sr-only">Buy {yes ? 'Yes' : 'No'}</span>
         <span aria-hidden>{yes ? 'Yes' : 'No'}</span>
       </span>
@@ -70,7 +70,7 @@ function SideOption({
 
 /** Small-caps connective that turns the ticket into one readable sentence. */
 function Lead({ children, htmlFor, id }: { children: React.ReactNode; htmlFor?: string; id?: string }) {
-  const cls = 'mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-muted';
+  const cls = 'mb-2 block eyebrow text-muted';
   return htmlFor ? (
     <label htmlFor={htmlFor} id={id} className={cls}>
       {children}
@@ -88,7 +88,7 @@ function PayoutBar({ stakeCents, payoutCents, side }: { stakeCents: number; payo
   return (
     <div className="mt-3" aria-hidden>
       <div className="flex h-2.5 w-full gap-[3px]">
-        <span className="bar-seg h-full rounded-full bg-ink/25" style={{ width: `${stakePct}%` }} />
+        <span className="bar-seg h-full rounded-full bg-rest" style={{ width: `${stakePct}%` }} />
         <span className={cn('bar-seg h-full flex-1 rounded-full', side === 'YES' ? 'bg-yes-fill' : 'bg-no-fill')} />
       </div>
       <div className="mt-1.5 flex justify-between text-[11px] text-muted">
@@ -149,7 +149,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
       )}
 
       <fieldset>
-        <legend className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">I believe</legend>
+        <legend className="mb-2 block eyebrow text-muted">I believe</legend>
         <div className="grid grid-cols-2 gap-2">
           {(['YES', 'NO'] as const).map((s) => (
             <SideOption
@@ -164,7 +164,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             />
           ))}
         </div>
-        <p id={`${uid}-sentence`} className="font-display mt-3 text-[22px] leading-[1.15] text-ink">
+        <p id={`${uid}-sentence`} className="mt-3 text-[19px] font-semibold leading-snug tracking-[-0.015em] text-ink">
           {proposition(market, outcome.id, ticket.side)}
         </p>
         {quote && <PriceExplainer quote={quote} sideLabel={yes ? 'Yes' : 'No'} className="mt-2" />}
@@ -174,8 +174,8 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
         <Lead htmlFor={`${uid}-amount`}>
           <span className="sr-only">Amount to invest — </span>And I’m putting in
         </Lead>
-        <div className="flex items-baseline border-b-2 border-ink/80 pb-1 focus-within:border-yes">
-          <span className="font-display text-[40px] leading-none text-muted" aria-hidden>
+        <div className="flex items-baseline border-b border-line-strong pb-1 transition-colors focus-within:border-cta">
+          <span className="font-display text-[40px] leading-none text-subtle" aria-hidden>
             $
           </span>
           <input
@@ -188,7 +188,7 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             placeholder="0"
             aria-describedby={`${uid}-estimate`}
             aria-invalid={!!error}
-            className="font-display h-14 w-full bg-transparent px-1 text-[48px] leading-none text-ink outline-none tabular placeholder:text-ink/25"
+            className="font-display h-14 w-full bg-transparent px-1 text-[48px] leading-none tracking-[-0.03em] text-ink outline-none tabular placeholder:text-ink/20"
           />
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
@@ -224,9 +224,9 @@ function BuyForm({ market, ticket, update, onReview }: PanelProps) {
             </span>
           </p>
         ) : preview && preview.quantity > 0 && quote ? (
-          <div className="rounded-2xl bg-ink/[0.04] p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">If I’m right, I get</p>
-            <p className="font-display mt-1 text-[44px] leading-none text-ink tabular">
+          <div className="rounded-2xl bg-ink/[0.04] p-5">
+            <p className="eyebrow text-muted">If I’m right, I get</p>
+            <p className="font-display mt-1 text-[44px] leading-none tracking-[-0.03em] text-ink tabular">
               <AnimatedNumber value={preview.payoutIfRightCents} format={formatMoney} duration={0.35} />
             </p>
             <p className="mt-1 text-sm text-ink-2">
@@ -396,7 +396,7 @@ export function SellForm({
         </label>
       )}
       <div className="rounded-2xl border border-line bg-ink/[0.03] p-3.5">
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">You’re backing</p>
+        <p className="eyebrow text-muted">You’re backing</p>
         <p className="mt-0.5 font-medium leading-snug">{proposition(view.market, position.outcomeId, position.side)}</p>
         <dl className="mt-3 grid grid-cols-3 gap-2 text-xs">
           <div>

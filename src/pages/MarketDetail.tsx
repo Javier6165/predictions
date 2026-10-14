@@ -44,19 +44,19 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
   if (market.type !== 'MULTI_OUTCOME') {
     const o = market.outcomes[0];
     const yes = o.probabilityCents;
+    const side = ticket.side;
+    const shown = side === 'YES' ? yes : 100 - yes;
     return (
-      <section className="card grid gap-6 p-5 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-10 sm:p-8" aria-label="Current odds">
-        <YesNoDots yes={yes} size="lg" className="mx-auto w-[min(100%,220px)] sm:mx-0" />
+      <section className="card grid gap-6 p-6 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-12 sm:p-10" aria-label="Current odds">
+        <YesNoDots yes={yes} emphasis={side} size="lg" className="mx-auto w-[min(100%,230px)] sm:mx-0" />
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">The crowd says</p>
+          <p className="eyebrow">{side === 'YES' ? 'Chance it happens' : 'Chance it doesn’t'}</p>
           <p className="mt-2 flex flex-wrap items-baseline gap-x-3">
-            <InHundred value={yes} className="text-[88px] leading-[0.85] text-yes sm:text-[112px]" />
+            <InHundred value={shown} className={cn('text-[88px] leading-[0.85] sm:text-[112px]', side === 'YES' ? 'text-yes' : 'text-no')} />
           </p>
-          <p className="font-display mt-2 text-xl leading-snug text-ink-2">
-            {proposition(market, o.id, 'YES')}
-          </p>
-          <p className="mt-3 flex items-center gap-3 text-xs text-muted">
-            <PpDelta value={changePp(market, o.id, 'YES')} suffix="this week" />
+          <p className="mt-3 text-[19px] font-semibold leading-snug tracking-[-0.015em] text-ink">{proposition(market, o.id, side)}</p>
+          <p className="mt-2 flex items-center gap-3 text-xs text-muted">
+            <PpDelta value={changePp(market, o.id, side)} suffix="this week" />
           </p>
           <div className="mt-5 grid grid-cols-2 gap-2.5">
             {(['YES', 'NO'] as const).map((side) => {
@@ -71,17 +71,15 @@ function OutcomeCards({ market, ticket, select }: { market: Market; ticket: Tick
                   aria-pressed={tradable ? selected : undefined}
                   disabled={!tradable}
                   className={cn(
-                    'group flex items-center justify-between rounded-2xl border-2 px-4 py-3 text-left transition disabled:opacity-50',
+                    'group flex items-center justify-between rounded-full px-5 py-3 text-left transition disabled:opacity-50',
                     selected && tradable
                       ? isYes
-                        ? 'border-yes bg-yes text-on-side'
-                        : 'border-no bg-no text-on-side'
-                      : isYes
-                        ? 'border-yes/40 text-yes hover:border-yes'
-                        : 'border-no/40 text-no hover:border-no',
+                        ? 'bg-yes-fill text-on-side'
+                        : 'bg-no-fill text-black'
+                      : 'bg-ink/[0.06] text-ink hover:bg-ink/10',
                   )}
                 >
-                  <span className="font-display text-2xl leading-none">{isYes ? 'Yes' : 'No'}</span>
+                  <span className="text-[17px] font-semibold">{isYes ? 'Yes' : 'No'}</span>
                   <span className="text-sm font-semibold tabular">{q ? formatPrice(q.askCents) : '—'}</span>
                 </button>
               );
@@ -626,7 +624,7 @@ export function MarketDetailPage() {
         </div>
 
         <aside className="hidden lg:block" aria-label="Trade">
-          <div className="card sticky top-[84px] max-h-[calc(100dvh-100px)] overflow-y-auto p-5">{panel}</div>
+          <div className="card sticky top-[72px] max-h-[calc(100dvh-100px)] overflow-y-auto p-5">{panel}</div>
         </aside>
       </div>
 

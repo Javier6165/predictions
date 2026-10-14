@@ -37,7 +37,7 @@ export function MarketRow({ market, rank, compact = false }: { market: Market; r
         )}
       </div>
       <div className="w-[92px] shrink-0 text-right sm:w-[132px]">
-        <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">{multi ? lead.label : 'Yes'}</p>
+        <p className="truncate eyebrow text-muted">{multi ? lead.label : 'Yes'}</p>
         <p className="mt-0.5 flex items-baseline justify-end gap-1">
           <span className="font-display text-[30px] leading-none text-ink tabular">{lead.probabilityCents}</span>
           <span className="text-[11px] text-muted">in 100</span>

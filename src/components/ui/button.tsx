@@ -4,15 +4,15 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/cn';
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-[background,color,border,box-shadow,transform] duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium tracking-[-0.01em] transition-[background,color,border,box-shadow,transform] duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        primary: 'btn-shine bg-cta text-on-cta hover:bg-cta-hover',
+        primary: 'bg-cta text-on-cta hover:bg-cta-hover',
         white: 'bg-cta text-on-cta hover:bg-cta-hover',
-        secondary: 'border border-line-strong bg-surface-2 text-ink hover:bg-surface-3',
+        secondary: 'bg-ink/[0.06] text-ink hover:bg-ink/10',
         ghost: 'text-ink-2 hover:bg-ink/6 hover:text-ink',
-        outline: 'border border-line-strong text-ink hover:bg-ink/5',
+        outline: 'border border-line-strong text-ink hover:border-ink/40 hover:bg-ink/[0.03]',
         yes: 'bg-yes text-on-side hover:bg-yes-strong',
         no: 'bg-no text-on-side hover:bg-no-strong',
         danger: 'bg-danger text-on-side hover:bg-danger-hover',

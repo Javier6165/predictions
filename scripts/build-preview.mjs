@@ -47,7 +47,7 @@ const out = `<title>${title}</title>
 <meta name="description" content="Interactive demo · Simulated markets. No real money.">
 <style>
 :root { color-scheme: light; }
-html, body { background: #f2efe7; }
+html, body { background: #f5f5f7; }
 ${css}
 </style>
 <div id="root"></div>

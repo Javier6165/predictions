@@ -118,7 +118,7 @@ const STATUS_COPY: Record<MarketStatus, { label: string; cls: string }> = {
 export function StatusBadge({ status, className }: { status: MarketStatus; className?: string }) {
   const s = STATUS_COPY[status];
   return (
-    <span className={cn('inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide', s.cls, className)}>
+    <span className={cn('inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold', s.cls, className)}>
       {s.label}
     </span>
   );

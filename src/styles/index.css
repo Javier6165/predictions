@@ -1,131 +1,133 @@
 @import '@fontsource-variable/inter';
-@import '@fontsource/instrument-serif/latin-400.css';
-@import '@fontsource/instrument-serif/latin-400-italic.css';
 @import 'tailwindcss';
 
 /*
- * ───────── Likely · design tokens ─────────
- * Two themes, one vocabulary. Components only use semantic tokens (bg, surface, ink,
- * muted, yes, no…), never raw colours, so a theme is just a different set of values.
+ * ───────── Likely · design tokens (v3, "if Apple made a prediction market") ─────────
+ * Calm neutrals, one accent, typography doing the work.
  *
- *   Light "paper" (default) — warm off-white, ink-black type, editorial.
- *   Dark  "night"           — warm black, paper-white type.
+ *   Light (default) — #f5f5f7 page, white tiles, #1d1d1f type.
+ *   Dark            — black page, graphite tiles, #f5f5f7 type.
  *
- * `data-theme="dark"` on <html> switches the whole app; on any element it switches
- * only that subtree (hybrid: photo-led sections stay dark inside the light theme).
+ * `data-theme="dark"` on <html> switches the app; on any element it switches only that
+ * subtree (hybrid: photo tiles stay dark inside the light theme).
  *
- * Contrast (WCAG AA, checked by axe in e2e): ink/ink-2/muted/subtle, yes and no text
- * are ≥ 4.5:1 on bg and surface in both themes. `*-fill` colours are for marks
- * (dots, bars) only and are never used for text.
+ * Colour has a job or it isn't there: blue = act / Yes, orange = No. Everything else is
+ * neutral. `*-fill` colours are for marks (dots, bars) only — never text. AA contrast is
+ * checked by axe in both themes (e2e/smoke-a11y.spec.ts).
  */
 @theme {
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter Variable', 'Segoe UI', system-ui, sans-serif;
 
   /* Surfaces */
-  --color-bg: #f2efe7;
-  --color-bg-elev: #ebe7dd;
-  --color-surface: #fbfaf6;
-  --color-surface-2: #f1ede4;
-  --color-surface-3: #e7e2d6;
-  --color-line: rgb(28 25 18 / 0.1);
-  --color-line-strong: rgb(28 25 18 / 0.2);
+  --color-bg: #f5f5f7;
+  --color-bg-elev: #ececf0;
+  --color-surface: #ffffff;
+  --color-surface-2: #f5f5f7;
+  --color-surface-3: #e8e8ed;
+  --color-line: rgb(0 0 0 / 0.08);
+  --color-line-strong: rgb(0 0 0 / 0.16);
 
   /* Type */
-  --color-ink: #16140f;
-  --color-ink-2: #3a372f;
-  --color-muted: #5a564d;
-  --color-subtle: #666257;
+  --color-ink: #1d1d1f;
+  --color-ink-2: #424245;
+  --color-muted: #6e6e73;
+  --color-subtle: #6e6e73;
 
-  /* Brand: ink CTAs, lime highlighter, focus in Yes cobalt */
-  --color-accent: #2a44e8;
-  --color-accent-strong: #1f35c4;
-  --color-accent-soft: rgb(42 68 232 / 0.1);
-  --color-cta: #16140f;
-  --color-cta-hover: #2e2b24;
-  --color-on-cta: #fbfaf6;
+  /* Action */
+  --color-accent: #0066cc;
+  --color-accent-strong: #004f9e;
+  --color-accent-soft: rgb(0 113 227 / 0.08);
+  --color-cta: #0071e3;
+  --color-cta-hover: #0077ed;
+  --color-on-cta: #ffffff;
   --color-on-side: #ffffff;
-  --color-highlight: #d8f94a;
-  --color-on-highlight: #16140f;
-  --color-danger: #c0341a;
-  --color-danger-hover: #a12a13;
-  --color-lilac: #5b4fd6;
+  --color-highlight: #e8e8ed;
+  --color-on-highlight: #1d1d1f;
+  --color-danger: #c4320a;
+  --color-danger-hover: #a52a08;
+  --color-lilac: #8944ab;
 
-  /* Prediction sides — cobalt Yes, vermilion No (not stock-market green/red) */
-  --color-yes: #2a44e8;
-  --color-yes-strong: #1f35c4;
-  --color-yes-fill: #3552ff;
-  --color-yes-soft: rgb(42 68 232 / 0.1);
-  --color-no: #a02c0a;
-  --color-no-strong: #862307;
-  --color-no-fill: #ff5a26;
-  --color-no-soft: rgb(232 76 30 / 0.11);
+  /* Prediction sides */
+  --color-yes: #0066cc;
+  --color-yes-strong: #004f9e;
+  --color-yes-fill: #0071e3;
+  --color-yes-soft: rgb(0 113 227 / 0.08);
+  --color-no: #b64400;
+  --color-no-strong: #8f3500;
+  --color-no-fill: #ff9500;
+  --color-no-soft: rgb(255 149 0 / 0.12);
+  --color-rest: #d2d2d7;
   --color-warn: #8a5a00;
-  /* Multi-outcome series (marks only) */
-  --color-series-1: #3552ff;
-  --color-series-2: #ff5a26;
-  --color-series-3: #16140f;
-  --color-series-4: #9a8cff;
-  --color-series-5: #c9a86a;
-  --color-series-rest: rgb(28 25 18 / 0.14);
-  --color-warn-soft: rgb(214 150 0 / 0.14);
+  --color-warn-soft: rgb(255 204 0 / 0.16);
 
-  --radius-card: 1.25rem;
-  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.6) inset, 0 1px 2px rgb(28 25 18 / 0.04), 0 12px 32px -20px rgb(28 25 18 / 0.18);
-  --shadow-pop: 0 24px 64px -20px rgb(28 25 18 / 0.28), 0 0 0 1px rgb(28 25 18 / 0.08);
+  /* Multi-outcome series (marks only) */
+  --color-series-1: #0071e3;
+  --color-series-2: #ff9500;
+  --color-series-3: #34c759;
+  --color-series-4: #af52de;
+  --color-series-5: #8e8e93;
+  --color-series-rest: #d2d2d7;
+
+  --radius-card: 1.75rem;
+  --shadow-card: none;
+  --shadow-pop: 0 30px 80px -30px rgb(0 0 0 / 0.35), 0 0 0 1px rgb(0 0 0 / 0.06);
 
   --animate-fade-in: fade-in 160ms ease-out;
-  --animate-pop-in: pop-in 180ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
-  --animate-slide-up: slide-up 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  --animate-slide-left: slide-left 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-pop-in: pop-in 220ms cubic-bezier(0.25, 1, 0.5, 1);
+  --animate-slide-up: slide-up 260ms cubic-bezier(0.25, 1, 0.5, 1);
+  --animate-slide-left: slide-left 260ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Night theme: whole app (<html data-theme="dark">) or one section (hybrid). */
+/* Dark: whole app (<html data-theme="dark">) or one tile (hybrid). */
 [data-theme='dark'] {
   color-scheme: dark;
-  --color-bg: #0f0e0c;
-  --color-bg-elev: #151411;
-  --color-surface: #1a1915;
-  --color-surface-2: #22201b;
-  --color-surface-3: #2c2a23;
-  --color-line: rgb(242 239 231 / 0.1);
-  --color-line-strong: rgb(242 239 231 / 0.2);
+  --color-bg: #000000;
+  --color-bg-elev: #0d0d0f;
+  --color-surface: #1c1c1e;
+  --color-surface-2: #2c2c2e;
+  --color-surface-3: #3a3a3c;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-strong: rgb(255 255 255 / 0.18);
 
-  --color-ink: #f4f1ea;
-  --color-ink-2: #d6d1c4;
-  --color-muted: #a7a194;
-  --color-subtle: #9a9486;
+  --color-ink: #f5f5f7;
+  --color-ink-2: #d1d1d6;
+  --color-muted: #a1a1a6;
+  --color-subtle: #98989d;
 
-  --color-accent: #8c9cff;
-  --color-accent-strong: #a9b5ff;
-  --color-accent-soft: rgb(140 156 255 / 0.14);
-  --color-cta: #f4f1ea;
-  --color-cta-hover: #ffffff;
-  --color-on-cta: #16140f;
-  --color-on-side: #0f0e0c;
-  --color-danger: #ff7a59;
-  --color-danger-hover: #ff9478;
-  --color-lilac: #b7aeff;
+  --color-accent: #2997ff;
+  --color-accent-strong: #64b5ff;
+  --color-accent-soft: rgb(41 151 255 / 0.14);
+  --color-cta: #0071e3;
+  --color-cta-hover: #0077ed;
+  --color-on-cta: #ffffff;
+  --color-on-side: #000000;
+  --color-highlight: #3a3a3c;
+  --color-on-highlight: #f5f5f7;
+  --color-danger: #ff6961;
+  --color-danger-hover: #ff8a84;
+  --color-lilac: #da8fff;
 
-  --color-yes: #8c9cff;
-  --color-yes-strong: #a9b5ff;
-  --color-yes-fill: #6f84ff;
-  --color-yes-soft: rgb(140 156 255 / 0.14);
-  --color-no: #ff8a5e;
-  --color-no-strong: #ffa27f;
-  --color-no-fill: #ff6a36;
-  --color-no-soft: rgb(255 106 54 / 0.14);
-  --color-warn: #f5c451;
-  --color-series-1: #6f84ff;
-  --color-series-2: #ff6a36;
-  --color-series-3: #f4f1ea;
-  --color-series-4: #b7aeff;
-  --color-series-5: #d9bd85;
-  --color-series-rest: rgb(242 239 231 / 0.16);
-  --color-warn-soft: rgb(245 196 81 / 0.14);
+  --color-yes: #2997ff;
+  --color-yes-strong: #64b5ff;
+  --color-yes-fill: #0a84ff;
+  --color-yes-soft: rgb(10 132 255 / 0.16);
+  --color-no: #ff9f0a;
+  --color-no-strong: #ffb340;
+  --color-no-fill: #ff9f0a;
+  --color-no-soft: rgb(255 159 10 / 0.14);
+  --color-rest: #3a3a3c;
+  --color-warn: #ffd60a;
+  --color-warn-soft: rgb(255 214 10 / 0.14);
 
-  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.7);
-  --shadow-pop: 0 24px 64px -16px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(242 239 231 / 0.12);
+  --color-series-1: #0a84ff;
+  --color-series-2: #ff9f0a;
+  --color-series-3: #30d158;
+  --color-series-4: #bf5af2;
+  --color-series-5: #98989d;
+  --color-series-rest: #3a3a3c;
+
+  --shadow-pop: 0 30px 80px -20px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(255 255 255 / 0.1);
   color: var(--color-ink);
 }
 
@@ -167,7 +169,7 @@ body {
   font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.5;
-  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  letter-spacing: -0.003em;
   min-height: 100dvh;
 }
 
@@ -199,7 +201,7 @@ body {
 @layer components {
   .card {
     background: var(--color-surface);
-    border: 1px solid var(--color-line);
+    border: 1px solid transparent;
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-card);
   }
@@ -209,12 +211,26 @@ body {
     backdrop-filter: blur(18px) saturate(1.3);
     -webkit-backdrop-filter: blur(18px) saturate(1.3);
   }
-  /* Display serif: questions and big numbers. */
+  /* Display type: headlines, questions and big numbers (SF Pro Display on Apple devices). */
   .font-display {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    font-feature-settings: 'lnum';
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    font-feature-settings: 'tnum' 0;
+  }
+  /* Small sentence-case label above a title (Apple "eyebrow"). */
+  .eyebrow {
+    font-size: 13px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--color-muted);
+  }
+  /* Translucent material (nav, sheets over content). */
+  .material {
+    background: color-mix(in oklab, var(--color-bg) 78%, transparent);
+    backdrop-filter: saturate(1.8) blur(20px);
+    -webkit-backdrop-filter: saturate(1.8) blur(20px);
   }
   /* Lime highlighter behind a word — the brand's one loud gesture. */
   .mark {
